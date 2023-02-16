@@ -1,0 +1,47 @@
+version: '3.9'
+services:
+  data_generator:
+    build: 
+      context: ../
+      dockerfile: ./docker/data_generator/Dockerfile
+    environment:
+      - DATABASE_HOST = 'db'
+      - DATABASE_PORT = '5432'
+      - DATABASE_NAME = "postgres"
+      - DATABASE_USERNAME = "postgres"
+      - DATABASE_PASSWORD = "postgres"
+    links:
+      - postgresdb:db
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgresdb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h db -p 5432 -U postgres -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: always
+
+  postgresdb:
+    build: 
+      context: ../
+      dockerfile: ./docker/database/Dockerfile
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -p 5432"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  anomaly_detector:
+    build:
+      context: ../
+      dockerfile: ./docker/anomaly_detector/Dockerfile
+    ports:
+      - "8001:8001"
+
+
+
+   
