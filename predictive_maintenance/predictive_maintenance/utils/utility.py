@@ -11,7 +11,7 @@ def get_root_path():
 
 def get_data_path():
     """Get the data path of the project"""
-    data_path = os.path.join(get_root_path().parent, "data")
+    data_path = os.path.join(get_root_path().parent, "data_generator","data")
     return data_path
 
 def get_env_variables():

@@ -38,7 +38,7 @@ services:
   anomaly_detector:
     build:
       context: ../
-      dockerfile: ./docker/anomaly_detector/Dockerfile
+      dockerfile: ./docker/predictive_maintenance/Dockerfile
     ports:
       - "8001:8001"
 

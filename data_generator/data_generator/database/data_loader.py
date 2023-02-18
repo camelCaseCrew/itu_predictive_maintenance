@@ -26,9 +26,16 @@ class DataLoader():
             result = session.exec(statement).all()
             return result
         
+    def get_failure_ids(self):
+        with Session(self.engine) as session:
+            statement = select(HardDriveStats.id).where(HardDriveStats.failure == 1)
+            result = session.exec(statement).all()
+            return result
+        
     def get_record(self, id):
         with Session(self.engine) as session:
             statement = select(HardDriveStats).where(HardDriveStats.id == id)
             result = session.exec(statement).one().dict()
-            del result["failure"]
+            remove_keys = ["failure", "model", "serial_number", "date", "id"]
+            for key in remove_keys: del result[key]
             return result

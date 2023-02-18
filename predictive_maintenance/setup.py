@@ -6,7 +6,7 @@ import platform
 from setuptools import find_packages, setup
 
 VERSION = '0.1.0'
-NAME = 'anomaly_detector'
+NAME = 'predictive_maintenance'
 DESCRIPTION = ''
 AUTHORS = "Mico Bøje"
 
@@ -34,9 +34,10 @@ dependent_packages = {
     "psycopg2-binary": ("2.9.5", CORE),
     "fastapi": ("0.92.0", CORE),
     "uvicorn": ("0.20.0", CORE),
-    "torch": ("1.13.0", CORE),
-    "sentence-transformers": ("2.2.2", CORE),
-    
+    "scikit-learn": ("1.2.1", CORE),
+    "pandas": ("1.5.3", CORE),
+    "imbalanced-learn": ("0.10.1", CORE),
+        
     # For tests
     "pytest": ("7.1.3", TEST),
 

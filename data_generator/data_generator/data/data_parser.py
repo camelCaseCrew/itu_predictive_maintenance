@@ -1,6 +1,7 @@
 from data_generator.utils.utility import get_data_path
 from data_generator.database.tables import HardDriveStats
 from data_generator.database.datawriter import DataWriter
+from data_generator.utils.logger import Logger
 
 import multiprocessing
 
@@ -8,6 +9,7 @@ import csv
 from datetime import datetime
 from typing import List
 
+_logger = Logger().get_logger()
 class CSVParser:
     def __init__(self, filename: str):
         self.filename = filename
@@ -22,10 +24,10 @@ class CSVParser:
                 for i, row in enumerate(pool.imap(self.parse_row, csvreader)):
                     rows.append(row)
                     if i % 10000 == 0:
-                        print(f"Processed {i} rows")
+                        _logger.info(f"Processed {i} rows")
                         data_writer.write_multiple_rows_to_database(rows)
                         rows = []
-                    elif i % 2000001 == 0:
+                    elif i % 1000001 == 0:
                         break
                 # Write any remaining rows to the database
                 data_writer.write_multiple_rows_to_database(rows)
