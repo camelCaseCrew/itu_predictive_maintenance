@@ -25,6 +25,8 @@ class CSVParser:
                         print(f"Processed {i} rows")
                         data_writer.write_multiple_rows_to_database(rows)
                         rows = []
+                    elif i % 2000001 == 0:
+                        break
                 # Write any remaining rows to the database
                 data_writer.write_multiple_rows_to_database(rows)
     
