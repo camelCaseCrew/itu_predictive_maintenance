@@ -21,7 +21,7 @@ class CSVParser:
             with multiprocessing.Pool(16) as pool:
                 for i, row in enumerate(pool.imap(self.parse_row, csvreader)):
                     rows.append(row)
-                    if i % 1000 == 0:
+                    if i % 10000 == 0:
                         print(f"Processed {i} rows")
                         data_writer.write_multiple_rows_to_database(rows)
                         rows = []

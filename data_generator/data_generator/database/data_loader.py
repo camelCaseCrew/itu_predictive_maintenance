@@ -29,5 +29,6 @@ class DataLoader():
     def get_record(self, id):
         with Session(self.engine) as session:
             statement = select(HardDriveStats).where(HardDriveStats.id == id)
-            result = session.exec(statement).one()
-            return result.to_dict().pop("failure")
+            result = session.exec(statement).one().dict()
+            del result["failure"]
+            return result
