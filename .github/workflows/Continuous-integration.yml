@@ -1,0 +1,21 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Cached LFS checkout
+      uses: nschloe/action-cached-lfs-checkout@v1.1.2
+
+    - name: Run build_and_run_docker
+      run: make build_and_run_docker
