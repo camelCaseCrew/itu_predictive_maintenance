@@ -2,7 +2,7 @@ name: Makefile CI
 
 on:
   push:
-    branches: [ "development", "SC-22-Pipeline" ]
+    branches: [ "development" ]
   pull_request:
     branches: [ "development" ]
 
