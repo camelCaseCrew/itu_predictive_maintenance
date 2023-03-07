@@ -25,7 +25,7 @@ services:
 
   postgresdb:
     build: 
-      context: ../
+      context: ./dockers
       dockerfile: ./docker/database/Dockerfile
     ports:
       - "5432:5432"
