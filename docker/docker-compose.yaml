@@ -11,7 +11,7 @@ services:
       - DATABASE_USERNAME = "postgres"
       - DATABASE_PASSWORD = "postgres"
     links:
-      - postgresdb:db
+      - postgredwadwadwadawdwaddb:db
     ports:
       - "8000:8000"
     depends_on:
