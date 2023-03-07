@@ -2,9 +2,9 @@ name: Makefile CI
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "development", "SC-22-Pipeline" ]
   pull_request:
-    branches: [ "dev" ]
+    branches: [ "development" ]
 
 jobs:
   build:
@@ -17,5 +17,5 @@ jobs:
     - name: Cached LFS checkout
       uses: nschloe/action-cached-lfs-checkout@v1.1.2
 
-    - name: Run build_and_run_docker
-      run: make build_and_run_docker
+    - name: Run build_services
+      run: make build_services
