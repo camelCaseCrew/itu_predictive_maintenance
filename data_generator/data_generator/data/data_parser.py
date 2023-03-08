@@ -13,7 +13,7 @@ _logger = Logger().get_logger()
 class CSVParser:
     def __init__(self, filename: str):
         self.filename = filename
-        
+
     def __call__(self):
         data_writer = DataWriter()
         rows = []
@@ -31,7 +31,7 @@ class CSVParser:
                         break
                 # Write any remaining rows to the database
                 data_writer.write_multiple_rows_to_database(rows)
-    
+
     @staticmethod
     def parse_row(row):
         return HardDriveStats(
@@ -112,7 +112,7 @@ class CSVParser:
                     smart_224_raw=row[74],
                     smart_225_normalized=row[75],
                     smart_225_raw=row[76])
-        
+
 def chunks(lst, chunk_size):
     """Yield successive chunk_size chunks from lst."""
     for i in range(0, len(lst), chunk_size):
