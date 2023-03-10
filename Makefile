@@ -8,4 +8,4 @@ build_services:
 	docker compose -f docker/docker-compose.yaml build
 
 temp_test:
-	docker compose -f docker/docker-compose.yaml up prometheus grafana
+	docker compose -f docker/docker-compose.yaml up --detach prometheus grafana
