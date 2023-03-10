@@ -101,3 +101,6 @@ config.ini
 
 # logs
 /logs/
+
+# node
+node_modules/
