@@ -36,6 +36,4 @@ class DataLoader():
         with Session(self.engine) as session:
             statement = select(HardDriveStats).where(HardDriveStats.id == id)
             result = session.exec(statement).one().dict()
-            #remove_keys = ["failure", "model", "serial_number", "date", "id"]
-            #for key in remove_keys: del result[key]
             return result
