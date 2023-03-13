@@ -24,7 +24,7 @@ def split_data(data):
     # Fix imbalanced data
     oversample = imblearn.over_sampling.SMOTE()
     X_train, y_train = oversample.fit_resample(X_train, y_train)
-    
+
     return X_train, X_test, y_train, y_test
 
 def train_model():
@@ -42,7 +42,7 @@ def evaluate_model(model, X_test, y_test):
 def save_model(model):
     save_path = os.path.join(get_root_path(), "models", "model.pkl")
     joblib.dump(model, save_path)
-    
+
 if __name__ == "__main__":
     model = train_model()
     save_model(model)

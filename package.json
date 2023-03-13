@@ -1,0 +1,22 @@
+{
+  "name": "itu_predictive_maintenance",
+  "version": "0.0.1",
+  "description": "Docker and docker-compose: https://docs.docker.com/engine/install/ubuntu/",
+  "main": "makefile",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/camelCaseCrew/itu_predictive_maintenance.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/camelCaseCrew/itu_predictive_maintenance/issues"
+  },
+  "homepage": "https://github.com/camelCaseCrew/itu_predictive_maintenance#readme",
+  "devDependencies": {
+    "cypress": "^12.7.0"
+  }
+}

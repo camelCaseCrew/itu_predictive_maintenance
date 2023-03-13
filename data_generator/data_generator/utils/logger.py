@@ -15,10 +15,10 @@ class Logger():
         except ValueError:
             raise ValueError(f'Invalid value for save_log_to_file "{save_log}", please provide a Boolean value')
         self._set_logger(sink)
-        
+
     def get_logger(self):
         return self._logger
-    
+
     def _set_logger(self, sink):
         self._logger.remove()
         if sink == sys.stdout:
@@ -40,4 +40,3 @@ class Logger():
                             diagnose=False,
                             catch=True,
                             level='DEBUG')
-   
