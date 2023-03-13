@@ -104,3 +104,6 @@ config.ini
 
 # node
 node_modules/
+
+# cypress
+cypress/videos
