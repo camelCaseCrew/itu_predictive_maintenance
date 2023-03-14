@@ -1,5 +1,10 @@
+# run
+# docker compose -f docker/docker-compose.yaml build data_generator
+# whenever this file is changed
+
 import os
 import random
+import sys
 
 from typing import Union
 from fastapi import FastAPI
@@ -15,7 +20,7 @@ ids = data_loader.get_ids()
 if len(ids) == 0:
     log_parser = CSVParser(os.path.join(get_data_path(), "harddrive.csv"))
     log_parser()
-    ids = data_loader.get_ids()  
+    ids = data_loader.get_ids()
 failure_ids = data_loader.get_failure_ids()
 
 @app.get("/health")

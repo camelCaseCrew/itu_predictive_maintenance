@@ -101,3 +101,9 @@ config.ini
 
 # logs
 /logs/
+
+# node
+node_modules/
+
+# cypress
+cypress/videos

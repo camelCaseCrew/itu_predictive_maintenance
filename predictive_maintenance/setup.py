@@ -37,7 +37,7 @@ dependent_packages = {
     "scikit-learn": ("1.2.1", CORE),
     "pandas": ("1.5.3", CORE),
     "imbalanced-learn": ("0.10.1", CORE),
-        
+
     # For tests
     "pytest": ("7.1.3", TEST),
 

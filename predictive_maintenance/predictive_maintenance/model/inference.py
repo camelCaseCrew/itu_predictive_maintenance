@@ -7,13 +7,13 @@ from predictive_maintenance.utils.utility import get_root_path
 class Inference:
     def __init__(self):
         self.model = joblib.load(os.path.join(get_root_path(), "models", "model.pkl"))
-        
+
     def predict(self, data: dict):
         df = pd.DataFrame(data, index=[0])
         data = df.reindex(sorted(df.columns), axis=1)
         data.fillna(-1, inplace=True)
         return self.model.predict_proba(data)[0][1]
-    
+
 # 'capacity_bytes', 'failure', 'smart_1_normalized', 'smart_1_raw',
 #        'smart_2_normalized', 'smart_2_raw', 'smart_3_normalized',
 #        'smart_3_raw', 'smart_4_normalized', 'smart_4_raw',

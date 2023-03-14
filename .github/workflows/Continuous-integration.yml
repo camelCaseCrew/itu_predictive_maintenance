@@ -2,20 +2,35 @@ name: Makefile CI
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "development" ]
   pull_request:
-    branches: [ "dev" ]
+    branches: [ "development" ]
 
 jobs:
   build:
 
+      runs-on: ubuntu-latest
+
+      steps:
+      - uses: actions/checkout@v3
+
+      - name: Cached LFS checkout
+        uses: nschloe/action-cached-lfs-checkout@v1.1.2
+
+      - name: Run build_services
+        run: make build_services
+
+  cypress-test:
     runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Cached LFS checkout
-      uses: nschloe/action-cached-lfs-checkout@v1.1.2
-
-    - name: Run build_and_run_docker
-      run: make build_and_run_docker
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Cached LFS checkout
+        uses: nschloe/action-cached-lfs-checkout@v1.1.2
+        
+      - name: Run docker-compose up
+        run: docker compose -f docker/docker-compose.yaml up --detach
+        
+      - name: Cypress run
+        uses: cypress-io/github-action@v5.3.0

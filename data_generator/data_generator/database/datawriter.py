@@ -12,7 +12,7 @@ class DataWriter():
         with Session(self.engine) as session:
             session.add(data)
             session.commit()
-    
+
     def write_multiple_rows_to_database(self, data: list):
         """Write multiple rows of data to database"""
         with Session(self.engine) as session:

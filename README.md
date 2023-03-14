@@ -1,4 +1,4 @@
-## Requirments
+## Requirments 
 Docker and docker-compose: https://docs.docker.com/engine/install/ubuntu/
 
 GIT LFS: https://git-lfs.com/

@@ -3,3 +3,6 @@ build_and_run_docker:
 
 compose_up:
 	docker-compose -f docker/docker-compose.yaml up
+	
+build_services:
+	docker compose -f docker/docker-compose.yaml build
