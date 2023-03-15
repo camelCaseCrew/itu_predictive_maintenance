@@ -66,6 +66,7 @@ config.ini
 
 # Database
 *.db
+!grafana.db
 *.rdb
 
 # Data
