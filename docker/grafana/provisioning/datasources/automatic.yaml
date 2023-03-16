@@ -1,0 +1,23 @@
+apiVersion: 1
+
+datasources:
+- name: Prometheus
+  type: prometheus
+  access: proxy
+  url: http://host.docker.internal:9090
+  orgId: 1
+  uid: "TSwyULa4z"
+  user: ""
+  database: ""
+  basicAuth: false
+  basicAuthUser:
+  basicAuthPassword:
+  withCredentials:
+  isDefault: true
+  jsonData:
+     tlsAuth: false
+     tlsAuthWithCACert: false
+     httpMethod: "POST"
+  version: 1
+  readOnly: false
+  editable: true
