@@ -8,12 +8,11 @@ volumes:
 
 services:
   rabbit_mq:
-    build:
-      context: ../
-      dockerfile: ./docker/rabbit_mq/Dockerfile
+    image: rabbitmq:3.11-management
     container_name: rabbit_mq
     ports:
       - "5672:5672"
+      - "15672:15672"
 
   prometheus:
     build:
