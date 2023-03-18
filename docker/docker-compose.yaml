@@ -7,6 +7,14 @@ volumes:
     driver: local
 
 services:
+  rabbit_mq:
+    build:
+      context: ../
+      dockerfile: ./docker/rabbit_mq/Dockerfile
+    container_name: rabbit_mq
+    ports:
+      - "5672:5672"
+
   prometheus:
     build:
       context: ../
