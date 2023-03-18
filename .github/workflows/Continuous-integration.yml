@@ -32,9 +32,11 @@ jobs:
       - name: Run docker-compose up
         run: docker compose -f docker/docker-compose.yaml up --detach
         
-      - name: Wait 5 minutes
-        run: sleep 5m
+      - name: Wait 2 minutes
+        run: sleep 2m
         shell: bash
         
       - name: Cypress run
         uses: cypress-io/github-action@v5.3.0
+        with:
+          wait-on: https://localhost:3000
