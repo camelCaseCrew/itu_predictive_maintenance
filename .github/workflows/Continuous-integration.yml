@@ -32,8 +32,8 @@ jobs:
       - name: Run docker-compose up
         run: docker compose -f docker/docker-compose.yaml up --detach
         
-      - name: Wait 1 minute
-        run: sleep 1m
+      - name: Wait 5 minutes
+        run: sleep 5m
         shell: bash
         
       - name: Cypress run
