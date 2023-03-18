@@ -4,7 +4,7 @@ class TestConnection(unittest.TestCase):
 
     def test_creatingConnectionReturnsBlockingConnection(self):
         # Arrange & Act
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host='host.docker.internal'))
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host='0.0.0.0'))
         
 
         # Assert
@@ -18,7 +18,7 @@ class TestTransactions(unittest.TestCase):
 
     def test_producingMessageDoesNotRaiseException(self):
         # Arrange
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host='host.docker.internal'))
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host='0.0.0.0'))
         channel = connection.channel()
         message = "test"
 
@@ -37,7 +37,7 @@ class TestTransactions(unittest.TestCase):
         
     def test_consumingMessageReturnsExpectedMessage(self):
         # Arrange
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host='host.docker.internal'))
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host='0.0.0.0'))
         channel = connection.channel()
         expected_message = 'expected this message :D'
 
