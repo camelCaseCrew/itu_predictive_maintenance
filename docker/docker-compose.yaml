@@ -29,7 +29,7 @@ services:
       timeout: 5s
       retries: 5
 
-  anomaly_detector:
+  predictive_maintenance:
     build:
       context: ../
       dockerfile: ./docker/predictive_maintenance/Dockerfile
