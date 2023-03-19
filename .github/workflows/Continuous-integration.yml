@@ -29,10 +29,10 @@ jobs:
         uses: nschloe/action-cached-lfs-checkout@v1.1.2
       
       - name: Start Grafana and Prometheus containers
-        run: docker compose -f docker/docker-compose.yaml up grafana prometheus --detach
+        run: docker-compose -f docker/docker-compose.yaml up grafana prometheus --detach
 
       - name: Get logs
-        run: docker compose -f docker/docker-compose.yaml logs grafana
+        run: docker-compose -f docker/docker-compose.yaml logs
 
       - name: Wait 30 seconds
         run: sleep 30s
