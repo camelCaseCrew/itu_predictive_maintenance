@@ -52,7 +52,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "count (device_health < 0.1)"
+              "options": "count (device_health{group=\"healthy\"})"
             },
             "properties": [
               {
@@ -71,7 +71,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "count (device_health >= 0.5)"
+              "options": "count (device_health{group=\"critical\"})"
             },
             "properties": [
               {
@@ -90,7 +90,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "count (device_health < 0.5 and device_health >= 0.1)"
+              "options": "count (device_health{group=\"risk\"})"
             },
             "properties": [
               {
@@ -137,7 +137,7 @@
             "uid": "TSwyULa4z"
           },
           "editorMode": "code",
-          "expr": "count (device_health >= 0.5)",
+          "expr": "count (device_health{group=\"critical\"})",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
@@ -149,7 +149,7 @@
             "uid": "TSwyULa4z"
           },
           "editorMode": "code",
-          "expr": "count (device_health < 0.5 and device_health >= 0.1)",
+          "expr": "count (device_health{group=\"risk\"})",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
@@ -161,7 +161,7 @@
             "uid": "TSwyULa4z"
           },
           "editorMode": "code",
-          "expr": "count (device_health < 0.1)",
+          "expr": "count (device_health{group=\"healthy\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "Healthy"
@@ -284,9 +284,9 @@
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "healthy",
-          "value": "healthy"
+          "selected": true,
+          "text": "critical",
+          "value": "critical"
         },
         "datasource": {
           "type": "prometheus",
