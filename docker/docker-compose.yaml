@@ -14,7 +14,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./grafana/grafana:/var/lib/grafana
+      - ./grafana:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
 
   postgresdb:
