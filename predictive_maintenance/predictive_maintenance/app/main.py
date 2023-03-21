@@ -30,7 +30,7 @@ def health():
 def metrics():
     for i in range(10):
         # get a random record
-        inputDevice = requests.get("http://host.docker.internal:8000/get_record").json()
+        inputDevice = requests.get("http://data_generator:8000/get_record").json()
         serial_number = inputDevice["serial_number"]
         model = inputDevice["model"]
 
@@ -40,7 +40,7 @@ def metrics():
             del inputDevice[key]
 
         # give record to machine learning model
-        pred = requests.post("http://host.docker.internal:8001/predict", json=inputDevice)
+        pred = requests.post("http://predictive_maintenance:8001/predict", json=inputDevice)
         failure_rate = float(pred.json()['failure_prediction'])
 
         # assign metric to group

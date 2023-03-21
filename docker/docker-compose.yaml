@@ -1,11 +1,15 @@
 version: '3.9'
 
+networks:
+  predictive-maintenance-net:
+    driver: bridge
+
 volumes:
   prometheus-data:
     driver: local
 
 services:
-  postgresdb:
+  db:
     build:
       context: ../
       dockerfile: ./docker/database/Dockerfile
@@ -16,6 +20,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - predictive-maintenance-net
 
   predictive_maintenance:
     build:
@@ -23,6 +29,8 @@ services:
       dockerfile: ./docker/predictive_maintenance/Dockerfile
     ports:
       - "8001:8001"
+    networks:
+      - predictive-maintenance-net
 
   data_generator:
     build:
@@ -34,12 +42,10 @@ services:
       - DATABASE_NAME=postgres
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=postgres
-    links:
-      - postgresdb:db
     ports:
       - "8000:8000"
     depends_on:
-      - postgresdb
+      - db
     healthcheck:
       test:
         [
@@ -50,6 +56,8 @@ services:
       timeout: 5s
       retries: 10
     restart: always
+    networks:
+      - predictive-maintenance-net
 
   prometheus:
     image: prom/prometheus:latest
@@ -59,6 +67,8 @@ services:
     volumes:
       - prometheus-data:/prometheus
       - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - predictive-maintenance-net
 
   grafana:
     image: grafana/grafana-enterprise
@@ -69,3 +79,5 @@ services:
     volumes:
       - ../grafana:/var/lib/grafana
       - ../grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - predictive-maintenance-net
