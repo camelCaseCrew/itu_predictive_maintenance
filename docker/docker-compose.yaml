@@ -52,25 +52,20 @@ services:
     restart: always
 
   prometheus:
-    build:
-      context: ../
-      dockerfile: ./docker/prometheus/Dockerfile
     image: prom/prometheus:latest
     container_name: prometheus
     ports:
       - "9090:9090"
     volumes:
       - prometheus-data:/prometheus
+      - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
 
   grafana:
-    build:
-      context: ../
-      dockerfile: ./docker/grafana/Dockerfile
     image: grafana/grafana-enterprise
     user: ":"
     container_name: grafana
     ports:
       - "3000:3000"
     volumes:
-      - ./grafana:/var/lib/grafana
-      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ../grafana:/var/lib/grafana
+      - ../grafana/provisioning:/etc/grafana/provisioning
