@@ -3,6 +3,8 @@ version: '3.9'
 networks:
   predictive-maintenance-net:
     driver: bridge
+  rabbitnet:
+    driver: bridge
 
 volumes:
   prometheus-data:
@@ -16,6 +18,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - rabbitnet
 
   db:
     build:
