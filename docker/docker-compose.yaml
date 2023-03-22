@@ -32,6 +32,8 @@ services:
     networks:
       - predictive-maintenance-net
 
+
+
   data_generator:
     build:
       context: ../
@@ -79,5 +81,14 @@ services:
     volumes:
       - ../grafana:/var/lib/grafana
       - ../grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - predictive-maintenance-net
+
+  frontend:
+    build:
+      context: ../
+      dockerfile: ./docker/frontend/Dockerfile
+    ports:
+      - "3001:3003"
     networks:
       - predictive-maintenance-net

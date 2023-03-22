@@ -36,3 +36,24 @@ Swagger ui is provided on localhost:8000/docs
 ### Acessing the prediction service
 The prediction rest services listens on localhost:8001 <br>
 Swagger ui is provided on localhost:8001/docs
+
+### Acessing the front end
+
+First, run the development server in the frontend folder or spin up the front end container:
+
+```cmd terminal in the folder itu_predicitive_maintainance/frontend
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
+
+OR
+
+docker compose -f docker/docker-compose.yaml up in itu_predicitive_maintainance
+
+AFTER CMD-TERMINAL IS DONE:
+
+Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
+
