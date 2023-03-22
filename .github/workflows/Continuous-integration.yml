@@ -55,6 +55,10 @@ jobs:
 
       - name: Build unit_tests image
         run: docker build -t unit_tests ./unit_tests/
+      
+      - name: Wait 30 seconds
+        run: sleep 30s
+        shell: bash
 
       - name: Get logs
         run: docker compose -f docker/docker-compose.yaml logs
