@@ -53,6 +53,9 @@ jobs:
       - name: Run docker-compose up
         run: docker compose -f docker/docker-compose.yaml up --detach
 
+      - name: Build unit_tests image
+        run: docker build -t unit_tests -f docker/unit_tests/Dockerfile
+
       - name: Get logs
         run: docker compose -f docker/docker-compose.yaml logs
 
@@ -66,4 +69,4 @@ jobs:
         run: pip install docker
         
       - name: Run Python Unit Tests
-        run: python3 tests/unit_tests/test_rabbitmq.py
+        run: docker run unit_tests
