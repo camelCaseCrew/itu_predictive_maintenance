@@ -11,8 +11,9 @@ from typing import List
 
 _logger = Logger().get_logger()
 class CSVParser:
-    def __init__(self, filename: str):
+    def __init__(self, filename: str, amount: int):
         self.filename = filename
+        self.amount = amount
 
     def __call__(self):
         data_writer = DataWriter()
@@ -27,7 +28,7 @@ class CSVParser:
                         _logger.info(f"Processed {i} rows")
                         data_writer.write_multiple_rows_to_database(rows)
                         rows = []
-                    elif i % 1000001 == 0:
+                    elif i % self.amount == 0:
                         break
                 # Write any remaining rows to the database
                 data_writer.write_multiple_rows_to_database(rows)
