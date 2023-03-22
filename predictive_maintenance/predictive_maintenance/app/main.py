@@ -28,6 +28,7 @@ def predict(data: dict):
 
 def process_data(ch, method, properties, body):
 
+    # Body deserialized from json to python dict
     body_string = body.decode('utf-8')
     body_deserialized = json.loads(body_string)
 
@@ -39,6 +40,7 @@ def process_data(ch, method, properties, body):
 
     body_deserialized['failure_prediction'] = prediction
 
+    # Publish row to rabbitmq queue 'processed_data'
     channel.basic_publish(exchange='',
                       routing_key='processed_data',
                       body=json.dumps(body_deserialized))
