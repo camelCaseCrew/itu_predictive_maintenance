@@ -2,7 +2,7 @@ FROM python:3.10
 
 WORKDIR /code/tests
 
-COPY ./tests .
+COPY . .
 
 RUN pip install --no-cache-dir -r ./unit_tests/requirements.txt
 
