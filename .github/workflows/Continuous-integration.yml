@@ -59,8 +59,11 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4.5.0
         
-      - name: Run pip install
-        run: python -m pip install pika --upgrade && python pip install docker
+      - name: pip install pika
+        run: python -m pip install pika --upgrade
+
+      - name: pip install docker
+        run: python pip install docker
         
       - name: Run Python Unit Tests
         run: python3 tests/unit_tests/test_rabbitmq.py
