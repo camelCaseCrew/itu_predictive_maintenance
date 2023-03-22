@@ -7,13 +7,12 @@ volumes:
     driver: local
 
 services:
-  rabbit_mq:
+  rabbitmq:
     image: rabbitmq:3.11-management
-    container_name: rabbit_mq
+    container_name: rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
-    network_mode: host
 
   prometheus:
     build:
