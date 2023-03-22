@@ -53,6 +53,9 @@ jobs:
       - name: Run docker-compose up
         run: docker compose -f docker/docker-compose.yaml up --detach
 
+      - name: Get logs
+        run: docker compose -f docker/docker-compose.yaml logs
+
       - name: Setup Python
         uses: actions/setup-python@v4.5.0
         
