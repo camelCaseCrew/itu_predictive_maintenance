@@ -4,7 +4,7 @@ class TestConnection(unittest.TestCase):
 
     def test_creatingConnectionReturnsBlockingConnection(self):
         # Arrange & Act
-        connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+        connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
         
 
         # Assert
