@@ -1,4 +1,8 @@
-import pika, unittest
+import pika, unittest, docker
+
+client = docker.DockerClient()
+container = client.containers.get("rabbitmq")
+ip_add = container.attrs['NetworkSettings']['IPAddress']
 
 class TestConnection(unittest.TestCase):
 
@@ -18,7 +22,7 @@ class TestTransactions(unittest.TestCase):
 
     def test_producingMessageDoesNotRaiseException(self):
         # Arrange
-        connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+        connection = pika.BlockingConnection(pika.ConnectionParameters(ip_add))
         channel = connection.channel()
         message = "test"
 
