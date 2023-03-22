@@ -54,7 +54,7 @@ jobs:
         run: docker compose -f docker/docker-compose.yaml up --detach
 
       - name: Build unit_tests image
-        run: docker build -t unit_tests ./docker/unit_tests/
+        run: docker build -t unit_tests ./unit_tests/
 
       - name: Get logs
         run: docker compose -f docker/docker-compose.yaml logs
