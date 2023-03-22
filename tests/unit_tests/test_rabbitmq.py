@@ -2,7 +2,8 @@ import pika, unittest, docker
 
 client = docker.DockerClient()
 container = client.containers.get("rabbitmq")
-ip_add = container.attrs['NetworkSettings']['IPAddress']
+ip_add = container.attrs["NetworkSettings"]["Networks"]["predictive-maintenance-net"]["IPAddress"]
+print(ip_add)
 
 class TestConnection(unittest.TestCase):
 
