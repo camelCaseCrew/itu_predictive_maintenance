@@ -61,11 +61,24 @@ services:
     networks:
       - predictive-maintenance-net
 
+  data_aggregator:
+      build:
+        context: ../
+        dockerfile: ./docker/data_generator/Dockerfile
+      ports:
+        - "8003:8003"
+      depends_on:
+        - predictive_maintenance
+      networks:
+        - predictive-maintenance-net
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
     ports:
       - "9090:9090"
+    depends_on:
+      - data_aggregator
     volumes:
       - prometheus-data:/prometheus
       - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
