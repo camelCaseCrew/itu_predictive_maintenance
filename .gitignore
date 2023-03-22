@@ -107,3 +107,7 @@ node_modules/
 
 # cypress
 cypress/videos
+cypress/screenshots
+
+# Grafana
+__default__.tmpl
