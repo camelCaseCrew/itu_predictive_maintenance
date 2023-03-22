@@ -28,8 +28,8 @@ jobs:
       - name: Cached LFS checkout
         uses: nschloe/action-cached-lfs-checkout@v1.1.2
       
-      - name: Start Grafana and Prometheus containers
-        run: docker compose -f docker/docker-compose.yaml up grafana prometheus --detach
+      - name: Start Grafana, Prometheus and FrontEnd containers
+        run: docker compose -f docker/docker-compose.yaml up grafana prometheus frontend --detach
 
       - name: Get logs
         run: docker compose -f docker/docker-compose.yaml logs
@@ -40,7 +40,7 @@ jobs:
 
       - name: Cypress run
         uses: cypress-io/github-action@v5.3.0
-
+        
   test:
     runs-on: ubuntu-latest
     steps:
