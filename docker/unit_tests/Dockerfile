@@ -2,7 +2,7 @@ FROM python:3.10
 
 WORKDIR /code/tests
 
-COPY . .
+COPY ../../tests/unit_tests .
 
 RUN ls
 
