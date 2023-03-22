@@ -1,9 +1,4 @@
-import pika, unittest, docker
-
-client = docker.DockerClient()
-container = client.containers.get("rabbitmq")
-ip_add = container.attrs["NetworkSettings"]["Networks"]["predictive-maintenance-net"]["IPAddress"]
-print(ip_add)
+import pika, unittest
 
 class TestConnection(unittest.TestCase):
 
@@ -23,7 +18,7 @@ class TestTransactions(unittest.TestCase):
 
     def test_producingMessageDoesNotRaiseException(self):
         # Arrange
-        connection = pika.BlockingConnection(pika.ConnectionParameters(ip_add))
+        connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
         channel = connection.channel()
         message = "test"
 
@@ -42,7 +37,7 @@ class TestTransactions(unittest.TestCase):
         
     def test_consumingMessageReturnsExpectedMessage(self):
         # Arrange
-        connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+        connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
         channel = connection.channel()
         expected_message = 'expected this message :D'
 
