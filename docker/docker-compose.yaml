@@ -4,6 +4,7 @@ networks:
   predictive-maintenance-net:
     driver: bridge
   rabbitnet:
+    name: rabbitnet
     driver: bridge
 
 volumes:
