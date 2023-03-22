@@ -2,51 +2,50 @@
 # docker compose -f docker/docker-compose.yaml build anomaly_detector
 # whenever this file is changed
 
-from fastapi import FastAPI
 from pydantic import BaseModel
-from fastapi.responses import PlainTextResponse
 
-from prometheus_client import Gauge, Summary, generate_latest
-import random
-import time
-import requests
+import pika
+import json
+import codecs
 
 from predictive_maintenance.model.inference import Inference
 
-app = FastAPI()
+connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+channel = connection.channel()
+
+channel.queue_declare(queue='unprocessed_data')
+channel.queue_declare(queue='processed_data')
+
 inference = Inference()
 
 class Prediction(BaseModel):
     failure_prediction: float
 
-metricsOutput = Gauge('device_health', 'Device Health (lower is better)', [
-                      'serial_number', 'model'])
-
-@app.get("/health")
-def health():
-    return {"status": "ok"}
-
-@app.get("/metrics")
-def metrics():
-    for i in range(10):
-        # get a random record
-        inputDevice = requests.get("http://host.docker.internal:8000/get_record").json()
-        serial_number = inputDevice["serial_number"]
-        model = inputDevice["model"]
-
-        # remove identifying info for the machine learning model
-        remove_keys = ["failure", "model", "serial_number", "date", "id"]
-        for key in remove_keys:
-            del inputDevice[key]
-
-        # give record to machine learning model
-        pred = requests.post("http://host.docker.internal:8001/predict", json=inputDevice)
-        metricsOutput.labels(serial_number, model).set(
-            pred.json()['failure_prediction'])
-    # update the gauge and show the output as text
-    return PlainTextResponse(generate_latest(metricsOutput))
-
-@app.post("/predict/", response_model=Prediction)
 def predict(data: dict):
     prediction = inference.predict(data)
-    return Prediction(failure_prediction=prediction)
+    return prediction
+
+
+def process_data(ch, method, properties, body):
+
+    body_string = body.decode('utf-8')
+    body_deserialized = json.loads(body_string)
+
+    remove_keys = ["failure", "model", "serial_number", "date", "id"]
+    for key in remove_keys:
+        del body_deserialized[key]
+    
+    prediction = predict(body_deserialized)
+
+    body_deserialized['failure_prediction'] = prediction
+
+    channel.basic_publish(exchange='',
+                      routing_key='processed_data',
+                      body=json.dumps(body_deserialized))
+    
+    ch.basic_ack(delivery_tag = method.delivery_tag)
+
+
+channel.basic_consume(queue='unprocessed_data', on_message_callback=process_data)
+
+channel.start_consuming()
