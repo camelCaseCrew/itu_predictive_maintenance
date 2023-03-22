@@ -4,31 +4,45 @@
 
 import os
 import random
-import sys
+import time
+import json
 
 from typing import Union
-from fastapi import FastAPI
 
 from data_generator.database.data_loader import DataLoader
 from data_generator.data.data_parser import CSVParser
 from data_generator.utils.utility import get_data_path
+import pika
 
+frequency = 100
 
-app = FastAPI()
+connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+channel = connection.channel()
+
+channel.queue_declare(queue='unprocessed_data')
+
 data_loader = DataLoader()
 ids = data_loader.get_ids()
 if len(ids) == 0:
-    log_parser = CSVParser(os.path.join(get_data_path(), "harddrive.csv"))
+    log_parser = CSVParser(os.path.join(get_data_path(), "harddrive.csv"), 10001)
     log_parser()
     ids = data_loader.get_ids()
 failure_ids = data_loader.get_failure_ids()
 
-@app.get("/health")
-def health():
-    return {"status": "ok"}
-
-@app.get("/get_record")
 def get_record(debug: bool = False):
     if debug:
         return data_loader.get_record(random.choice(failure_ids))
     return data_loader.get_record(random.choice(ids))
+
+def publish_message(msg: str):
+    channel.basic_publish(exchange='',
+                      routing_key='unprocessed_data',
+                      body=json.dumps(msg))
+
+def simulate():
+    while True:
+        msg = get_record()
+        publish_message(msg)
+        time.sleep(60./frequency)
+
+simulate()
