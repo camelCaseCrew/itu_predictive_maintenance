@@ -63,4 +63,4 @@ jobs:
         run: sleep 10s
         
       - name: Run Python Unit Tests
-        run: docker run --network predictive-maintenance-net unit_tests
+        run: docker run --network docker_predictive-maintenance-net unit_tests
