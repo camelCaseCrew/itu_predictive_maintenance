@@ -53,9 +53,6 @@ jobs:
       - name: Run docker-compose up rabbitmq
         run: docker compose -f docker/docker-compose.yaml up rabbitmq --detach
 
-      - name: List docker networks
-        run: docker network ls
-
       - name: Build unit_tests image
         run: docker build -t unit_tests ./unit_tests/
       
