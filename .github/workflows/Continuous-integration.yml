@@ -50,8 +50,8 @@ jobs:
       - name: Cached LFS checkout
         uses: nschloe/action-cached-lfs-checkout@v1.1.2
 
-      - name: Run docker-compose up
-        run: docker compose -f docker/docker-compose.yaml up --detach
+      - name: Run docker-compose up rabbitmq
+        run: docker compose -f docker/docker-compose.yaml up rabbitmq --detach
 
       - name: Build unit_tests image
         run: docker build -t unit_tests ./unit_tests/
