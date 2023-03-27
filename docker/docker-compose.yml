@@ -42,12 +42,11 @@ services:
     networks:
       - predictive-maintenance-net
 
-
-
   data_generator:
     build:
       context: ../
       dockerfile: ./docker/data_generator/Dockerfile
+    container_name: data_generator
     environment:
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
