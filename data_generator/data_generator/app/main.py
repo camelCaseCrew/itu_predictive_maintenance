@@ -20,7 +20,7 @@ low_throughput = random.randint(500, 1000)
 medium_throughput = random.randint(1000, 5000)
 high_throughput = random.randint(10000, 100000)
 
-arg = int(sys.argv[1])
+arg = int(sys.argv[1]) if len(sys.argv) > 1 else 2
 
 frequency = low_throughput if arg == 1 else high_throughput if arg == 3 else medium_throughput 
 
@@ -32,7 +32,7 @@ channel.queue_declare(queue='unprocessed_data')
 data_loader = DataLoader()
 ids = data_loader.get_ids()
 if len(ids) == 0:
-    log_parser = CSVParser(os.path.join(get_data_path(), "harddrive.csv"), 10001)
+    log_parser = CSVParser(os.path.join(get_data_path(), "harddrive.csv"), 50001)
     log_parser()
     ids = data_loader.get_ids()
 failure_ids = data_loader.get_failure_ids()
