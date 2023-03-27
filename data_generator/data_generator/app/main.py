@@ -13,6 +13,11 @@ from data_generator.database.data_loader import DataLoader
 from data_generator.data.data_parser import CSVParser
 from data_generator.utils.utility import get_data_path
 import pika
+import random
+
+low_throughput = random.randint(500, 1000)
+medium_throughput = random.randint(1000, 5000)
+high_throughput = random.randint(10000, 100000)
 
 frequency = 100
 
