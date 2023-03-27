@@ -20,7 +20,7 @@ class Prediction(BaseModel):
     failure_prediction: float
 
 metricsOutput = Gauge('device_health', 'Device Health (lower is better)', [
-                      'serial_number', 'model'])
+                      'serial_number', 'model', 'group'])
 
 @app.get("/health")
 def health():
@@ -30,7 +30,7 @@ def health():
 def metrics():
     for i in range(10):
         # get a random record
-        inputDevice = requests.get("http://host.docker.internal:8000/get_record").json()
+        inputDevice = requests.get("http://data_generator:8000/get_record").json()
         serial_number = inputDevice["serial_number"]
         model = inputDevice["model"]
 
@@ -40,9 +40,19 @@ def metrics():
             del inputDevice[key]
 
         # give record to machine learning model
-        pred = requests.post("http://host.docker.internal:8001/predict", json=inputDevice)
-        metricsOutput.labels(serial_number, model).set(
-            pred.json()['failure_prediction'])
+        pred = requests.post("http://predictive_maintenance:8001/predict", json=inputDevice)
+        failure_rate = float(pred.json()['failure_prediction'])
+
+        # assign metric to group
+        group = ""
+        if failure_rate >= 0.5:
+            group = "critical"
+        elif failure_rate < 0.5 and failure_rate >= 0.1:
+            group = "risk"
+        elif failure_rate < 0.1:
+            group = "healthy"
+
+        metricsOutput.labels(serial_number, model, group).set(pred.json()['failure_prediction'])
     # update the gauge and show the output as text
     return PlainTextResponse(generate_latest(metricsOutput))
 
