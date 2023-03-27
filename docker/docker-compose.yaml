@@ -9,6 +9,16 @@ volumes:
     driver: local
 
 services:
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    container_name: rabbitmq
+    user: ":"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - predictive-maintenance-net
+
   db:
     build:
       context: ../
