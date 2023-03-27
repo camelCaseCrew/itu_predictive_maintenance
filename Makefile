@@ -6,9 +6,3 @@ build_and_run_docker:
 	
 build_services:
 	docker compose -f docker/docker-compose.yml build
-
-rm_all_containers:
-	docker rm $(docker ps -aq)
-
-rm_all_images:
-	docker rmi $(docker images -a)
