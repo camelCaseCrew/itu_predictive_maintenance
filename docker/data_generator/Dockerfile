@@ -12,4 +12,4 @@ COPY ./data_generator .
 
 RUN pip install -e .
 
-CMD ["python3", "data_generator/app/main.py"]
+ENTRYPOINT ["python3", "data_generator/app/main.py"]
