@@ -14,12 +14,15 @@ from data_generator.data.data_parser import CSVParser
 from data_generator.utils.utility import get_data_path
 import pika
 import random
+import sys
 
 low_throughput = random.randint(500, 1000)
 medium_throughput = random.randint(1000, 5000)
 high_throughput = random.randint(10000, 100000)
 
-frequency = 100
+arg = int(sys.argv[1])
+
+frequency = low_throughput if arg == 1 else high_throughput if arg == 3 else medium_throughput 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
 channel = connection.channel()
