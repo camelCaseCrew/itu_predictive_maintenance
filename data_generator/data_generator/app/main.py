@@ -50,6 +50,7 @@ def publish_message(msg: str):
 def simulate():
     while True:
         msg = get_record()
+        del msg['failure']
         publish_message(msg)
         time.sleep(60./frequency)
 
