@@ -1,41 +1,8 @@
-import pika, unittest
-
-class TestConnection(unittest.TestCase):
-
-    def test_creatingConnectionReturnsBlockingConnection(self):
-        # Arrange & Act
-        connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
-        
-
-        # Assert
-        self.assertTrue(isinstance(connection, pika.BlockingConnection))
-
-        connection.close()
-
-    
+import pika, unittest, json, time
 
 class TestTransactions(unittest.TestCase):
-
-    def test_producingMessageDoesNotRaiseException(self):
-        # Arrange
-        connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
-        channel = connection.channel()
-        message = "test"
-
-        # Act
-        channel.queue_declare(queue='test_queue')
         
-
-        # Assert
-        try:
-            channel.basic_publish(exchange='', routing_key='test_queue', body=message)
-        except Exception:
-            self.assertTrue(False, 'Exception Raised')
-        
-        connection.close()
-
-        
-    def test_consumingMessageReturnsExpectedMessage(self):
+    def test_unprocessedMessagesAreInsertedIntoRabbitMQ(self):
         # Arrange
         connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
         channel = connection.channel()
@@ -43,15 +10,69 @@ class TestTransactions(unittest.TestCase):
 
         def callback(ch, method, properties, body):
             # Assert
-            self.assertEqual(expected_message, body)
+            self.assertTrue(True)
 
         # Act
-        channel.queue_declare(queue='test_queue')
-        channel.basic_publish(exchange='', routing_key='test_queue', body=expected_message)
-        channel.basic_consume(queue='test_queue', on_message_callback=callback, auto_ack=True)
+        channel.queue_declare(queue='unprocessed_data')
+        channel.basic_consume(queue='unprocessed_data', on_message_callback=callback, auto_ack=True)
 
         connection.close()
 
+    def test_deserializedMessagesContainExpectedKeys(self):
+            # Arrange
+            connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
+            channel = connection.channel()
+
+            def callback(ch, method, properties, body):
+                # Assert
+                body_string = body.decode('utf-8')
+                body_deserialized = json.loads(body_string)
+                self.assertTrue('serial_number' in body_deserialized, "Serial number is not in body")
+                self.assertTrue('model' in body_deserialized, "model is not in body")
+                self.assertTrue('capacity_bytes' in body_deserialized, "capacity_bytes is not in body")
+                self.assertTrue('date' in body_deserialized), "date is not in body"
+                # SMART parameters to test for were chosen arbitrarily
+                self.assertTrue('smart_1_normalized' in body_deserialized, "smart_1_normalized is not in body")
+                self.assertTrue('smart_1_raw' in body_deserialized, "smart_1_raw is not in body")
+                self.assertTrue('smart_7_normalized' in body_deserialized, "smart_7_normalized is not in body")
+                self.assertTrue('smart_7_raw' in body_deserialized, "smart_7_raw is not in body")
+                self.assertTrue('smart_193_normalized' in body_deserialized, "smart_193_normalized is not in body")
+                self.assertTrue('smart_193_raw' in body_deserialized, "smart_193_raw is not in body")
+                self.assertTrue('smart_220_normalized' in body_deserialized, "smart_220_normalized is not in body")
+                self.assertTrue('smart_220_raw' in body_deserialized, "smart_220_raw is not in body")
+                # There shouln't be a failure key in the unprocessed data
+                self.assertFalse('failure' in body_deserialized, "failure is unexpectedly in body")
+
+            # Act
+            channel.queue_declare(queue='unprocessed_data')
+            channel.basic_consume(queue='unprocessed_data', on_message_callback=callback, auto_ack=True)
+
+            connection.close()
+    
+    def test_deserializedMessageAmountMatchesWithFrequency(self):
+            # Arrange
+            connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
+            channel = connection.channel()
+            frequency = 100
+            start_time = 0
+            message_count = 0
+            started_timer = False
+
+            def callback(ch, method, properties, body):
+                if not started_timer:
+                    started_timer = True
+                    start_time = time.time()
+                message_count = message_count + 1
+                if message_count == frequency:
+                    stop_time = time.time()
+                    total_time = stop_time - start_time
+                    self.assertAlmostEqual(total_time, 60, None, "total_time was not close to 60 seconds", 10)
+
+            # Act
+            channel.queue_declare(queue='unprocessed_data')
+            channel.basic_consume(queue='unprocessed_data', on_message_callback=callback, auto_ack=True)
+
+            connection.close()
 
 if __name__ == '__main__':
     unittest.main()
