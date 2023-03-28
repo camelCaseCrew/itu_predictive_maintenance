@@ -67,10 +67,11 @@ class TestTransactions(unittest.TestCase):
                     stop_time = time.time()
                     total_time = stop_time - start_time
                     # Total time should be below 60 seconds, since many messages have already been created before the tests run
-                    self.assertLess(total_time, 60, "total_time was above 60 seconds")
+                    self.assertAlmostEqual(total_time, 60, None, "total_time was not 10 seconds from a minute", 10)
 
             # Act
             channel.queue_declare(queue='unprocessed_data')
+            channel.queue_purge(queue='unprocessed_data')
             channel.basic_consume(queue='unprocessed_data', on_message_callback=callback, auto_ack=True)
 
             connection.close()
