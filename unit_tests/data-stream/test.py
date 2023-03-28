@@ -32,7 +32,8 @@ class TestTransactions(unittest.TestCase):
                 self.assertTrue('serial_number' in body_deserialized, "Serial number is not in body")
                 self.assertTrue('model' in body_deserialized, "model is not in body")
                 self.assertTrue('capacity_bytes' in body_deserialized, "capacity_bytes is not in body")
-                self.assertTrue('date' in body_deserialized), "date is not in body"
+                self.assertTrue('date' in body_deserialized, "date is not in body")
+                self.assertTrue('device_type' in body_deserialized, "device_type is not in body")
                 # SMART parameters to test for were chosen arbitrarily
                 self.assertTrue('smart_1_normalized' in body_deserialized, "smart_1_normalized is not in body")
                 self.assertTrue('smart_1_raw' in body_deserialized, "smart_1_raw is not in body")
