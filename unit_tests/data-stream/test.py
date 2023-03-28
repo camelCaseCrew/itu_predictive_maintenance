@@ -59,26 +59,21 @@ class TestTransactions(unittest.TestCase):
             channel = connection.channel()
             frequency = 1000 # This corresponds to 'medium_throughput'
             start_time = 0
-            message_count = 0
-            started_timer = False
-
-            def callback(ch, method, properties, body):
-                if not started_timer:
-                    started_timer = True
-                    start_time = time.time()
-                message_count = message_count + 1
-                if message_count == frequency:
-                    stop_time = time.time()
-                    total_time = stop_time - start_time
-                    # Total time should be below 60 seconds, since many messages have already been created before the tests run
-                    self.assertAlmostEqual(total_time, 60, None, "total_time was not 10 seconds from a minute", 10)
-                    channel.stop_consuming()
 
             # Act
             channel.queue_declare(queue='unprocessed_data')
             channel.queue_purge(queue='unprocessed_data')
-            channel.basic_consume(queue='unprocessed_data', on_message_callback=callback, auto_ack=True)
-            channel.start_consuming()
+            start_time = time.time()
+            for method_frame, properties, body in channel.consume('unprocessed_data'):
+                channel.basic_ack(method_frame.delivery_tag)
+
+                if method_frame.delivery_tag == frequency:
+                    break
+
+            stop_time = time.time()
+            total_time = stop_time - start_time
+            print(total_time)
+            self.assertAlmostEqual(total_time, 60, None, "Total time was not 10 seconds from 1 minute", 10)
 
             connection.close()
 
