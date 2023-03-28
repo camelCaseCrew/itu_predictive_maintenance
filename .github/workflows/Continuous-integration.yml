@@ -29,10 +29,10 @@ jobs:
         uses: nschloe/action-cached-lfs-checkout@v1.1.2
       
       - name: Start Grafana, Prometheus and FrontEnd containers
-        run: docker compose -f docker/docker-compose.yaml up grafana prometheus frontend --detach
+        run: docker compose -f docker/docker-compose.yml up grafana prometheus frontend --detach
 
       - name: Get logs
-        run: docker compose -f docker/docker-compose.yaml logs
+        run: docker compose -f docker/docker-compose.yml logs
 
       - name: Wait 30 seconds
         run: sleep 30s
@@ -51,7 +51,7 @@ jobs:
         uses: nschloe/action-cached-lfs-checkout@v1.1.2
 
       - name: Run docker-compose up rabbitmq
-        run: docker compose -f docker/docker-compose.yaml up rabbitmq --detach
+        run: docker compose -f docker/docker-compose.yml up rabbitmq --detach
 
       - name: Build unit_tests image
         run: docker build -t unit_tests ./unit_tests/rabbitmq/
@@ -72,7 +72,7 @@ jobs:
         uses: nschloe/action-cached-lfs-checkout@v1.1.2
 
       - name: Run docker-compose up rabbitmq data_generator
-        run: docker compose -f docker/docker-compose.yaml up rabbitmq data_generator --detach
+        run: docker compose -f docker/docker-compose.yml up rabbitmq data_generator --detach
 
       - name: Build unit_tests image
         run: docker build -t unit_tests ./unit_tests/data-stream/
