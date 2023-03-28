@@ -66,7 +66,8 @@ class TestTransactions(unittest.TestCase):
                 if message_count == frequency:
                     stop_time = time.time()
                     total_time = stop_time - start_time
-                    self.assertAlmostEqual(total_time, 60, None, "total_time was not close to 60 seconds", 10)
+                    # Total time should be below 60 seconds, since many messages have already been created before the tests run
+                    self.assertLess(total_time, 60, "total_time was above 60 seconds")
 
             # Act
             channel.queue_declare(queue='unprocessed_data')
