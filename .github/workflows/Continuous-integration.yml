@@ -77,8 +77,8 @@ jobs:
       - name: Build unit_tests image
         run: docker build -t unit_tests ./unit_tests/data-stream/
       
-      - name: Wait 15 seconds
-        run: sleep 15s
+      - name: Wait 60 seconds
+        run: sleep 60s
         
       - name: Run Python Unit Tests
         run: docker run --network docker_predictive-maintenance-net unit_tests
