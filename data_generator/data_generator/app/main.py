@@ -16,9 +16,9 @@ import pika
 import random
 import sys
 
-low_throughput = random.randint(500, 1000)
-medium_throughput = random.randint(1000, 5000)
-high_throughput = random.randint(10000, 100000)
+low_throughput = 250
+medium_throughput = 1000
+high_throughput = 4000
 
 arg = int(sys.argv[1]) if len(sys.argv) > 1 else 2
 
