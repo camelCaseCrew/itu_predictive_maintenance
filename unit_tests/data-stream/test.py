@@ -72,7 +72,6 @@ class TestTransactions(unittest.TestCase):
 
             stop_time = time.time()
             total_time = stop_time - start_time
-            print(total_time)
             self.assertAlmostEqual(total_time, 60, None, "Total time was not 10 seconds from 1 minute", 10)
 
             connection.close()
