@@ -51,6 +51,7 @@ def simulate():
     while True:
         msg = get_record()
         del msg['failure'] # Remove failure key
+        msg['device_type'] = 'harddrive'
         publish_message(msg)
         time.sleep(60./frequency)
 
