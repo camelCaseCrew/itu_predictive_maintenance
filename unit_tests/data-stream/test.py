@@ -1,4 +1,5 @@
 import pika, unittest, json, time
+from unittest.mock import Mock
 
 class TestTransactions(unittest.TestCase):
         
@@ -6,15 +7,16 @@ class TestTransactions(unittest.TestCase):
         # Arrange
         connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
         channel = connection.channel()
-        expected_message = 'expected this message :D'
-
+    
         def callback(ch, method, properties, body):
             # Assert
             self.assertTrue(True)
+            channel.stop_consuming()
 
         # Act
         channel.queue_declare(queue='unprocessed_data')
         channel.basic_consume(queue='unprocessed_data', on_message_callback=callback, auto_ack=True)
+        channel.start_consuming()
 
         connection.close()
 
@@ -42,10 +44,12 @@ class TestTransactions(unittest.TestCase):
                 self.assertTrue('smart_220_raw' in body_deserialized, "smart_220_raw is not in body")
                 # There shouln't be a failure key in the unprocessed data
                 self.assertFalse('failure' in body_deserialized, "failure is unexpectedly in body")
+                channel.stop_consuming()
 
             # Act
             channel.queue_declare(queue='unprocessed_data')
             channel.basic_consume(queue='unprocessed_data', on_message_callback=callback, auto_ack=True)
+            channel.start_consuming()
 
             connection.close()
     
@@ -53,7 +57,7 @@ class TestTransactions(unittest.TestCase):
             # Arrange
             connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
             channel = connection.channel()
-            frequency = 100
+            frequency = 1000 # This corresponds to 'medium_throughput'
             start_time = 0
             message_count = 0
             started_timer = False
@@ -68,11 +72,13 @@ class TestTransactions(unittest.TestCase):
                     total_time = stop_time - start_time
                     # Total time should be below 60 seconds, since many messages have already been created before the tests run
                     self.assertAlmostEqual(total_time, 60, None, "total_time was not 10 seconds from a minute", 10)
+                    channel.stop_consuming()
 
             # Act
             channel.queue_declare(queue='unprocessed_data')
             channel.queue_purge(queue='unprocessed_data')
             channel.basic_consume(queue='unprocessed_data', on_message_callback=callback, auto_ack=True)
+            channel.start_consuming()
 
             connection.close()
 
