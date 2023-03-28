@@ -45,12 +45,12 @@ def get_record(debug: bool = False):
 def publish_message(msg: str):
     channel.basic_publish(exchange='',
                       routing_key='unprocessed_data',
-                      body=json.dumps(msg))
+                      body=json.dumps(msg)) # JSON encode
 
 def simulate():
     while True:
         msg = get_record()
-        del msg['failure']
+        del msg['failure'] # Remove failure key
         publish_message(msg)
         time.sleep(60./frequency)
 

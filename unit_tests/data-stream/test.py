@@ -58,12 +58,13 @@ class TestTransactions(unittest.TestCase):
             connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
             channel = connection.channel()
             frequency = 1000 # This corresponds to 'medium_throughput'
-            start_time = 0
 
             # Act
             channel.queue_declare(queue='unprocessed_data')
             channel.queue_purge(queue='unprocessed_data')
             start_time = time.time()
+
+            # Loop until amount of delivered messages reach frequency (i.e. amount of messages in 60 seconds)
             for method_frame, properties, body in channel.consume('unprocessed_data'):
                 channel.basic_ack(method_frame.delivery_tag)
 
