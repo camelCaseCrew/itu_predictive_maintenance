@@ -1,11 +1,15 @@
 compose_up:
-	docker-compose -f docker/docker-compose.yml up
+	docker compose -f docker/docker-compose.yml up
 
 build_and_run_docker:
 	./scripts/docker/build_and_run_postgres.sh
 	
 build_services:
 	docker compose -f docker/docker-compose.yml build
+
+compose_down:
+	docker compose -f docker/docker-compose.yml down
+	docker rm data_generator
 
 config_data_generator:
 ifeq ($(shell docker ps -q -f name=data_generator),)
