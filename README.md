@@ -29,10 +29,6 @@ make compose_up
 ```
 It can take several minutes for the services to be ready. Go grab a cup of coffe!
 
-### Acessing the data generator
-By default the data generator listen on localhost:8000 <br>
-Swagger ui is provided on localhost:8000/docs
-
 ### Acessing the prediction service
 The prediction rest services listens on localhost:8001 <br>
 Swagger ui is provided on localhost:8001/docs
@@ -57,3 +53,4 @@ AFTER CMD-TERMINAL IS DONE:
 
 Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
 
+###
