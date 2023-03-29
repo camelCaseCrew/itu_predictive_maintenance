@@ -9,6 +9,21 @@ volumes:
     driver: local
 
 services:
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    container_name: rabbitmq
+    user: ":"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - predictive-maintenance-net
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
   db:
     build:
       context: ../
@@ -27,17 +42,22 @@ services:
     build:
       context: ../
       dockerfile: ./docker/predictive_maintenance/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      data_generator:
+        condition: service_started
     ports:
       - "8001:8001"
+    restart: always
     networks:
       - predictive-maintenance-net
-
-
 
   data_generator:
     build:
       context: ../
       dockerfile: ./docker/data_generator/Dockerfile
+    container_name: data_generator
     environment:
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
@@ -47,16 +67,10 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
-    healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "pg_isready -h db -p 5432 -U postgres -d postgres"
-        ]
-      interval: 10s
-      timeout: 5s
-      retries: 10
+      rabbitmq:
+        condition: service_healthy
+      db:
+        condition: service_healthy
     restart: always
     networks:
       - predictive-maintenance-net
@@ -68,9 +82,13 @@ services:
       ports:
         - "8003:8003"
       depends_on:
-        - predictive_maintenance
+        rabbitmq:
+          condition: service_healthy
+        predictive_maintenance:
+          condition: service_started
       networks:
         - predictive-maintenance-net
+      restart: always
 
   prometheus:
     image: prom/prometheus:latest
@@ -94,8 +112,17 @@ services:
     volumes:
       - ../grafana:/var/lib/grafana
       - ../grafana/provisioning:/etc/grafana/provisioning
+      - ../grafana/etc/custom.ini:/etc/grafana/grafana.ini
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+      - GF_SERVER_ALLOW_EMBEDDING=true
+      - GF_SECURITY_X_CONTENT_TYPE=""
+      - GF_SECURITY_X_FRAME_OPTIONS="ALLOW-FROM localhost:3001"
     networks:
       - predictive-maintenance-net
+    depends_on:
+      - prometheus
 
   frontend:
     build:
@@ -103,5 +130,9 @@ services:
       dockerfile: ./docker/frontend/Dockerfile
     ports:
       - "3001:3003"
+    environment:
+      - X_FRAME_OPTIONS=SAMEORIGIN
     networks:
       - predictive-maintenance-net
+    depends_on:
+      - grafana
