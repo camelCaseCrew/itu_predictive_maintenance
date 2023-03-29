@@ -15,7 +15,7 @@ def createMetric(ch, method, properties, body):
         model = data["model"]
 
         # get failure rate
-        failure_rate = float(data.json()['failure_prediction'])
+        failure_rate = float(data['failure_prediction'])
 
         # assign metric to group
         group = ""
@@ -26,7 +26,7 @@ def createMetric(ch, method, properties, body):
         elif failure_rate < 0.1:
             group = "healthy"
 
-        metricsOutput.labels(serial_number, model, group).set(data.json()['failure_prediction'])
+        metricsOutput.labels(serial_number, model, group).set(data['failure_prediction'])
 
         # update the gauge and show the output as text
         generate_latest(metricsOutput)
@@ -37,7 +37,7 @@ if __name__ == '__main__':
     start_http_server(8003)
 
     # get data processed by ml and post it as metric
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
     channel = connection.channel()
     channel.queue_declare(queue='processed_data')
     channel.basic_consume(queue='processed_data', on_message_callback=createMetric, auto_ack=True)
