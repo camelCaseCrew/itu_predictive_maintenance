@@ -1,9 +1,9 @@
 import pika, unittest, json, time
-from unittest.mock import Mock
+from sample import sample
 
 class TestTransactions(unittest.TestCase):
         
-    def test_unprocessedMessagesAreInsertedIntoRabbitMQ(self):
+    def test_messageIsTakenFromUnprocessedAndEndsUpInProcessed(self):
         # Arrange
         connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
         channel = connection.channel()
@@ -13,9 +13,11 @@ class TestTransactions(unittest.TestCase):
             self.assertTrue(True)
             channel.stop_consuming()
 
-        # Act
+        # Act        
         channel.queue_declare(queue='unprocessed_data')
-        channel.basic_consume(queue='unprocessed_data', on_message_callback=callback, auto_ack=True)
+        channel.queue_declare(queue='processed_data')
+        channel.basic_publish(exchange='', routing_key='unprocessed_data', body=sample)
+        channel.basic_consume(queue='processed_data', on_message_callback=callback, auto_ack=True)
         channel.start_consuming()
 
         connection.close()
@@ -34,47 +36,46 @@ class TestTransactions(unittest.TestCase):
                 self.assertTrue('capacity_bytes' in body_deserialized, "capacity_bytes is not in body")
                 self.assertTrue('date' in body_deserialized, "date is not in body")
                 self.assertTrue('device_type' in body_deserialized, "device_type is not in body")
-                # SMART parameters to test for were chosen arbitrarily
-                self.assertTrue('smart_1_normalized' in body_deserialized, "smart_1_normalized is not in body")
-                self.assertTrue('smart_1_raw' in body_deserialized, "smart_1_raw is not in body")
-                self.assertTrue('smart_7_normalized' in body_deserialized, "smart_7_normalized is not in body")
-                self.assertTrue('smart_7_raw' in body_deserialized, "smart_7_raw is not in body")
-                self.assertTrue('smart_193_normalized' in body_deserialized, "smart_193_normalized is not in body")
-                self.assertTrue('smart_193_raw' in body_deserialized, "smart_193_raw is not in body")
-                self.assertTrue('smart_220_normalized' in body_deserialized, "smart_220_normalized is not in body")
-                self.assertTrue('smart_220_raw' in body_deserialized, "smart_220_raw is not in body")
-                # There shouln't be a failure key in the unprocessed data
-                self.assertFalse('failure' in body_deserialized, "failure is unexpectedly in body")
+                self.assertTrue('failure_prediction' in body_deserialized, "failure_prediction is not in body")
+                # SMART parameters no longer relevant, shouldnt be in body
+                self.assertFalse('smart_1_normalized' in body_deserialized, "smart_1_normalized is unexpectedly in body")
+                self.assertFalse('smart_1_raw' in body_deserialized, "smart_1_raw is unexpectedly in body")
+                self.assertFalse('smart_7_normalized' in body_deserialized, "smart_7_normalized is unexpectedly in body")
+                self.assertFalse('smart_7_raw' in body_deserialized, "smart_7_raw is unexpectedly in body")
+                self.assertFalse('smart_193_normalized' in body_deserialized, "smart_193_normalized is unexpectedly in body")
+                self.assertFalse('smart_193_raw' in body_deserialized, "smart_193_raw is unexpectedly in body")
+                self.assertFalse('smart_220_normalized' in body_deserialized, "smart_220_normalized is unexpectedly in body")
+                self.assertFalse('smart_220_raw' in body_deserialized, "smart_220_raw is unexpectedly in body")
                 channel.stop_consuming()
 
             # Act
             channel.queue_declare(queue='unprocessed_data')
-            channel.basic_consume(queue='unprocessed_data', on_message_callback=callback, auto_ack=True)
+            channel.queue_declare(queue='processed_data')
+            channel.basic_publish(exchange='', routing_key='unprocessed_data', body=sample)
+            channel.basic_consume(queue='processed_data', on_message_callback=callback, auto_ack=True)
             channel.start_consuming()
 
             connection.close()
     
-    def test_deserializedMessageAmountMatchesWithFrequency(self):
+    def test_multipleMessagesAreTakenFromUnprocessedAndEndUpInProcessed(self):
             # Arrange
             connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
             channel = connection.channel()
-            frequency = 1000 # This corresponds to 'medium_throughput'
+            total_messages = 20
 
             # Act
             channel.queue_declare(queue='unprocessed_data')
-            channel.queue_purge(queue='unprocessed_data')
-            start_time = time.time()
+            channel.queue_declare(queue='processed_data')
+            for _ in range(total_messages):
+                channel.basic_publish(exchange='', routing_key='unprocessed_data', body=sample)
 
-            # Loop until amount of delivered messages reach frequency (i.e. amount of messages in 60 seconds)
-            for method_frame, properties, body in channel.consume('unprocessed_data'):
+            # Loop until amount of delivered messages reach amount sent into unprocessed
+            for method_frame, properties, body in channel.consume('processed_data'):
                 channel.basic_ack(method_frame.delivery_tag)
 
-                if method_frame.delivery_tag == frequency:
+                if method_frame.delivery_tag == total_messages:
+                    self.assertTrue(True)
                     break
-
-            stop_time = time.time()
-            total_time = stop_time - start_time
-            self.assertAlmostEqual(total_time, 60, None, "Total time was not 10 seconds from 1 minute", 10)
 
             connection.close()
 
