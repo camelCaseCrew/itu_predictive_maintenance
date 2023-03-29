@@ -11,6 +11,5 @@ WORKDIR /app
 COPY ./data_generator .
 
 RUN pip install -e .
-RUN pip install uvicorn
 
-CMD ["uvicorn", "data_generator.app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+ENTRYPOINT ["python3", "data_generator/app/main.py"]
