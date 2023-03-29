@@ -13,6 +13,7 @@ from predictive_maintenance.model.inference import Inference
 connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
 channel = connection.channel()
 
+
 channel.queue_declare(queue='unprocessed_data')
 channel.queue_declare(queue='processed_data')
 
@@ -53,7 +54,7 @@ def process_data(ch, method, properties, body):
     # Publish processed_data to rabbitmq queue 'processed_data'
     channel.basic_publish(exchange='',
                       routing_key='processed_data',
-                      body=json.dumps(process_data))
+                      body=json.dumps(processed_data))
     
     channel.basic_ack(delivery_tag = method.delivery_tag)
 
