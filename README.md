@@ -29,9 +29,18 @@ make compose_up
 ```
 It can take several minutes for the services to be ready. Go grab a cup of coffe!
 
-### Acessing the data generator
-By default the data generator listen on localhost:8000 <br>
-Swagger ui is provided on localhost:8000/docs
+### Configuring the data generator
+The data generator can be configured to run at three different levels of intensity.
+- 1: 250 records a minute
+- 2: 1000 records a minute
+- 3: 4000 records a minute
+
+To configure the data generator, run one of the following commands
+```bash
+make low_throughput_data_simulation
+make medium_throughput_data_simulation
+make high_throughput_data_simulation
+```
 
 ### Acessing the prediction service
 The prediction rest services listens on localhost:8001 <br>
@@ -57,3 +66,4 @@ AFTER CMD-TERMINAL IS DONE:
 
 Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
 
+###
