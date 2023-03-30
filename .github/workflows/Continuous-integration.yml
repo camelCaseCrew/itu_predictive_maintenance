@@ -29,10 +29,10 @@ jobs:
         uses: nschloe/action-cached-lfs-checkout@v1.1.2
       
       - name: Start Grafana, Prometheus and FrontEnd containers
-        run: docker compose -f docker/docker-compose.yaml up grafana prometheus frontend --detach
+        run: docker compose -f docker/docker-compose.yml up grafana prometheus frontend --detach
 
       - name: Get logs
-        run: docker compose -f docker/docker-compose.yaml logs
+        run: docker compose -f docker/docker-compose.yml logs
 
       - name: Wait 30 seconds
         run: sleep 30s
@@ -41,7 +41,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5.3.0
         
-  test:
+  test-rabbitmq:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -51,13 +51,34 @@ jobs:
         uses: nschloe/action-cached-lfs-checkout@v1.1.2
 
       - name: Run docker-compose up rabbitmq
-        run: docker compose -f docker/docker-compose.yaml up rabbitmq --detach
+        run: docker compose -f docker/docker-compose.yml up rabbitmq --detach
 
       - name: Build unit_tests image
-        run: docker build -t unit_tests ./unit_tests/
+        run: docker build -t unit_tests ./unit_tests/rabbitmq/
       
       - name: Wait 10 seconds
         run: sleep 10s
+        
+      - name: Run Python Unit Tests
+        run: docker run --network docker_predictive-maintenance-net unit_tests
+
+  test-data-stream:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Cached LFS checkout
+        uses: nschloe/action-cached-lfs-checkout@v1.1.2
+
+      - name: Run docker-compose up rabbitmq data_generator
+        run: docker compose -f docker/docker-compose.yml up rabbitmq data_generator --detach
+
+      - name: Build unit_tests image
+        run: docker build -t unit_tests ./unit_tests/data-stream/
+      
+      - name: Wait 60 seconds
+        run: sleep 60s
         
       - name: Run Python Unit Tests
         run: docker run --network docker_predictive-maintenance-net unit_tests

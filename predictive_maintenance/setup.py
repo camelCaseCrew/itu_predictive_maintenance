@@ -32,11 +32,10 @@ dependent_packages = {
     "sqlmodel": ("0.0.8", CORE),
     #"psycopg2": ("2.9.5", CORE),
     "psycopg2-binary": ("2.9.5", CORE),
-    "fastapi": ("0.92.0", CORE),
-    "uvicorn": ("0.20.0", CORE),
     "scikit-learn": ("1.2.1", CORE),
     "pandas": ("1.5.3", CORE),
     "imbalanced-learn": ("0.10.1", CORE),
+    "pika": ("1.2.1", CORE),
 
     # For tests
     "pytest": ("7.1.3", TEST),
