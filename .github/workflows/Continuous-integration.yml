@@ -34,8 +34,8 @@ jobs:
       - name: Get logs
         run: docker compose -f docker/docker-compose.yml logs
 
-      - name: Wait 30 seconds
-        run: sleep 30s
+      - name: Wait 1 minute
+        run: sleep 1m
         shell: bash
 
       - name: Cypress run
