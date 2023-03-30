@@ -28,8 +28,8 @@ jobs:
       - name: Cached LFS checkout
         uses: nschloe/action-cached-lfs-checkout@v1.1.2
       
-      - name: Start Grafana, Prometheus and FrontEnd containers
-        run: docker compose -f docker/docker-compose.yml up grafana prometheus frontend --detach
+      - name: Start containers
+        run: docker compose -f docker/docker-compose.yml up --detach
 
       - name: Get logs
         run: docker compose -f docker/docker-compose.yml logs
@@ -97,6 +97,27 @@ jobs:
 
       - name: Build unit_tests image
         run: docker build -t unit_tests ./unit_tests/ml-worker/
+      
+      - name: Wait 20 seconds
+        run: sleep 20s
+        
+      - name: Run Python Unit Tests
+        run: docker run --network docker_predictive-maintenance-net unit_tests
+  
+  test-data-aggregator:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Cached LFS checkout
+        uses: nschloe/action-cached-lfs-checkout@v1.1.2
+
+      - name: Run docker-compose up rabbitmq data_generator
+        run: docker compose -f docker/docker-compose.yml up rabbitmq data_aggregator --detach
+
+      - name: Build unit_tests image
+        run: docker build -t unit_tests ./unit_tests/data-aggregator/
       
       - name: Wait 20 seconds
         run: sleep 20s
