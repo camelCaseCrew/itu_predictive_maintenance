@@ -39,6 +39,7 @@ def process_data(ch, method, properties, body):
         "serial_number": body_deserialized["serial_number"],
         "model": body_deserialized["model"],
         "device_type": body_deserialized["device_type"],
+        "capacity_bytes": body_deserialized["capacity_bytes"]
     }
 
     # Remove certain keys not used for prediction
