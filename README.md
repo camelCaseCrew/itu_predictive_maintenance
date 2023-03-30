@@ -42,6 +42,14 @@ make medium_throughput_data_simulation
 make high_throughput_data_simulation
 ```
 
+### Configuring ML worksers
+
+To launch multiple ML-workers at once, the `--scale` flag can be used. 
+E.g. the following command will launch 3 instances of the ML-worker on startup:
+```bash
+docker-compose -f docker/docker-compose.yaml up --scale predictive_maintenance=3
+```
+
 ### Acessing the prediction service
 The prediction rest services listens on localhost:8001 <br>
 Swagger ui is provided on localhost:8001/docs

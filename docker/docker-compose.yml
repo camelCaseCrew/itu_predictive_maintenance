@@ -37,8 +37,7 @@ services:
     build:
       context: ../
       dockerfile: ./docker/predictive_maintenance/Dockerfile
-    ports:
-      - "8001:8001"
+    restart: always
     networks:
       - predictive-maintenance-net
 
