@@ -28,14 +28,14 @@ jobs:
       - name: Cached LFS checkout
         uses: nschloe/action-cached-lfs-checkout@v1.1.2
       
-      - name: Start Grafana, Prometheus and FrontEnd containers
-        run: docker compose -f docker/docker-compose.yml up grafana prometheus frontend --detach
+      - name: Start containers
+        run: docker compose -f docker/docker-compose.yml up --detach
 
       - name: Get logs
         run: docker compose -f docker/docker-compose.yml logs
 
-      - name: Wait 1 minute
-        run: sleep 1m
+      - name: Wait 30 seconds
+        run: sleep 30s
         shell: bash
 
       - name: Cypress run
