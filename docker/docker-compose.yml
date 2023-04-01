@@ -126,4 +126,6 @@ services:
       - predictive-maintenance-net
     depends_on:
       - grafana
+    volumes:
+      - ../frontend:/frontend
       
