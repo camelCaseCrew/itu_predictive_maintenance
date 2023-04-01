@@ -1,7 +1,14 @@
 import React from 'react';
 
 function Navbar() {
-    return <h1>Navbar</h1>
+    return <div class="bg-background text-text w-full h-32 flex justify-center place-items-center gap-x-4">
+        <div class="">
+            Dashboard
+        </div>
+        <div class="">
+            History
+        </div>
+    </div>
 }
 
 export default Navbar;
