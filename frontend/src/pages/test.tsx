@@ -29,21 +29,18 @@ export default function test() {
   }
 
   return (
-    <>
-      <h3 className=" font-bold text-gray-700 text-center" > Health Graphs</h3>
+    <div className="bg-component1 m-0">
+        <select className="bg-component2 text-text rounded m-4 py-2 px-2" name="Health" onChange={e => riskGroupSelect(e.target.value)}>
+          <option value="healthy">Healthy</option>
+          <option value="risk">At Risk</option>
+          <option value="critical">Critical</option>
+        </select>
 
-      <select name="Health" onChange={e => riskGroupSelect(e.target.value)}>
-        <option value="healthy">Healthy</option>
-        <option value="risk">Risk</option>
-        <option value="critical">Critical</option>
-      </select>
+        <input className="bg-component2 text-text rounded py-2 px-2" type="text" placeholder="All" onChange={e => serialNumber = e.target.value} onKeyDown={e => serialSearchKeyDown(e.key)}></input>
 
-      <input type="text" placeholder="All" onChange={e => serialNumber = e.target.value} onKeyDown={e => serialSearchKeyDown(e.key)}></input>
-
-      <div className=" w-screen h-screen">
-      <iframe className="w-full h-full" loading="lazy" src={grafanaSrc} ></iframe>
-      </div>
-
-    </>
+        <div className=" w-screen h-screen">
+        <iframe className="w-full h-full" loading="lazy" src={grafanaSrc} ></iframe>
+        </div>
+    </div>
   )
 }
