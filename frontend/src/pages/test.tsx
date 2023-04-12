@@ -9,7 +9,8 @@ export default function test() {
   }
 
   function riskGroupSelect(value: string) {
-    console.log(value)
+    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=5s&var-risk_group=`+value+`&var-serial_number=All&kiosk`
+    updateGrafanaSrc(updated)
   }
     
   if(typeof window !== "undefined" && window.document){
