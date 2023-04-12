@@ -11,7 +11,14 @@ export default function test() {
     const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=5s&var-risk_group=`+value+`&var-serial_number=All&kiosk`
     updateGrafanaSrc(updated)
   }
-
+  
+  function serialSearchKeyDown(key: string) {
+    if (key === 'Enter') {
+      const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=5s&var-risk_group=`+riskGroup+`&var-serial_number=`+serialNumber+`&kiosk`
+      console.log(updated)
+      updateGrafanaSrc(updated)
+    }
+  }
     
   if(typeof window !== "undefined" && window.document){
     window.addEventListener("blur", function (e) {
