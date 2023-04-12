@@ -9,6 +9,7 @@ function Navbar() {
         <Placeholder></Placeholder>
         <NavbarButton title="Dashboard" href="/dashboard"></NavbarButton>
         <NavbarButton title="History" href="/history"></NavbarButton>
+    
     </div>
 }
 
