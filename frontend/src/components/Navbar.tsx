@@ -1,5 +1,4 @@
 import React from 'react';
-import Logo from './Logo';
 import Placeholder from './Placeholder';
 import NavbarButton from './NavbarButton';
 
