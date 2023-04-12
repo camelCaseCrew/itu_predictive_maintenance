@@ -26,6 +26,8 @@ export default function test() {
         <option value="critical">Critical</option>
       </select>
 
+      <input type="text" placeholder="All"></input>
+
       <div className=" w-screen h-screen">
       <iframe className="w-full h-full" loading="lazy" src={grafanaSrc} ></iframe>
       </div>
