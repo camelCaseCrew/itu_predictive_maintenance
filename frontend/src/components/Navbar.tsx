@@ -5,7 +5,7 @@ import NavbarButton from './NavbarButton';
 
 
 function Navbar() {
-    return <div className="bg-component1 text-text w-full h-28 flex justify-start place-items-center gap-x-4">
+    return <div className="bg-component1 text-text m-4 rounded-xl h-28 flex justify-start place-items-center gap-x-4">
         <Placeholder></Placeholder>
         <NavbarButton title="Dashboard" href="/dashboard"></NavbarButton>
         <NavbarButton title="History" href="/history"></NavbarButton>
