@@ -31,6 +31,10 @@ jobs:
       - name: Start containers
         run: docker compose -f docker/docker-compose.yml up --detach
 
+      - name: Wait 30 seconds
+        run: sleep 30s
+        shell: bash
+
       - name: Get logs
         run: docker compose -f docker/docker-compose.yml logs
 
