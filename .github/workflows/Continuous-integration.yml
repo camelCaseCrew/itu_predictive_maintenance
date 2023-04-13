@@ -28,19 +28,14 @@ jobs:
       - name: Cached LFS checkout
         uses: nschloe/action-cached-lfs-checkout@v1.1.2
         
-      - name: Install dependencies
-        run: npm ci
-      
       - name: Start containers
-        run: docker compose -f docker/docker-compose.yml up --detach
-        
-        
+        run: docker compose -f docker/docker-compose.yml up --detach     
         
       - name: Get logs
         run: docker compose -f docker/docker-compose.yml logs
 
-      - name: Wait 30 seconds
-        run: sleep 30s
+      - name: Wait 300 seconds
+        run: sleep 300s
         shell: bash
 
       - name: Cypress run
