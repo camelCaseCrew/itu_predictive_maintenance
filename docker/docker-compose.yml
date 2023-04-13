@@ -96,8 +96,6 @@ services:
       - X_FRAME_OPTIONS=SAMEORIGIN
     networks:
       - predictive-maintenance-net
-    depends_on:
-      - grafana
     volumes:
       - ../frontend:/frontend
 
