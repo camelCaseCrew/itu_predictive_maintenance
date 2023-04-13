@@ -4,9 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 function Logo() {
-    return <div>
+    return <div className='m-6 text-bold text-4xl'>
         <Link href="/">
-            <Image src={Systematic} alt="Systematic Logo" width={200} height={100} />
+            <h1>PredictIT</h1>
         </Link>
     </div>
 }
