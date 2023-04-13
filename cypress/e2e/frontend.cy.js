@@ -12,3 +12,11 @@ describe('Grafana Graph test, will break if test page is removed', () => {
       // ^hardcoded for the homepage graph^
     })
   })
+
+  describe('Grafana Graph test, will break if test page is removed', () => {
+    it('Visits the test page', () => {
+      cy.visit('http://localhost:3001')
+      cy.get('Health Graphs id').click()
+      cy.url().should('include', '/healthgraphs')
+    })
+  })
