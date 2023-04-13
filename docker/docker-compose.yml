@@ -9,20 +9,6 @@ volumes:
     driver: local
 
 
-  frontend:
-    build:
-      context: ../
-      dockerfile: ./docker/frontend/Dockerfile
-    ports:
-      - "3001:3003"
-    environment:
-      - X_FRAME_OPTIONS=SAMEORIGIN
-    networks:
-      - predictive-maintenance-net
-    depends_on:
-      - grafana
-    volumes:
-      - ../frontend:/frontend
 
 
 services:
@@ -98,6 +84,22 @@ services:
       networks:
         - predictive-maintenance-net
       restart: always
+
+
+  frontend:
+    build:
+      context: ../
+      dockerfile: ./docker/frontend/Dockerfile
+    ports:
+      - "3001:3003"
+    environment:
+      - X_FRAME_OPTIONS=SAMEORIGIN
+    networks:
+      - predictive-maintenance-net
+    depends_on:
+      - grafana
+    volumes:
+      - ../frontend:/frontend
 
   prometheus:
     image: prom/prometheus:latest
