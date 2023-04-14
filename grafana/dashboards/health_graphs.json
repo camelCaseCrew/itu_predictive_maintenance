@@ -33,7 +33,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 0
       },
       "id": 11,
       "panels": [],
@@ -45,6 +45,7 @@
         "type": "prometheus",
         "uid": "TSwyULa4z"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -97,7 +98,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 10
+        "y": 1
       },
       "id": 4,
       "maxPerRow": 4,
@@ -122,13 +123,13 @@
             "uid": "TSwyULa4z"
           },
           "editorMode": "builder",
-          "expr": "device_health{group=\"$risk_group\", serial_number=\"$serial_number\"}",
+          "expr": "device_health{group=\"$risk_group\", serial_number=\"$serial_number\", model=\"$model\"}",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Health graph: $serial_number",
+      "title": "$serial_number - $model",
       "type": "timeseries"
     }
   ],
@@ -142,8 +143,8 @@
       {
         "current": {
           "selected": true,
-          "text": "critical",
-          "value": "critical"
+          "text": "risk",
+          "value": "risk"
         },
         "datasource": {
           "type": "prometheus",
@@ -180,7 +181,7 @@
           "type": "prometheus",
           "uid": "TSwyULa4z"
         },
-        "definition": "label_values(device_health{group=\"$risk_group\"}, serial_number)",
+        "definition": "label_values(device_health{group=\"$risk_group\", model=\"$model\"}, serial_number)",
         "hide": 0,
         "includeAll": true,
         "label": "Serial number",
@@ -188,13 +189,36 @@
         "name": "serial_number",
         "options": [],
         "query": {
-          "query": "label_values(device_health{group=\"$risk_group\"}, serial_number)",
+          "query": "label_values(device_health{group=\"$risk_group\", model=\"$model\"}, serial_number)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "Hitachi HDS5C3030ALA630",
+          "value": "Hitachi HDS5C3030ALA630"
+        },
+        "definition": "label_values(device_health{group=\"$risk_group\"}, model)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Model",
+        "multi": false,
+        "name": "model",
+        "options": [],
+        "query": {
+          "query": "label_values(device_health{group=\"$risk_group\"}, model)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
         "type": "query"
       }
     ]
