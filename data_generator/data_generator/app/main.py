@@ -52,6 +52,7 @@ def simulate():
         msg = get_record()
         del msg['failure'] # Remove failure key
         type_int = random.randint(0, 1)
+        # Choose between 'harddrive' and 'sensor' device type at random
         if type_int == 0:
             msg['device_type'] = 'harddrive'
         else:
