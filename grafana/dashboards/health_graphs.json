@@ -123,13 +123,13 @@
             "uid": "TSwyULa4z"
           },
           "editorMode": "builder",
-          "expr": "device_health{group=\"$risk_group\", serial_number=\"$serial_number\", model=\"$model\"}",
+          "expr": "device_health{group=\"$risk_group\", serial_number=\"$serial_number\", model=\"$model\", device_type=\"$device_type\"}",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "$serial_number - $model",
+      "title": "$serial_number - $model - $device_type",
       "type": "timeseries"
     }
   ],
