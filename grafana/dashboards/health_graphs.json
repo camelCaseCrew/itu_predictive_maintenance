@@ -143,8 +143,8 @@
       {
         "current": {
           "selected": true,
-          "text": "risk",
-          "value": "risk"
+          "text": "critical",
+          "value": "critical"
         },
         "datasource": {
           "type": "prometheus",
@@ -181,7 +181,7 @@
           "type": "prometheus",
           "uid": "TSwyULa4z"
         },
-        "definition": "label_values(device_health{group=\"$risk_group\", model=\"$model\"}, serial_number)",
+        "definition": "label_values(device_health{group=\"$risk_group\", model=\"$model\", device_type=\"$device_type\"}, serial_number)",
         "hide": 0,
         "includeAll": true,
         "label": "Serial number",
@@ -189,7 +189,7 @@
         "name": "serial_number",
         "options": [],
         "query": {
-          "query": "label_values(device_health{group=\"$risk_group\", model=\"$model\"}, serial_number)",
+          "query": "label_values(device_health{group=\"$risk_group\", model=\"$model\", device_type=\"$device_type\"}, serial_number)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -201,8 +201,12 @@
       {
         "current": {
           "selected": true,
-          "text": "Hitachi HDS5C3030ALA630",
-          "value": "Hitachi HDS5C3030ALA630"
+          "text": "ST4000DM000",
+          "value": "ST4000DM000"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "TSwyULa4z"
         },
         "definition": "label_values(device_health{group=\"$risk_group\"}, model)",
         "hide": 0,
@@ -213,6 +217,29 @@
         "options": [],
         "query": {
           "query": "label_values(device_health{group=\"$risk_group\"}, model)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "harddrive",
+          "value": "harddrive"
+        },
+        "definition": "label_values(device_health, device_type)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Device Type",
+        "multi": false,
+        "name": "device_type",
+        "options": [],
+        "query": {
+          "query": "label_values(device_health, device_type)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -231,6 +258,6 @@
   "timezone": "",
   "title": "Health Graphs",
   "uid": "enayayaya",
-  "version": 1,
+  "version": 4,
   "weekStart": ""
 }
