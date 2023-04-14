@@ -8,6 +8,9 @@ volumes:
   prometheus-data:
     driver: local
 
+
+
+
 services:
   rabbitmq:
     image: rabbitmq:3.11-management
@@ -82,6 +85,8 @@ services:
         - predictive-maintenance-net
       restart: always
 
+
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -113,6 +118,7 @@ services:
       - predictive-maintenance-net
     depends_on:
       - prometheus
+
 
   frontend:
     build:
