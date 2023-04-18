@@ -3,14 +3,14 @@
 //to prevent exiting kiosk mode on the Grafana embed, however a better solution could be
 //1. managing user permissions such that an anonymous viewer cannot get a full view
 //or 2. disabling the hotkeys to exit kiosk mode (esc or f) on the Grafana embed
-export default function DeselectWindow() {
-  if (typeof window !== "undefined") {
+export default function App() {
+  /*if (typeof window !== "undefined") {
     window.addEventListener("blur", function (e) {
       setTimeout(function () {
         window.focus();
       }, 0);
     });
-  }
+  }*/
 
   return (
     <>
