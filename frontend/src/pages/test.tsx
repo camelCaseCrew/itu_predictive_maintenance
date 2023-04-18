@@ -14,6 +14,9 @@ export default function test() {
   
   function serialSearchKeyDown(key: string) {
     if (key === 'Enter') {
+      if (serialNumber === '') {
+        serialNumber = 'All'
+      }
       const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=5s&var-risk_group=`+riskGroup+`&var-serial_number=`+serialNumber+`&kiosk`
       console.log(updated)
       updateGrafanaSrc(updated)
