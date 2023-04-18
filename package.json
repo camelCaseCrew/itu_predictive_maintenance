@@ -18,5 +18,8 @@
   "homepage": "https://github.com/camelCaseCrew/itu_predictive_maintenance#readme",
   "dependencies": {
     "cypress": "^12.8.1"
+  },
+  "devDependencies": {
+    "cypress-iframe": "^1.0.1"
   }
 }
