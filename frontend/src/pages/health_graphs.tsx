@@ -15,9 +15,9 @@ export default function App() {
   return (
     <>
       <h3 className=" font-bold text-gray-700 text-center" > Health Graphs</h3>
-      <div className=" w-screen h-screen">
+      <div className="h-screen w-[100%]">
         {/*This source is a link to the grafana dashboard with uid=enayayaya in kiosk mode*/}
-        <iframe id="devices" className=" w-full h-full" loading="lazy" src={`http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=60s&kiosk`}></iframe>
+        <iframe id="devices" className="w-full h-full" loading="lazy" src={`http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=60s&kiosk`}></iframe>
       </div>
 
     </>
