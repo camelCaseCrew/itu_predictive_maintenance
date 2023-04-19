@@ -22,3 +22,11 @@ describe('Grafana Graph test, will break if health_graphs page is removed', () =
       cy.get('iframe[src="http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=60s&kiosk"]').should('exist'); 
     })
   })
+
+  describe('Navbar test', () => {
+    it('Ensures functionality of navbar button', () => {
+      cy.visit('http://localhost:3001')
+      cy.get('#Health-Graphs-id').click()
+      cy.url().should('include', '/healthgraphs')
+    })
+  })

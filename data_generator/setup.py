@@ -32,13 +32,14 @@ dependent_packages = {
     "sqlmodel": ("0.0.8", CORE),
     #"psycopg2": ("2.9.5", CORE),
     "psycopg2-binary": ("2.9.5", CORE),
-    "fastapi": ("0.92.0", CORE),
-    "uvicorn": ("0.20.0", CORE),
     # For tests
     "pytest": ("7.1.3", TEST),
 
     # For inference
     "onnx": ("1.11.0", INFERENCE),
+
+    # For rabbitMQ
+    "pika": ("1.2.1", CORE)
 }
 
 tag_to_packages: dict = {
