@@ -9,3 +9,5 @@ const Logo = () => (
         </Link>
     </div>
 )
+
+export default Logo;
