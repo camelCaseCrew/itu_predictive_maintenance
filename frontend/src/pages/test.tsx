@@ -1,16 +1,24 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import React from 'react'
 import Select from 'react-select'
+
 
 export default function test() {
   const [grafanaSrc, updateGrafanaSrc] = useState(`http://localhost:3000/d/enayayaya/overview-of-devices-copy?orgId=1&refresh=60s&kiosk`)
   const [riskGroup, updateRiskGroup] = useState('healthy')
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-  ]
-  
+  const [models, updateModels] = useState([])
+
+  function getModels() {
+    fetch('http://localhost:9090/api/v1/label/model/values?match[]=device_health%7Bgroup=%22healthy%22%7D')
+    .then(response => response.json()).then(data => {updateModels(data["data"].map((model: string) => {console.log("Models fetched"); return {label: model, value: model} }))})
+    // Set timeout ? 
+  }
+
+  useEffect(() => {
+    getModels()
+    }, [])
+
+    
   var serialNumber = 'All'
 
   function riskGroupSelect(value: string) {
@@ -50,7 +58,7 @@ export default function test() {
         <input className="bg-component2 text-text rounded py-2 px-2" type="text" placeholder="All" onChange={e => serialNumber = e.target.value} onKeyDown={e => serialSearchKeyDown(e.key)}></input>
 
         <div className="w-60">
-        <Select classNamePrefix="bg-component2 text-text outline-0 " options={options} isMulti styles={{ menu: (base) => ({ ...base, backgroundColor: "#FF0000" }),
+        <Select classNamePrefix="bg-component2 text-text outline-0 " options={models} isMulti styles={{ menu: (base) => ({ ...base, backgroundColor: "#FF0000" }),
                                                     valueContainer: (base) => ({ ...base, borderTopLeftRadius: '5px', borderBottomLeftRadius: '5px'  }),
                                                     indicatorsContainer: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
                                                     dropdownIndicator: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
@@ -60,8 +68,6 @@ export default function test() {
                                                     control: (base) => ({ ...base, backgroundColor: '#30343D', borderRadius: '5px', border: 'none' }),}}/>
         
         </div>
-        
-
 
         <div className=" w-screen h-screen">
         <iframe className="w-full h-full" loading="lazy" src={grafanaSrc} ></iframe>
