@@ -1,3 +1,4 @@
+import { update } from "cypress/types/lodash"
 import { useState, useEffect } from "react"
 import React from 'react'
 import Select from 'react-select'
@@ -6,6 +7,7 @@ import Select from 'react-select'
 export default function test() {
   const [grafanaSrc, updateGrafanaSrc] = useState(`http://localhost:3000/d/enayayaya/overview-of-devices-copy?orgId=1&refresh=60s&kiosk`)
   const [riskGroup, updateRiskGroup] = useState('healthy')
+  const [serialNumber, updateSerialNumber] = useState('All')
   const [time, updateTime] = useState('from=now-6h&to=now')
   const [models, updateModels] = useState([])
 
@@ -31,21 +33,18 @@ export default function test() {
     getModels()
     }, [])
 
-    
-  var serialNumber = 'All'
-
   function riskGroupSelect(value: string) {
     updateRiskGroup(value)
-    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=5s&var-risk_group=`+value+`&var-serial_number=All&kiosk`
+    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=5s&var-risk_group=`+value+`&var-serial_number=`+serialNumber+`&`+time+`&kiosk`
     updateGrafanaSrc(updated)
   }
   
   function serialSearchKeyDown(key: string) {
     if (key === 'Enter') {
       if (serialNumber === '') {
-        serialNumber = 'All'
+        updateSerialNumber('All')
       }
-      const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=5s&var-risk_group=`+riskGroup+`&var-serial_number=`+serialNumber+`&kiosk`
+      const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=5s&var-risk_group=`+riskGroup+`&var-serial_number=`+serialNumber+`&`+time+`&kiosk`
       console.log(updated)
       updateGrafanaSrc(updated)
     }
@@ -77,7 +76,7 @@ export default function test() {
           <option value="critical">Critical</option>
         </select>
 
-        <input className="bg-component2 text-text rounded m-2 py-2 px-2" type="text" placeholder="Search serial number" onChange={e => serialNumber = e.target.value} onKeyDown={e => serialSearchKeyDown(e.key)}></input>
+        <input className="bg-component2 text-text rounded m-2 py-2 px-2" type="text" placeholder="Search serial number" onChange={e => updateSerialNumber(e.target.value)} onKeyDown={e => serialSearchKeyDown(e.key)}></input>
 
         <div className="m-2 rounded">
           <Select placeholder="Select model" classNamePrefix="text-text outline-0 " options={models} isMulti styles={{ menu: (base) => ({ ...base, backgroundColor: "#30343D" }),
