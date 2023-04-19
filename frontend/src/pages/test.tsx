@@ -50,22 +50,25 @@ export default function test() {
     
     <div className="m-0 bg-component1">
       <div className="flex justify-start place-items-center mx-4">
-
-        <Select classNamePrefix="bg-component2 text-text outline-0 " options={models} isMulti styles={{ menu: (base) => ({ ...base, backgroundColor: "#FF0000" }),
-                                                    valueContainer: (base) => ({ ...base, borderTopLeftRadius: '5px', borderBottomLeftRadius: '5px'  }),
-                                                    indicatorsContainer: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
-                                                    dropdownIndicator: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
-                                                    container: (base) => ({ ...base, borderRadius: '5px' }),
-                                                    multiValueLabel: (base) => ({ ...base, color: '#DEDEDE' }), 
-                                                    multiValue: (base) => ({ ...base, backgroundColor: '#30343D' }),
-                                                    control: (base) => ({ ...base, backgroundColor: '#30343D', borderRadius: '5px', border: 'none' }),}}/>
-        <select className="bg-component2 text-text rounded m-4 py-2 px-2" name="Health" onChange={e => riskGroupSelect(e.target.value)}>
+        <select className="bg-component2 text-text rounded m-2 py-2 px-2" name="Health" onChange={e => riskGroupSelect(e.target.value)}>
           <option value="healthy">Healthy</option>
           <option value="risk">At Risk</option>
           <option value="critical">Critical</option>
         </select>
 
-        <input className="bg-component2 text-text rounded py-2 px-2" type="text" placeholder="All" onChange={e => serialNumber = e.target.value} onKeyDown={e => serialSearchKeyDown(e.key)}></input>
+        <input className="bg-component2 text-text rounded m-2 py-2 px-2" type="text" placeholder="All" onChange={e => serialNumber = e.target.value} onKeyDown={e => serialSearchKeyDown(e.key)}></input>
+
+        <div style={{minWidth: "15%"}} className="m-2 rounded min-w-max">
+          <Select classNamePrefix="bg-component2 text-text outline-0 " options={models} isMulti styles={{ menu: (base) => ({ ...base, backgroundColor: "#FF0000" }),
+                                                      valueContainer: (base) => ({ ...base, borderTopLeftRadius: '5px', borderBottomLeftRadius: '5px'  }),
+                                                      indicatorsContainer: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
+                                                      dropdownIndicator: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
+                                                      container: (base) => ({ ...base, borderRadius: '5px' }),
+                                                      multiValueLabel: (base) => ({ ...base, color: '#DEDEDE' }),
+                                                      placeholder: (base) => ({ ...base, backgroundColor: "#30343D" }),
+                                                      multiValue: (base) => ({ ...base, backgroundColor: '#30343D' }),
+                                                      control: (base) => ({ ...base, backgroundColor: '#30343D', borderRadius: '5px', border: 'none' }),}}/>
+        </div>
 
       </div>
 
