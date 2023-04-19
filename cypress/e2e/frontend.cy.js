@@ -13,10 +13,10 @@ describe('Grafana Graph test, will break if test page is removed', () => {
     })
   })
 
-  describe('Navbar test', () => {
-    it('Ensures functionality of navbar button', () => {
-      cy.visit('http://localhost:3001')
-      cy.get('#Health-Graphs-id').click()
-      cy.url().should('include', '/healthgraphs')
-    })
+describe('Navbar test', () => {
+  it('Ensures functionality of navbar button', () => {
+    cy.visit('http://localhost:3001')
+    cy.get('#Health-Graphs-id').click()
+    cy.url().should('include', '/healthgraphs')
   })
+})
