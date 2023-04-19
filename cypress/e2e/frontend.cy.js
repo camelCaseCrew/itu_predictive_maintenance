@@ -20,3 +20,11 @@ describe('Navbar test', () => {
     cy.url().should('include', '/healthgraphs')
   })
 })
+
+describe('Check logo for text', () => {
+  it('Logo has the right ', () => {
+    cy.visit('http://localhost:3001')
+    cy.contains('Systematic')
+    cy.contains('PredictIT')
+  })
+})
