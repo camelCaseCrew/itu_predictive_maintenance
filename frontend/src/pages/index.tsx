@@ -1,7 +1,5 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,13 +12,6 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-
-      <h3 className=" font-bold text-gray-700 text-center" > Home page</h3>
-      <div>
-        <iframe src={`http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&var-risk_group=healthy&var-serial_number=All&panelId=2&refresh=5s`} width="450" height="200"></iframe>
-      </div>
-      </main>
     </>
   )
 }
