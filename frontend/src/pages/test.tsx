@@ -6,7 +6,20 @@ import Select from 'react-select'
 export default function test() {
   const [grafanaSrc, updateGrafanaSrc] = useState(`http://localhost:3000/d/enayayaya/overview-of-devices-copy?orgId=1&refresh=60s&kiosk`)
   const [riskGroup, updateRiskGroup] = useState('healthy')
+  const [time, updateTime] = useState('from=now-6h&to=now')
   const [models, updateModels] = useState([])
+
+  const times = [
+    {value: "Last 5 minutes", label: "Last 5 minutes"},
+    {value: "Last 15 minutes", label: "Last 15 minutes"},
+    {value: "Last 30 minutes", label: "Last 30 minutes"},
+    {value: "Last 1 hour", label: "Last 1 hour"},
+    {value: "Last 3 hours", label: "Last 3 hours"},
+    {value: "Last 6 hours", label: "Last 6 hours"},
+    {value: "Last 12 hours", label: "Last 12 hours"},
+    {value: "Last 24 hours", label: "Last 24 hours"},
+    {value: "Last 3 days", label: "Last 3 days"},
+  ]
 
   function getModels() {
     fetch('http://localhost:9090/api/v1/label/model/values?match[]=device_health%7Bgroup=%22healthy%22%7D')
@@ -37,6 +50,14 @@ export default function test() {
       updateGrafanaSrc(updated)
     }
   }
+
+  function timeSelect(value: string) {
+    const formattedValue = value.split(" ")[1] + value.split(" ")[2].split("")[0]
+    const newTime = `from=now-${formattedValue}&to=now`
+    updateTime(newTime)
+    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=5s&var-risk_group=`+riskGroup+`&var-serial_number=`+serialNumber+`&`+newTime+`&kiosk`
+    updateGrafanaSrc(updated)
+  }
     
   if(typeof window !== "undefined" && window.document){
     window.addEventListener("blur", function (e) {
@@ -56,17 +77,31 @@ export default function test() {
           <option value="critical">Critical</option>
         </select>
 
-        <input className="bg-component2 text-text rounded m-2 py-2 px-2" type="text" placeholder="All" onChange={e => serialNumber = e.target.value} onKeyDown={e => serialSearchKeyDown(e.key)}></input>
+        <input className="bg-component2 text-text rounded m-2 py-2 px-2" type="text" placeholder="Search serial number" onChange={e => serialNumber = e.target.value} onKeyDown={e => serialSearchKeyDown(e.key)}></input>
 
-        <div style={{minWidth: "15%"}} className="m-2 rounded min-w-max">
-          <Select classNamePrefix="bg-component2 text-text outline-0 " options={models} isMulti styles={{ menu: (base) => ({ ...base, backgroundColor: "#FF0000" }),
+        <div className="m-2 rounded">
+          <Select placeholder="Select model" classNamePrefix="text-text outline-0 " options={models} isMulti styles={{ menu: (base) => ({ ...base, backgroundColor: "#30343D" }),
                                                       valueContainer: (base) => ({ ...base, borderTopLeftRadius: '5px', borderBottomLeftRadius: '5px'  }),
                                                       indicatorsContainer: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
                                                       dropdownIndicator: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
                                                       container: (base) => ({ ...base, borderRadius: '5px' }),
                                                       multiValueLabel: (base) => ({ ...base, color: '#DEDEDE' }),
                                                       placeholder: (base) => ({ ...base, backgroundColor: "#30343D" }),
+                                                      singleValue: (base) => ({ ...base, color: '#DEDEDE' }),
+                                                      input: (base) => ({ ...base, color: '#DEDEDE' }),
                                                       multiValue: (base) => ({ ...base, backgroundColor: '#30343D' }),
+                                                      control: (base) => ({ ...base, backgroundColor: '#30343D', borderRadius: '5px', border: 'none' }),}}/>
+        </div>
+
+        <div className="m-2 rounded">
+          <Select onChange={e => timeSelect(e ? e.value : "")} placeholder="Select time" className="basic-single" classNamePrefix="text-text outline-0 " options={times} styles={{ menu: (base) => ({ ...base, backgroundColor: "#30343D" }),
+                                                      valueContainer: (base) => ({ ...base, borderTopLeftRadius: '5px', borderBottomLeftRadius: '5px'  }),
+                                                      indicatorsContainer: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
+                                                      dropdownIndicator: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
+                                                      container: (base) => ({ ...base, borderRadius: '5px' }),
+                                                      input: (base) => ({ ...base, color: '#DEDEDE' }),
+                                                      singleValue: (base) => ({ ...base, color: '#DEDEDE' }),
+                                                      placeholder: (base) => ({ ...base, backgroundColor: "#30343D" }),
                                                       control: (base) => ({ ...base, backgroundColor: '#30343D', borderRadius: '5px', border: 'none' }),}}/>
         </div>
 
