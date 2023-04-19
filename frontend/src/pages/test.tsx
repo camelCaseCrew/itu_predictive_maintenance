@@ -68,7 +68,7 @@ export default function test() {
 
   return (
     
-    <div className="m-0 bg-component1">
+    <div className="m-4 bg-component1">
       <div className="flex justify-start place-items-center mx-4">
         <select className="bg-component2 text-text rounded m-2 py-2 px-2" name="Health" onChange={e => riskGroupSelect(e.target.value)}>
           <option value="healthy">Healthy</option>
@@ -78,7 +78,7 @@ export default function test() {
 
         <input className="bg-component2 text-text rounded m-2 py-2 px-2" type="text" placeholder="Search serial number" onChange={e => updateSerialNumber(e.target.value)} onKeyDown={e => serialSearchKeyDown(e.key)}></input>
 
-        <div className="m-2 rounded">
+        <div style={{minWidth: "15%"}} className="m-2 rounded">
           <Select placeholder="Select model" classNamePrefix="text-text outline-0 " options={models} isMulti styles={{ menu: (base) => ({ ...base, backgroundColor: "#30343D" }),
                                                       valueContainer: (base) => ({ ...base, borderTopLeftRadius: '5px', borderBottomLeftRadius: '5px'  }),
                                                       indicatorsContainer: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
@@ -92,7 +92,7 @@ export default function test() {
                                                       control: (base) => ({ ...base, backgroundColor: '#30343D', borderRadius: '5px', border: 'none' }),}}/>
         </div>
 
-        <div className="m-2 rounded">
+        <div style={{minWidth: "15%"}} className="m-2 rounded">
           <Select onChange={e => timeSelect(e ? e.value : "")} placeholder="Select time" className="basic-single" classNamePrefix="text-text outline-0 " options={times} styles={{ menu: (base) => ({ ...base, backgroundColor: "#30343D" }),
                                                       valueContainer: (base) => ({ ...base, borderTopLeftRadius: '5px', borderBottomLeftRadius: '5px'  }),
                                                       indicatorsContainer: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
@@ -106,8 +106,8 @@ export default function test() {
 
       </div>
 
-      <div className=" w-screen h-screen">
-          <iframe className="w-full h-full" loading="lazy" src={grafanaSrc} ></iframe>
+      <div className="h-screen w-[100%]">
+        <iframe className="w-full h-full" loading="lazy" src={grafanaSrc} ></iframe>
       </div>
       
     </div>
