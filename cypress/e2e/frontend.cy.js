@@ -7,6 +7,32 @@ describe('Presence of bar graph test', () => {
   })
 })
 
+// Home page - Overview buttons
+
+describe('Critical button goes to /health_graph', () => {
+  it('Critical button goes to /health_graph', () => {
+    cy.visit('http://localhost:3003')
+    cy.get('[id=Critical-goto-btn-id]').click()
+    cy.url().should('include', '/health_graphs')
+  })
+})
+
+describe('Risk button goes to /health_graph', () => {
+  it('Risk button goes to /health_graph', () => {
+    cy.visit('http://localhost:3003')
+    cy.get('[id=Risk-goto-btn-id]').click()
+    cy.url().should('include', '/health_graphs')
+  })
+})
+
+describe('Healthy button goes to /health_graph', () => {
+  it('Healthy button goes to /health_graph', () => {
+    cy.visit('http://localhost:3003')
+    cy.get('[id=Healthy-goto-btn-id]').click()
+    cy.url().should('include', '/health_graphs')
+  })
+})
+
 // Navbar tests
 
 describe('Presence of Logo', () => {
