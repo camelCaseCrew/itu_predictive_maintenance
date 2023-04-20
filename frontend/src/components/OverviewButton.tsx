@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 
-const OverviewButton = ( props: {Status: string, Id: string, HexColor: string, href: string, percentage: number} ) => {
+const OverviewButton = ( props: {Status: string, Id: string, Filter: string, HexColor: string, href: string, percentage: number} ) => {
     return (
         <div id={props.Id} className=" w-[25%] sm:w-[18%] md:w-[13%] h-32 ">
             <Link href={props.href}>
