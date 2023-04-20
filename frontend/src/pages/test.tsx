@@ -31,7 +31,7 @@ export default function test() {
   ]
 
   function getModels() {
-    fetch(`http://localhost:9090/api/v1/label/model/values?match[]=device_health{group="`+riskGroup+`"}`)
+    fetch(`http://localhost:9090/api/v1/label/model/values?match[]=device_health{group="${riskGroup}"}`)
     .then(response => response.json()).then(data => {updateModels(data["data"].map((model: string) => {console.log("Models fetched"); return {name: model, code: model} }))})
     // Set timeout ? 
   }
@@ -42,7 +42,7 @@ export default function test() {
 
   function riskGroupSelect(value: string) {
     updateRiskGroup(value)
-    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s&var-risk_group=`+value+`&var-serial_number=`+serialNumber+`&`+time+`&kiosk`
+    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s&var-risk_group=${value}&var-serial_number=${serialNumber}&${time}&kiosk`
     updateGrafanaSrc(updated)
   }
   
@@ -51,7 +51,7 @@ export default function test() {
       if (serialNumber === '') {
         updateSerialNumber('All')
       }
-      const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s&var-risk_group=`+riskGroup+`&var-serial_number=`+serialNumber+`&`+time+`&kiosk`
+      const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s&var-risk_group=${riskGroup}&var-serial_number=${serialNumber}&${time}&kiosk`
       console.log(updated)
       updateGrafanaSrc(updated)
     }
@@ -61,7 +61,7 @@ export default function test() {
     const formattedValue = value.split(" ")[1] + value.split(" ")[2].split("")[0]
     const newTime = `from=now-${formattedValue}&to=now`
     updateTime(newTime)
-    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s&var-risk_group=`+riskGroup+`&var-serial_number=`+serialNumber+`&`+newTime+`&kiosk`
+    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s&var-risk_group=${riskGroup}&var-serial_number=${serialNumber}&${newTime}&kiosk`
     updateGrafanaSrc(updated)
   }
   
