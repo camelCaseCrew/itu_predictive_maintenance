@@ -12,7 +12,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className=' sm:w-[90%]  mx-auto h-[50%]'>
+      <div className=' w-[90%] sm:w-[60%]  mx-auto h-[50%]'>
         <iframe className=' w-full h-full' src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2&kiosk"></iframe>
       </div>
     </>
