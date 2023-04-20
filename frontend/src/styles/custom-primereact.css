@@ -1,0 +1,35 @@
+.p-multiselect {
+    background-color: #30343D !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.p-multiselect-panel {
+    background-color: #22252B !important;
+    color: #DEDEDE !important;
+}
+
+.p-multiselect-header {
+    background-color: #30343D !important;
+    color: #DEDEDE !important;
+}
+
+.p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
+    background-color: #30343D !important;
+}
+
+.p-multiselect-item {
+    color: #DEDEDE !important;
+    box-shadow: none !important;
+
+}
+
+.p-multiselect-item:hover {
+    color: #DEDEDE !important;
+    background-color: #30343D;
+}
+
+
+.p-multiselect-label {
+    color: #DEDEDE !important;
+}
