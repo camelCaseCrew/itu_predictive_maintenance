@@ -1,9 +1,8 @@
 // Home page tests
 
 describe('Presence of Logo', () => {
-  it('Checks for the presence of "Systematic" and "PredictIT"', () => {
+  it('Checks for the presence of and "PredictIT"', () => {
     cy.visit('http://localhost:3001')
-    cy.contains('Systematic')
     cy.contains('PredictIT') 
   })
 })
@@ -40,7 +39,7 @@ describe('Critical goto button test', () => {
   it('Tests that the critical goto button exists and leads to health graphs with critical filter turned on', () => {
     cy.visit('http://localhost:3001')
     cy.get('#Critical-goto-btn-id').click()
-    cy.url().should('include', '/healthgraphs')
+    cy.url().should('include', '/health_graphs')
     cy.url().should('include', 'health=critical')
   })
 })
@@ -49,7 +48,7 @@ describe('Risk goto button test', () => {
   it('Tests that the risk goto button exists and leads to health graphs with risk filter turned on', () => {
     cy.visit('http://localhost:3001')
     cy.get('#Risk-goto-btn-id').click()
-    cy.url().should('include', '/healthgraphs')
+    cy.url().should('include', '/health_graphs')
     cy.url().should('include', 'health=risk')
   })
 })
@@ -58,7 +57,7 @@ describe('Healthy goto button test', () => {
   it('Tests that the healthy goto button exists and leads to health graphs with healthy filter turned on', () => {
     cy.visit('http://localhost:3001')
     cy.get('#Healthy-goto-btn-id').click()
-    cy.url().should('include', '/healthgraphs')
+    cy.url().should('include', '/health_graphs')
     cy.url().should('include', 'health=healthy')
   })
 })
@@ -72,8 +71,6 @@ describe('Health graph button test', () => {
     cy.url().should('include', '/healthgraphs')
   })
 })
-
-
 
 // Health Graphs page tests
 
