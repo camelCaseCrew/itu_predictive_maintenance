@@ -21,6 +21,11 @@ export default function test() {
     {value: "Last 12 hours", label: "Last 12 hours"},
     {value: "Last 24 hours", label: "Last 24 hours"},
     {value: "Last 3 days", label: "Last 3 days"},
+    {value: "Last 7 days", label: "Last 7 days"},
+    {value: "Last 30 days", label: "Last 30 days"},
+    {value: "Last 180 days", label: "Last 180 days"},
+    {value: "Last 1 year", label: "Last 1 year"},
+    {value: "Last 3 years", label: "Last 3 years"},
   ]
 
   function getModels() {
@@ -35,7 +40,7 @@ export default function test() {
 
   function riskGroupSelect(value: string) {
     updateRiskGroup(value)
-    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=5s&var-risk_group=`+value+`&var-serial_number=`+serialNumber+`&`+time+`&kiosk`
+    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s&var-risk_group=`+value+`&var-serial_number=`+serialNumber+`&`+time+`&kiosk`
     updateGrafanaSrc(updated)
   }
   
@@ -44,7 +49,7 @@ export default function test() {
       if (serialNumber === '') {
         updateSerialNumber('All')
       }
-      const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=5s&var-risk_group=`+riskGroup+`&var-serial_number=`+serialNumber+`&`+time+`&kiosk`
+      const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s&var-risk_group=`+riskGroup+`&var-serial_number=`+serialNumber+`&`+time+`&kiosk`
       console.log(updated)
       updateGrafanaSrc(updated)
     }
@@ -54,7 +59,7 @@ export default function test() {
     const formattedValue = value.split(" ")[1] + value.split(" ")[2].split("")[0]
     const newTime = `from=now-${formattedValue}&to=now`
     updateTime(newTime)
-    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=5s&var-risk_group=`+riskGroup+`&var-serial_number=`+serialNumber+`&`+newTime+`&kiosk`
+    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s&var-risk_group=`+riskGroup+`&var-serial_number=`+serialNumber+`&`+newTime+`&kiosk`
     updateGrafanaSrc(updated)
   }
     
@@ -70,16 +75,16 @@ export default function test() {
     
     <div className="m-4 bg-component1">
       <div className="flex justify-start place-items-center mx-4">
-        <select className="bg-component2 text-text rounded m-2 py-2 px-2" name="Health" onChange={e => riskGroupSelect(e.target.value)}>
+        <select className="bg-component2 text-text rounded m-2 py-2 px-2" name="healthFilter" onChange={e => riskGroupSelect(e.target.value)}>
           <option value="healthy">Healthy</option>
           <option value="risk">At Risk</option>
           <option value="critical">Critical</option>
         </select>
 
-        <input className="bg-component2 text-text rounded m-2 py-2 px-2" type="text" placeholder="Search serial number" onChange={e => updateSerialNumber(e.target.value)} onKeyDown={e => serialSearchKeyDown(e.key)}></input>
+        <input name="serialNumberFilter" className="bg-component2 text-text rounded m-2 py-2 px-2" type="text" placeholder="Search serial number" onChange={e => updateSerialNumber(e.target.value)} onKeyDown={e => serialSearchKeyDown(e.key)}></input>
 
         <div style={{minWidth: "15%"}} className="m-2 rounded">
-          <Select placeholder="Select model" classNamePrefix="text-text outline-0 " options={models} isMulti styles={{ menu: (base) => ({ ...base, backgroundColor: "#30343D" }),
+          <Select name="modelFilter" placeholder="Select model" classNamePrefix="text-text outline-0 " options={models} isMulti styles={{ menu: (base) => ({ ...base, backgroundColor: "#30343D" }),
                                                       valueContainer: (base) => ({ ...base, borderTopLeftRadius: '5px', borderBottomLeftRadius: '5px'  }),
                                                       indicatorsContainer: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
                                                       dropdownIndicator: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
@@ -93,7 +98,7 @@ export default function test() {
         </div>
 
         <div style={{minWidth: "15%"}} className="m-2 rounded">
-          <Select onChange={e => timeSelect(e ? e.value : "")} placeholder="Select time" className="basic-single" classNamePrefix="text-text outline-0 " options={times} styles={{ menu: (base) => ({ ...base, backgroundColor: "#30343D" }),
+          <Select name="timeFilter" onChange={e => timeSelect(e ? e.value : "")} placeholder="Select time" className="basic-single" classNamePrefix="text-text outline-0 " options={times} styles={{ menu: (base) => ({ ...base, backgroundColor: "#30343D" }),
                                                       valueContainer: (base) => ({ ...base, borderTopLeftRadius: '5px', borderBottomLeftRadius: '5px'  }),
                                                       indicatorsContainer: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
                                                       dropdownIndicator: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
