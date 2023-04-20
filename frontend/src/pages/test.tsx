@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import React from 'react'
 import Select from 'react-select'
 
+import { MultiSelect } from 'primereact/multiselect';
 
 export default function test() {
   const [grafanaSrc, updateGrafanaSrc] = useState(`http://localhost:3000/d/enayayaya/overview-of-devices-copy?orgId=1&refresh=60s&kiosk`)
@@ -10,6 +11,7 @@ export default function test() {
   const [serialNumber, updateSerialNumber] = useState('All')
   const [time, updateTime] = useState('from=now-6h&to=now')
   const [models, updateModels] = useState([])
+  const [selectedModels, updateSelectedModels] = useState([])
 
   const times = [
     {value: "Last 5 minutes", label: "Last 5 minutes"},
@@ -25,7 +27,7 @@ export default function test() {
 
   function getModels() {
     fetch('http://localhost:9090/api/v1/label/model/values?match[]=device_health%7Bgroup=%22healthy%22%7D')
-    .then(response => response.json()).then(data => {updateModels(data["data"].map((model: string) => {console.log("Models fetched"); return {label: model, value: model} }))})
+    .then(response => response.json()).then(data => {updateModels(data["data"].map((model: string) => {console.log("Models fetched"); return {name: model, code: model} }))})
     // Set timeout ? 
   }
 
@@ -78,19 +80,9 @@ export default function test() {
 
         <input className="bg-component2 text-text rounded m-2 py-2 px-2" type="text" placeholder="Search serial number" onChange={e => updateSerialNumber(e.target.value)} onKeyDown={e => serialSearchKeyDown(e.key)}></input>
 
-        <div style={{minWidth: "15%"}} className="m-2 rounded">
-          <Select placeholder="Select model" classNamePrefix="text-text outline-0 " options={models} isMulti styles={{ menu: (base) => ({ ...base, backgroundColor: "#30343D" }),
-                                                      valueContainer: (base) => ({ ...base, borderTopLeftRadius: '5px', borderBottomLeftRadius: '5px'  }),
-                                                      indicatorsContainer: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
-                                                      dropdownIndicator: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
-                                                      container: (base) => ({ ...base, borderRadius: '5px' }),
-                                                      multiValueLabel: (base) => ({ ...base, color: '#DEDEDE' }),
-                                                      placeholder: (base) => ({ ...base, backgroundColor: "#30343D" }),
-                                                      singleValue: (base) => ({ ...base, color: '#DEDEDE' }),
-                                                      input: (base) => ({ ...base, color: '#DEDEDE' }),
-                                                      multiValue: (base) => ({ ...base, backgroundColor: '#30343D' }),
-                                                      control: (base) => ({ ...base, backgroundColor: '#30343D', borderRadius: '5px', border: 'none' }),}}/>
-        </div>
+        <MultiSelect value={selectedModels} onChange={(e) => updateSelectedModels(e.value)} options={models} optionLabel="name" filter 
+                placeholder="Select Cities" maxSelectedLabels={3} className="w-full md:w-20rem" /> 
+                {/* https://primereact.org/multiselect/ */}
 
         <div style={{minWidth: "15%"}} className="m-2 rounded">
           <Select onChange={e => timeSelect(e ? e.value : "")} placeholder="Select time" className="basic-single" classNamePrefix="text-text outline-0 " options={times} styles={{ menu: (base) => ({ ...base, backgroundColor: "#30343D" }),
