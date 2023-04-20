@@ -3,7 +3,7 @@
 describe('Presence of bar graph test', () => {
   it('Tests that the grafana bar graph is on the page', () => {
     cy.visit('http://localhost:3001')
-    cy.get('iframe[src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2&kiosk"]').should('exist');
+    cy.get('iframe[src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2&kiosk&refresh=20s"]').should('exist');
   })
 })
 
@@ -11,7 +11,7 @@ describe('Presence of bar graph test', () => {
 
 describe('Critical button goes to /health_graph', () => {
   it('Critical button goes to /health_graph', () => {
-    cy.visit('http://localhost:3003')
+    cy.visit('http://localhost:3001')
     cy.get('[id=Critical-goto-btn-id]').click()
     cy.url().should('include', '/health_graphs')
   })
@@ -19,7 +19,7 @@ describe('Critical button goes to /health_graph', () => {
 
 describe('Risk button goes to /health_graph', () => {
   it('Risk button goes to /health_graph', () => {
-    cy.visit('http://localhost:3003')
+    cy.visit('http://localhost:3001')
     cy.get('[id=Risk-goto-btn-id]').click()
     cy.url().should('include', '/health_graphs')
   })
@@ -27,7 +27,7 @@ describe('Risk button goes to /health_graph', () => {
 
 describe('Healthy button goes to /health_graph', () => {
   it('Healthy button goes to /health_graph', () => {
-    cy.visit('http://localhost:3003')
+    cy.visit('http://localhost:3001')
     cy.get('[id=Healthy-goto-btn-id]').click()
     cy.url().should('include', '/health_graphs')
   })
@@ -37,7 +37,7 @@ describe('Healthy button goes to /health_graph', () => {
 
 describe('Presence of Logo', () => {
   it('Checks for the presence of and "PredictIT"', () => {
-    cy.visit('http://localhost:3003')
+    cy.visit('http://localhost:3001')
     cy.contains('PredictIT') 
   })
 })
