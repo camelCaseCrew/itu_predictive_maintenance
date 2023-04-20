@@ -15,28 +15,28 @@ describe('Presence of bar graph test', () => {
   })
 })
 
-describe('Critical button test', () => {
-  it('Tests that the critical button exists and leads to health graphs with critical filter turned on', () => {
+describe('Critical goto button test', () => {
+  it('Tests that the critical goto button exists and leads to health graphs with critical filter turned on', () => {
     cy.visit('http://localhost:3001')
-    cy.get('#Critical-btn-id').click()
+    cy.get('#Critical-goto-btn-id').click()
     cy.url().should('include', '/healthgraphs')
     cy.url().should('include', 'health=critical')
   })
 })
 
-describe('Risk button test', () => {
-  it('Tests that the risk button exists and leads to health graphs with risk filter turned on', () => {
+describe('Risk goto button test', () => {
+  it('Tests that the risk goto button exists and leads to health graphs with risk filter turned on', () => {
     cy.visit('http://localhost:3001')
-    cy.get('#Risk-btn-id').click()
+    cy.get('#Risk-goto-btn-id').click()
     cy.url().should('include', '/healthgraphs')
     cy.url().should('include', 'health=risk')
   })
 })
 
-describe('Healthy button test', () => {
-  it('Tests that the healthy button exists and leads to health graphs with healthy filter turned on', () => {
+describe('Healthy goto button test', () => {
+  it('Tests that the healthy goto button exists and leads to health graphs with healthy filter turned on', () => {
     cy.visit('http://localhost:3001')
-    cy.get('#Healthy-btn-id').click()
+    cy.get('#Healthy-goto-btn-id').click()
     cy.url().should('include', '/healthgraphs')
     cy.url().should('include', 'health=healthy')
   })
