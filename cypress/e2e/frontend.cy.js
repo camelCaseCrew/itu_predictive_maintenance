@@ -15,13 +15,34 @@ describe('Presence of bar graph test', () => {
   })
 })
 
-describe('Health graph button test', () => {
-  it('Tests that the health graph button leads to healthgraphs page', () => {
+describe('Critical button test', () => {
+  it('Tests that the critical button exists and leads to health graphs with critical filter turned on', () => {
     cy.visit('http://localhost:3001')
-    cy.get('#Health-Graphs-id').click()
+    cy.get('#Critical-btn-id').click()
     cy.url().should('include', '/healthgraphs')
+    cy.url().should('include', 'health=critical')
   })
 })
+
+describe('Risk button test', () => {
+  it('Tests that the risk button exists and leads to health graphs with risk filter turned on', () => {
+    cy.visit('http://localhost:3001')
+    cy.get('#Risk-btn-id').click()
+    cy.url().should('include', '/healthgraphs')
+    cy.url().should('include', 'health=risk')
+  })
+})
+
+describe('Healthy button test', () => {
+  it('Tests that the healthy button exists and leads to health graphs with healthy filter turned on', () => {
+    cy.visit('http://localhost:3001')
+    cy.get('#Healthy-btn-id').click()
+    cy.url().should('include', '/healthgraphs')
+    cy.url().should('include', 'health=healthy')
+  })
+})
+
+// Navbar tests
 
 describe('Health graph button test', () => {
   it('Tests that the health graph button leads to healthgraphs page', () => {
@@ -30,6 +51,8 @@ describe('Health graph button test', () => {
     cy.url().should('include', '/healthgraphs')
   })
 })
+
+
 
 // Health Graphs page tests
 
