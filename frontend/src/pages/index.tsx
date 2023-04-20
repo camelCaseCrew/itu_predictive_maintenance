@@ -1,8 +1,7 @@
 import Head from 'next/head'
 import { useState, useEffect } from "react"
 import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
+import OverviewButton from '@/components/OverviewButton'
 
 export default function Home() {
   const [healthyPercentage, updateHealthyPercentage] = useState(0.0)
@@ -43,10 +42,12 @@ export default function Home() {
       <div className=' w-[90%] sm:w-[60%]  mx-auto h-[50%]'>
         <iframe className=' w-full h-full' src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2&kiosk"></iframe>
       </div>
-      <h1 className="text-text">{healthyPercentage}%</h1>
-      <h1 className="text-text">{riskPercentage}%</h1>
-      <h1 className="text-text">{criticalPercentage}%</h1>
-
+      <div className='flex flex-row gap-2 sm:gap-14 lg:gap-20 justify-center mt-3'>
+        <OverviewButton Status='Critical' Id='Critical-goto-btn-id' HexColor='#C4162A' href='/health_graphs' percentage={criticalPercentage} />
+        <OverviewButton Status='At risk' Id='Risk-goto-btn-id' HexColor='#FADE2A' href='/health_graphs' percentage={riskPercentage} />
+        <OverviewButton Status='Healthy' Id='Healthy-goto-btn-id' HexColor='#37872D' href='/health_graphs' percentage={healthyPercentage} />
+        
+      </div>
     </>
   )
 }
