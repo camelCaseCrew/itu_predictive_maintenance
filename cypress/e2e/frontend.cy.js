@@ -23,6 +23,8 @@ describe('Navbar test', () => {
   })
 })
 
+// Health Graphs page tests
+
 describe('Grafana Graph test, will break if test page is removed', () => {
   it('Visits the test page', () => {
     cy.visit('http://localhost:3003/test')
