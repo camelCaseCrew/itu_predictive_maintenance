@@ -1,9 +1,37 @@
 import Head from 'next/head'
+import { useState, useEffect } from "react"
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const [healthyPercentage, updateHealthyPercentage] = useState(0.0)
+  const [riskPercentage, updateRiskPercentage] = useState(0.0)
+  const [criticalPercentage, updateCriticalPercentage] = useState(0.0)
+
+  function getHealthyPercentage() {
+    fetch('http://localhost:9090/api/v1/query?query=count(device_health{group="healthy"})/count(device_health)*100')
+      .then(response => response.json()).then(jsonresponse => {updateHealthyPercentage(jsonresponse.data.result[0].value[1])})
+  }
+
+  function getRiskPercentage() {
+    fetch('http://localhost:9090/api/v1/query?query=count(device_health{group="risk"})/count(device_health)*100')
+      .then(response => response.json()).then(jsonresponse => {updateRiskPercentage(jsonresponse.data.result[0].value[1])})
+  }
+
+  function getCriticalPercentage() {
+    fetch('http://localhost:9090/api/v1/query?query=count(device_health{group="critical"})/count(device_health)*100')
+      .then(response => response.json()).then(jsonresponse => {updateCriticalPercentage(jsonresponse.data.result[0].value[1])})
+  }
+
+
+  useEffect(() => {
+    getHealthyPercentage()
+    getRiskPercentage()
+    getCriticalPercentage()
+  }, [])
+
+
   return (
     <>
       <Head>
@@ -15,6 +43,10 @@ export default function Home() {
       <div className=' sm:w-[90%]  mx-auto h-[50%]'>
         <iframe className=' w-full h-full' src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2&kiosk"></iframe>
       </div>
+      <h1 className="text-text">{healthyPercentage}%</h1>
+      <h1 className="text-text">{riskPercentage}%</h1>
+      <h1 className="text-text">{criticalPercentage}%</h1>
+
     </>
   )
 }
