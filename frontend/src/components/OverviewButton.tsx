@@ -7,7 +7,7 @@ const OverviewButton = ( props: {Status: string, Id: string, Filter: string, Hex
             <Link href={props.href}>
             
             <div className=" w-full h-32 lg:h-36 bg-component1 text-center rounded-[3px] shadow-2xl">
-                <div style={{backgroundColor: props.HexColor}} className={`w-[40%] aspect-square outline inline-block mt-2`}>
+                <div style={{backgroundColor: props.HexColor}} className={`w-[40%] aspect-square outline outline-1 inline-block mt-2`}>
                     <span className=" w-full"> &#8205; </span>
                 </div>
                 <h1 className=" text-xl text-text">{props.Status}</h1>
