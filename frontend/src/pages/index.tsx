@@ -9,6 +9,7 @@ export default function Home() {
   const [criticalPercentage, updateCriticalPercentage] = useState(0.0)
 
   function getHealthyPercentage() {
+    //Finds percentage of healthy devices, ( gets amount of healthy devices divided by amount of all devices times 100 )
     fetch('http://localhost:9090/api/v1/query?query=count(device_health{group="healthy"})/count(device_health)*100')
       .then(response => response.json()).then(jsonresponse => {updateHealthyPercentage(jsonresponse.data.result[0].value[1])})
   }
