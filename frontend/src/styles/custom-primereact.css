@@ -29,6 +29,9 @@
     background-color: #30343D;
 }
 
+.p-multiselect-item.p-highlight {
+    color: #30343D !important;
+}
 
 .p-multiselect-label {
     color: #DEDEDE !important;

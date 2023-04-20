@@ -31,14 +31,14 @@ export default function test() {
   ]
 
   function getModels() {
-    fetch('http://localhost:9090/api/v1/label/model/values?match[]=device_health%7Bgroup=%22healthy%22%7D')
+    fetch(`http://localhost:9090/api/v1/label/model/values?match[]=device_health{group="`+riskGroup+`"}`)
     .then(response => response.json()).then(data => {updateModels(data["data"].map((model: string) => {console.log("Models fetched"); return {name: model, code: model} }))})
     // Set timeout ? 
   }
 
   useEffect(() => {
     getModels()
-    }, [])
+  }, [riskGroup])
 
   function riskGroupSelect(value: string) {
     updateRiskGroup(value)
@@ -64,7 +64,7 @@ export default function test() {
     const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s&var-risk_group=`+riskGroup+`&var-serial_number=`+serialNumber+`&`+newTime+`&kiosk`
     updateGrafanaSrc(updated)
   }
-    
+  
   if(typeof window !== "undefined" && window.document){
     window.addEventListener("blur", function (e) {
       setTimeout(function () {
@@ -85,9 +85,10 @@ export default function test() {
 
         <input name="serialNumberFilter" className="bg-component2 text-text rounded m-2 py-2 px-2" type="text" placeholder="Search serial number" onChange={e => updateSerialNumber(e.target.value)} onKeyDown={e => serialSearchKeyDown(e.key)}></input>
 
-        <MultiSelect value={selectedModels} onChange={(e) => updateSelectedModels(e.value)} options={models} optionLabel="name" filter 
-                placeholder="Select Cities" maxSelectedLabels={3} className="w-full md:w-20rem" /> 
-                {/* https://primereact.org/multiselect/ */}
+        <div style={{minWidth: "15%"}} className="m-2">
+          <MultiSelect value={selectedModels} onChange={(e) => updateSelectedModels(e.value)} options={models} optionLabel="name" filter 
+              placeholder="Select Models" maxSelectedLabels={3} className="w-full md:w-20rem" />
+        </div>
 
         <div style={{minWidth: "15%"}} className="m-2 rounded">
           <Select name="timeFilter" onChange={e => timeSelect(e ? e.value : "")} placeholder="Select time" className="basic-single" classNamePrefix="text-text outline-0 " options={times} styles={{ menu: (base) => ({ ...base, backgroundColor: "#30343D" }),
