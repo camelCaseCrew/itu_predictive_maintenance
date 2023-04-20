@@ -15,6 +15,27 @@ describe('Presence of bar graph test', () => {
   })
 })
 
+describe('Critical health information box content', () => {
+  it('Tests the content of the critical health information box', () => {
+    cy.visit('http://localhost:3001')
+    cy.get('#Critical-health-box').should('contain', /\d+\.\d*%/) // This regex matches with a percentage, e.g. 0.5% or 99.98%
+  })
+})
+
+describe('Risk health information box content', () => {
+  it('Tests the content of the risk health information box', () => {
+    cy.visit('http://localhost:3001')
+    cy.get('#Risk-health-box').should('contain', /\d+\.\d*%/)
+  })
+})
+
+describe('Healthy health information box content', () => {
+  it('Tests the content of the healthy health information box', () => {
+    cy.visit('http://localhost:3001')
+    cy.get('#Healthy-health-box').should('contain', /\d+\.\d*%/)
+  })
+})
+
 describe('Critical goto button test', () => {
   it('Tests that the critical goto button exists and leads to health graphs with critical filter turned on', () => {
     cy.visit('http://localhost:3001')
