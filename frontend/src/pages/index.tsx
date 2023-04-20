@@ -11,26 +11,39 @@ export default function Home() {
   function getHealthyPercentage() {
     //Finds percentage of healthy devices, ( gets amount of healthy devices divided by amount of all devices times 100 )
     fetch('http://localhost:9090/api/v1/query?query=count(device_health{group="healthy"})/count(device_health)*100')
-      .then(response => response.json()).then(jsonresponse => {updateHealthyPercentage(jsonresponse.data.result[0].value[1])})
+      .then(response => response.json())
+      .then(jsonresponse => { 
+          try {updateHealthyPercentage(jsonresponse.data.result[0].value[1])}
+          catch {}
+      })
   }
 
   function getRiskPercentage() {
-    fetch('http://localhost:9090/api/v1/query?query=count(device_health{group="risk"})/count(device_health)*100')
-      .then(response => response.json()).then(jsonresponse => {updateRiskPercentage(jsonresponse.data.result[0].value[1])})
+      fetch('http://localhost:9090/api/v1/query?query=count(device_health{group="risk"})/count(device_health)*100')
+      .then(response => response.json())
+      .then(jsonresponse => { 
+          try {updateRiskPercentage(jsonresponse.data.result[0].value[1])}
+          catch {}
+      })
   }
 
   function getCriticalPercentage() {
     fetch('http://localhost:9090/api/v1/query?query=count(device_health{group="critical"})/count(device_health)*100')
-      .then(response => response.json()).then(jsonresponse => {updateCriticalPercentage(jsonresponse.data.result[0].value[1])})
-  }
+      .then(response => response.json())
+      .then(jsonresponse => { 
+          try {updateCriticalPercentage(jsonresponse.data.result[0].value[1])}
+          catch {}
+      })
+     }
 
-
-  useEffect(() => {
-    getHealthyPercentage()
-    getRiskPercentage()
-    getCriticalPercentage()
+  useEffect(() => { // Code inside this function is only called once per load
+    setInterval(() => { // 15 second interval for fetching percentage data
+      console.log("Interval")
+      getHealthyPercentage()
+      getRiskPercentage()
+      getCriticalPercentage()
+    }, 15000)
   }, [])
-
 
   return (
     <>
@@ -41,7 +54,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className=' w-[90%] md:w-[60%]  mx-auto h-[50%]'>
-        <iframe className=' w-full h-full' src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2&kiosk"></iframe>
+        <iframe className=' w-full h-full' src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2&kiosk&refresh=20s"></iframe>
       </div>
       <div className='flex flex-row gap-2 sm:gap-14 lg:gap-20 justify-center mt-3'>
         <OverviewButton Status='Critical' Id='Critical-goto-btn-id' Filter='critical' HexColor='#C4162A' href='/health_graphs' percentage={criticalPercentage} />
