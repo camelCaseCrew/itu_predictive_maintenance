@@ -1,12 +1,5 @@
 // Home page tests
 
-describe('Presence of Logo', () => {
-  it('Checks for the presence of and "PredictIT"', () => {
-    cy.visit('http://localhost:3001')
-    cy.contains('PredictIT') 
-  })
-})
-
 describe('Presence of bar graph test', () => {
   it('Tests that the grafana bar graph is on the page', () => {
     cy.visit('http://localhost:3001')
@@ -15,6 +8,13 @@ describe('Presence of bar graph test', () => {
 })
 
 // Navbar tests
+
+describe('Presence of Logo', () => {
+  it('Checks for the presence of and "PredictIT"', () => {
+    cy.visit('http://localhost:3003')
+    cy.contains('PredictIT') 
+  })
+})
 
 describe('Health graph button test', () => {
   it('Tests that the health graph button leads to healthgraphs page', () => {
