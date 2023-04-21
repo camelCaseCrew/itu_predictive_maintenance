@@ -7,6 +7,7 @@ function Navbar() {
     return <div id="navbar" className="bg-component1 text-text rounded h-20 flex justify-start place-items-center gap-x-8">
         <Logo></Logo>
         <NavbarButton title="Health-Graphs" href="/healthgraphs"></NavbarButton>
+        <NavbarButton title="History" href="/history"></NavbarButton>
     </div>
 }
 
