@@ -77,7 +77,7 @@ export default function History() {
                 </select>
             </div>
 
-            <div className="bg-component ml-4 mr-4 mt-2 p-4">
+            <div className="bg-component ml-4 mr-4 mt-2 p-4 h-4/6 overflow-auto">
                 <LogData />
             </div>
 
