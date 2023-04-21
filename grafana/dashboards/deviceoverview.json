@@ -167,7 +167,7 @@
           "refId": "Healthy"
         }
       ],
-      "title": "Device Overview",
+      "title": "",
       "type": "bargauge"
     }
   ],
