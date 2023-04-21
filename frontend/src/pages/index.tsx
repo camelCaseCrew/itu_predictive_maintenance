@@ -53,7 +53,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className=' w-[90%] md:w-[60%]  mx-auto h-[50%]'>
+      <div className=' w-[90%] md:w-[60%]  mx-auto h-[50%] mt-8'>
         <iframe className=' w-full h-full' src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2&kiosk&refresh=20s"></iframe>
       </div>
       <div className='flex flex-row gap-2 sm:gap-14 lg:gap-20 justify-center mt-3'>
