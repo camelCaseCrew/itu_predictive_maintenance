@@ -4,8 +4,8 @@ import axios from 'axios';
 import LogDataComponent from './LogDataComponent'
 
 interface DataPoint {
-  timestamp: number;
-  value: number;
+  [0]: number;
+  [1]: number;
 }
 
 interface MetricData {
@@ -13,8 +13,15 @@ interface MetricData {
   values: DataPoint[];
 }
 
+interface FlattenedData {
+  date: number,
+  percentage: string,
+  type: string,
+  serial_number: string
+}
+
 const PrometheusData: React.FC = () => {
-  const [data, setData] = useState<MetricData[]>([]);
+  const [data, setData] = useState<FlattenedData[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -23,7 +30,8 @@ const PrometheusData: React.FC = () => {
         const startTimestamp = Math.floor((Date.now() / 1000) - 60 * 60);
         const endTimestamp = Math.floor(Date.now() / 1000);
         const stepDuration = 15;
-        const query = `device_health{serial_number="MJ1311YNG3K3JA"}`;
+        //const query = `device_health{serial_number="MJ1311YNG3K3JA"}`;
+        const query = `device_health{group="critical"}`;
 
         const response = await axios.get('http://localhost:9090/api/v1/query_range', {
           params: {
@@ -35,7 +43,10 @@ const PrometheusData: React.FC = () => {
         });
 
         if (response.data.status === 'success') {
-          setData(response.data.data.result);
+          console.log(response.data.data.result)
+          const flattenedData: FlattenedData[] = response.data.data.result.map((device: MetricData) => (device.values.map((datapoint: DataPoint) => ( { date: datapoint[0], percentage: datapoint[1], type: device.metric["device_type"], serial_number: device.metric["serial_number"] } )))).flat(1) // idk
+          console.log(flattenedData)
+          setData(flattenedData);
         }
       } catch (error) {
         console.error('Error fetching data from Prometheus:', error);
