@@ -37,12 +37,12 @@ export default function Home() {
      }
 
   useEffect(() => { // Code inside this function is only called once per load
-    setInterval(() => { // 15 second interval for fetching percentage data
+    setInterval(() => { // 20 second interval for fetching percentage data
       console.log("Interval")
       getHealthyPercentage()
       getRiskPercentage()
       getCriticalPercentage()
-    }, 15000)
+    }, 20000)
   }, [])
 
   return (
