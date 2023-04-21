@@ -1,4 +1,4 @@
-
+import LogData from '@/components/LogData'
 export default function test() {
   return (
     <>
@@ -6,6 +6,7 @@ export default function test() {
       <div>
       <iframe src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&from=1679499012553&to=1679520612553&panelId=2"></iframe>
       </div>
+      <LogData />
 
     </>
   )
