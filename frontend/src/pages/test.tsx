@@ -59,7 +59,7 @@ export default function test() {
 
     const newSerials = serials.map(serial => `&var-serial_number=${serial["name"]}` )
     
-    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s${newSerials}&var-risk_group=${group.toLowerCase()}&var-model=${model}&${newTime}&var-device_type=${device}&kiosk`
+    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s${newSerials}&var-risk_group=${group.toLowerCase()}&var-model=${model}&${newTime}&var-device_type=${device.toLowerCase()}&kiosk`
     updateGrafanaSrc(updated)
   }
 
@@ -139,8 +139,8 @@ export default function test() {
 
         <div style={{minWidth: "15%"}} className="m-2 rounded">
           <span className="p-float-label">
-            <Dropdown inputId="deviceFilter" filter value={{name: selectedDevice, code: selectedDevice}} onChange={(e) => deviceSelect(e.value["name"])} options={devices} optionLabel="name" placeholder="Select Device" className="w-full md:w-20rem" />
-            <label htmlFor="deviceFilter">Select Device</label>
+            <Dropdown inputId="deviceFilter" filter value={{name: selectedDevice, code: selectedDevice}} onChange={(e) => deviceSelect(e.value["name"])} options={devices} optionLabel="name" placeholder="Select Device Type" className="w-full md:w-20rem" />
+            <label htmlFor="deviceFilter">Select Device Type</label>
           </span>
         </div>
 
