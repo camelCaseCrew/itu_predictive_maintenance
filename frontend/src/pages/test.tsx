@@ -1,10 +1,6 @@
 import { update } from "cypress/types/lodash"
 import { useState, useEffect } from "react"
 import React from 'react'
-<<<<<<< HEAD
-import Select, { NonceProvider } from 'react-select'
-=======
->>>>>>> 83bbf30f7a7f388b70cb21084c49b2aacde62838
 
 import { MultiSelect } from 'primereact/multiselect';
 import { Dropdown } from 'primereact/dropdown'
@@ -38,19 +34,6 @@ export default function test() {
     {name: "Last 3 years", code: "Last 3 years"},
   ]
 
-<<<<<<< HEAD
-  const devices = [
-    {value: "harddrive", label: "harddrive"},
-    {value: "sensor", label: "sensor"},
-  ]
-
-  function getModels() {
-    fetch(`http://localhost:9090/api/v1/label/model/values?match[]=device_health{group="${riskGroup}"}`)
-    .then(response => response.json()).then(data => {updateModels(data["data"].map((model: string) => {console.log("Models fetched"); return {name: model, code: model} }))})
-    // Set timeout ? 
-  }
-=======
->>>>>>> 83bbf30f7a7f388b70cb21084c49b2aacde62838
 
   useEffect(() => {
     getModels()
@@ -99,11 +82,6 @@ export default function test() {
   function timeSelect(value: string) {
     updateSelectedTime(value)
     updateFilter(undefined, undefined, undefined, value)
-  }
-
-  function deviceSelect(value: string) {
-    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s&var-risk_group=${riskGroup}&var-serial_number=${serialNumber}&${time}&var-device_type=${value}&kiosk`
-    updateGrafanaSrc(updated)
   }
   
   function modelSelect(value: string) {
@@ -155,18 +133,6 @@ export default function test() {
             <MultiSelect inputId="serialFilter" value={selectedSerials} onChange={(e) => serialSelect(e.value)} virtualScrollerOptions={{ itemSize: 43 }} options={serialNumbers} optionLabel="name" filter placeholder="Select Serial Numbers" maxSelectedLabels={3} className="w-full md:w-20rem" /> 
             <label htmlFor="serialFilter">Select Serial Numbers</label>
           </span>
-        </div>
-
-        <div style={{minWidth: "15%"}} className="m-2">
-          <Select name="deviceFilter" onChange={e => deviceSelect(e ? e.value : "")} placeholder="Select Device Type" className="basic-single" classNamePrefix="text-text outline-0 " options={devices} styles={{ menu: (base) => ({ ...base, backgroundColor: "#30343D" }),
-                                                      valueContainer: (base) => ({ ...base, borderTopLeftRadius: '5px', borderBottomLeftRadius: '5px'  }),
-                                                      indicatorsContainer: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
-                                                      dropdownIndicator: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
-                                                      container: (base) => ({ ...base, borderRadius: '5px' }),
-                                                      input: (base) => ({ ...base, color: '#DEDEDE' }),
-                                                      singleValue: (base) => ({ ...base, color: '#DEDEDE' }),
-                                                      placeholder: (base) => ({ ...base, backgroundColor: "#30343D" }),
-                                                      control: (base) => ({ ...base, backgroundColor: '#30343D', borderRadius: '5px', border: 'none' }),}}/>
         </div>
 
       </div>
