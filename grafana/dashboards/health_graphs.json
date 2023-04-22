@@ -28,6 +28,19 @@
   "liveNow": false,
   "panels": [
     {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 11,
+      "panels": [],
+      "title": "Health Graphs",
+      "type": "row"
+    },
+    {
       "datasource": {
         "type": "prometheus",
         "uid": "TSwyULa4z"
@@ -35,7 +48,37 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -48,127 +91,45 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "count (device_health{group=\"healthy\"})"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-green",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "displayName",
-                "value": "Healthy"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "count (device_health{group=\"critical\"})"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-red",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "displayName",
-                "value": "Critical"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "count (device_health{group=\"risk\"})"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "At risk"
-              },
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "yellow",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 6,
-        "y": 0
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 10
       },
-      "id": 2,
+      "id": 4,
+      "maxPerRow": 4,
       "options": {
-        "displayMode": "gradient",
-        "minVizHeight": 10,
-        "minVizWidth": 0,
-        "orientation": "vertical",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
         },
-        "showUnfilled": true
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
-      "pluginVersion": "9.4.3",
+      "repeat": "serial_number",
+      "repeatDirection": "h",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "TSwyULa4z"
           },
-          "editorMode": "code",
-          "expr": "count (device_health{group=\"critical\"})",
-          "hide": false,
+          "editorMode": "builder",
+          "expr": "device_health{group=\"$risk_group\", serial_number=\"$serial_number\"}",
           "legendFormat": "__auto",
           "range": true,
-          "refId": "Critical"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "TSwyULa4z"
-          },
-          "editorMode": "code",
-          "expr": "count (device_health{group=\"risk\"})",
-          "hide": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "At risk"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "TSwyULa4z"
-          },
-          "editorMode": "code",
-          "expr": "count (device_health{group=\"healthy\"})",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "Healthy"
+          "refId": "A"
         }
       ],
-      "title": "Device Overview",
-      "type": "bargauge"
+      "title": "Health graph: $serial_number",
+      "type": "timeseries"
     }
   ],
   "refresh": "",
@@ -244,8 +205,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Overview of devices",
-  "uid": "en2yCsa4k",
+  "title": "Health Graphs",
+  "uid": "enayayaya",
   "version": 1,
   "weekStart": ""
 }
