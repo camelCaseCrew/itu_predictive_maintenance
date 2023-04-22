@@ -41,7 +41,7 @@ describe('Filtering buttons works', () => {
     cy.get('input[name="timeFilter"]').parent().click().contains('Last 1 hour').click()
     cy.get('iframe').invoke('attr', 'src').should('contain', 'from=now-1h&to=now')
 
-    // filter by time
+    // filter by device
     cy.get('input[name="deviceFilter"]').parent().click().contains('Sensor').click()
     cy.get('iframe').invoke('attr', 'src').should('contain', 'var-device_type=sensor')
   })
