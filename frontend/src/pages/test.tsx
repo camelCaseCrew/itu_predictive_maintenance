@@ -16,6 +16,7 @@ export default function test() {
   const [selectedGroup, updateSelectedGroup] = useState('Healthy')
   const [selectedModel, updateSelectedModel] = useState('ST4000DM000')
   const [selectedTime, updateSelectedTime] = useState('Last 6 hours')
+  const [selectedDevice, updateSelectedDevice] = useState('Harddrive')
 
   const times = [
     {name: "Last 5 minutes", code: "Last 5 minutes"},
@@ -34,6 +35,10 @@ export default function test() {
     {name: "Last 3 years", code: "Last 3 years"},
   ]
 
+  const devices = [
+    {name: "Harddrive", code: "Harddrive"},
+    {name: "Sensor", code: "Sensor"},
+  ]
 
   useEffect(() => {
     getModels()
@@ -48,13 +53,13 @@ export default function test() {
   }, [selectedGroup, selectedModel])
 
 
-  function updateFilter(model = selectedModel, group = selectedGroup, serials = selectedSerials, time = selectedTime) {
+  function updateFilter(model = selectedModel, group = selectedGroup, serials = selectedSerials, time = selectedTime, device = selectedDevice) {
     const formattedValue = time.split(" ")[1] + time.split(" ")[2].split("")[0]
     const newTime = `from=now-${formattedValue}&to=now`
 
     const newSerials = serials.map(serial => `&var-serial_number=${serial["name"]}` )
     
-    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s${newSerials}&var-risk_group=${group.toLowerCase()}&var-model=${model}&${newTime}&kiosk`
+    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s${newSerials}&var-risk_group=${group.toLowerCase()}&var-model=${model}&${newTime}&var-device_type=${device}&kiosk`
     updateGrafanaSrc(updated)
   }
 
@@ -72,7 +77,6 @@ export default function test() {
     fetch(`http://localhost:9090/api/v1/label/serial_number/values?match[]=device_health{group="${selectedGroup.toLowerCase()}",model="${selectedModel}"}`)
     .then(response => response.json()).then(data => {updateSerialNumbers(data["data"].map((serial: string) => {return {name: serial, code: serial} }))})
   }
-
 
   function riskGroupSelect(value: string) {
     updateSelectedGroup(value)
@@ -92,6 +96,11 @@ export default function test() {
   function serialSelect(value : []) {
     updateSelectedSerials(value)
     updateFilter(undefined, undefined, value)
+  }
+
+  function deviceSelect(device: string) {
+    updateSelectedDevice(device)
+    updateFilter(undefined, undefined, undefined, undefined, device)
   }
 
   if(typeof window !== "undefined" && window.document){
@@ -125,6 +134,13 @@ export default function test() {
           <span className="p-float-label">
             <Dropdown inputId="timeFilter" filter value={{name: selectedTime, code: selectedTime}} onChange={(e) => timeSelect(e.value["name"])} options={times} optionLabel="name" placeholder="Select Time" className="w-full md:w-20rem" />
             <label htmlFor="timeFilter">Select Time</label>
+          </span>
+        </div>
+
+        <div style={{minWidth: "15%"}} className="m-2 rounded">
+          <span className="p-float-label">
+            <Dropdown inputId="deviceFilter" filter value={{name: selectedDevice, code: selectedDevice}} onChange={(e) => deviceSelect(e.value["name"])} options={devices} optionLabel="name" placeholder="Select Device" className="w-full md:w-20rem" />
+            <label htmlFor="deviceFilter">Select Device</label>
           </span>
         </div>
 
