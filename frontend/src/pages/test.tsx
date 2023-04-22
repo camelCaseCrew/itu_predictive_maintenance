@@ -1,7 +1,7 @@
 import { update } from "cypress/types/lodash"
 import { useState, useEffect } from "react"
 import React from 'react'
-import Select from 'react-select'
+import Select, { NonceProvider } from 'react-select'
 
 import { MultiSelect } from 'primereact/multiselect';
 
@@ -28,6 +28,11 @@ export default function test() {
     {value: "Last 180 days", label: "Last 180 days"},
     {value: "Last 1 year", label: "Last 1 year"},
     {value: "Last 3 years", label: "Last 3 years"},
+  ]
+
+  const devices = [
+    {value: "harddrive", label: "harddrive"},
+    {value: "sensor", label: "sensor"},
   ]
 
   function getModels() {
@@ -64,6 +69,11 @@ export default function test() {
     const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s&var-risk_group=${riskGroup}&var-serial_number=${serialNumber}&${newTime}&kiosk`
     updateGrafanaSrc(updated)
   }
+
+  function deviceSelect(value: string) {
+    const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s&var-risk_group=${riskGroup}&var-serial_number=${serialNumber}&${time}&var-device_type=${value}&kiosk`
+    updateGrafanaSrc(updated)
+  }
   
   if(typeof window !== "undefined" && window.document){
     window.addEventListener("blur", function (e) {
@@ -92,6 +102,18 @@ export default function test() {
 
         <div style={{minWidth: "15%"}} className="m-2 rounded">
           <Select name="timeFilter" onChange={e => timeSelect(e ? e.value : "")} placeholder="Select time" className="basic-single" classNamePrefix="text-text outline-0 " options={times} styles={{ menu: (base) => ({ ...base, backgroundColor: "#30343D" }),
+                                                      valueContainer: (base) => ({ ...base, borderTopLeftRadius: '5px', borderBottomLeftRadius: '5px'  }),
+                                                      indicatorsContainer: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
+                                                      dropdownIndicator: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
+                                                      container: (base) => ({ ...base, borderRadius: '5px' }),
+                                                      input: (base) => ({ ...base, color: '#DEDEDE' }),
+                                                      singleValue: (base) => ({ ...base, color: '#DEDEDE' }),
+                                                      placeholder: (base) => ({ ...base, backgroundColor: "#30343D" }),
+                                                      control: (base) => ({ ...base, backgroundColor: '#30343D', borderRadius: '5px', border: 'none' }),}}/>
+        </div>
+
+        <div style={{minWidth: "15%"}} className="m-2">
+          <Select name="deviceFilter" onChange={e => deviceSelect(e ? e.value : "")} placeholder="Select Device Type" className="basic-single" classNamePrefix="text-text outline-0 " options={devices} styles={{ menu: (base) => ({ ...base, backgroundColor: "#30343D" }),
                                                       valueContainer: (base) => ({ ...base, borderTopLeftRadius: '5px', borderBottomLeftRadius: '5px'  }),
                                                       indicatorsContainer: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
                                                       dropdownIndicator: (base) => ({ ...base, borderTopRightRadius: '5px', borderBottomRightRadius: '5px'  }),
