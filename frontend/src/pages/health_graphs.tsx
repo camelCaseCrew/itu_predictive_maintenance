@@ -10,7 +10,7 @@ import React from 'react'
 import { MultiSelect } from 'primereact/multiselect';
 import { Dropdown } from 'primereact/dropdown'
 
-export default function test() {
+export default function App() {
   const [grafanaSrc, updateGrafanaSrc] = useState(`http://localhost:3000/d/enayayaya/overview-of-devices-copy?orgId=1&refresh=60s&kiosk`)
   
   const [models, updateModels] = useState([])
@@ -152,7 +152,7 @@ export default function test() {
           </span>
         </div>
 
-        <div style={{minWidth: "15%"}} className="m-2 rounded">
+        <div style={{minWidth: "20%"}} className="m-2 rounded">
           <span className="p-float-label">
             <MultiSelect inputId="serialFilter" value={selectedSerials} onChange={(e) => serialSelect(e.value)} virtualScrollerOptions={{ itemSize: 43 }} options={serialNumbers} optionLabel="name" filter maxSelectedLabels={3} className="w-full md:w-20rem" /> 
             <label htmlFor="serialFilter">Select Serial Numbers</label>
