@@ -121,35 +121,35 @@ export default function test() {
 
         <div style={{minWidth: "8%"}} className="m-2">
           <span className="p-float-label">
-            <Dropdown inputId="healthFilter" filter value={{name: selectedGroup, code: selectedGroup.toLowerCase()}} onChange={(e) => riskGroupSelect(e.value["name"])} options={riskGroups} optionLabel="name" placeholder="Select Risk Group" className="w-full md:w-20rem" />
+            <Dropdown inputId="healthFilter" filter value={{name: selectedGroup, code: selectedGroup.toLowerCase()}} onChange={(e) => riskGroupSelect(e.value["name"])} options={riskGroups} optionLabel="name" className="w-full md:w-20rem" />
             <label htmlFor="healthFilter">Select Risk Group</label>
           </span>
         </div>
 
         <div style={{minWidth: "15%"}} className="m-2">
           <span className="p-float-label">
-            <Dropdown inputId="modelFilter" filter value={{name: selectedModel, code: selectedModel}} onChange={(e) => modelSelect(e.value["name"])} options={models} optionLabel="name" placeholder="Select Model" className="w-full md:w-20rem" />
+            <Dropdown inputId="modelFilter" filter value={{name: selectedModel, code: selectedModel}} onChange={(e) => modelSelect(e.value["name"])} options={models} optionLabel="name" className="w-full md:w-20rem" />
             <label htmlFor="modelFilter">Select Model</label>
           </span>
         </div>
 
         <div style={{minWidth: "15%"}} className="m-2 rounded">
           <span className="p-float-label">
-            <Dropdown inputId="timeFilter" filter value={{name: selectedTime, code: selectedTime}} onChange={(e) => timeSelect(e.value["name"])} options={times} optionLabel="name" placeholder="Select Time" className="w-full md:w-20rem" />
+            <Dropdown inputId="timeFilter" filter value={{name: selectedTime, code: selectedTime}} onChange={(e) => timeSelect(e.value["name"])} options={times} optionLabel="name" className="w-full md:w-20rem" />
             <label htmlFor="timeFilter">Select Time</label>
           </span>
         </div>
 
         <div style={{minWidth: "15%"}} className="m-2 rounded">
           <span className="p-float-label">
-            <Dropdown inputId="deviceFilter" filter value={{name: selectedDevice, code: selectedDevice}} onChange={(e) => deviceSelect(e.value["name"])} options={devices} optionLabel="name" placeholder="Select Device Type" className="w-full md:w-20rem" />
+            <Dropdown inputId="deviceFilter" filter value={{name: selectedDevice, code: selectedDevice}} onChange={(e) => deviceSelect(e.value["name"])} options={devices} optionLabel="name" className="w-full md:w-20rem" />
             <label htmlFor="deviceFilter">Select Device Type</label>
           </span>
         </div>
 
         <div style={{minWidth: "15%"}} className="m-2 rounded">
           <span className="p-float-label">
-            <MultiSelect inputId="serialFilter" value={selectedSerials} onChange={(e) => serialSelect(e.value)} virtualScrollerOptions={{ itemSize: 43 }} options={serialNumbers} optionLabel="name" filter placeholder="Select Serial Numbers" maxSelectedLabels={3} className="w-full md:w-20rem" /> 
+            <MultiSelect inputId="serialFilter" value={selectedSerials} onChange={(e) => serialSelect(e.value)} virtualScrollerOptions={{ itemSize: 43 }} options={serialNumbers} optionLabel="name" filter maxSelectedLabels={3} className="w-full md:w-20rem" /> 
             <label htmlFor="serialFilter">Select Serial Numbers</label>
           </span>
         </div>
