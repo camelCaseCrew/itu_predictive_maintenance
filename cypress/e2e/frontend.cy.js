@@ -2,13 +2,13 @@ import 'cypress-iframe';
 
 describe('Preliminary front end test', () => {
   it('Visits the frontend website', () => {
-    cy.visit('http://localhost:3003/test') 
+    cy.visit('http://localhost:3001/test') 
   })
 })
 
 describe('Grafana Graph test, will break if test page is removed', () => {
   it('Visits the test page', () => {
-    cy.visit('http://localhost:3003/test')
+    cy.visit('http://localhost:3001/test')
     cy.get('iframe[src="http://localhost:3000/d/enayayaya/overview-of-devices-copy?orgId=1&refresh=60s&kiosk"]').should('exist'); 
     // ^hardcoded for the homepage graph^
   })
@@ -16,7 +16,7 @@ describe('Grafana Graph test, will break if test page is removed', () => {
 
 describe('Filtering buttons works', () => {
   it('Checks that filtering buttons have been created', () => {
-    cy.visit('http://localhost:3003/test')
+    cy.visit('http://localhost:3001/test')
 
     // check filtering buttons exist
     cy.get('input[id="healthFilter"]').should('exist')
@@ -52,7 +52,7 @@ describe('Filtering buttons works', () => {
 
 describe('Navbar test', () => {
   it('Ensures functionality of navbar button', () => {
-    cy.visit('http://localhost:3003')
+    cy.visit('http://localhost:3001')
     cy.get('#Health-Graphs-id').click()
     cy.url().should('include', '/healthgraphs')
   })
