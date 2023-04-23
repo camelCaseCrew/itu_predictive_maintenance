@@ -40,19 +40,21 @@ export default function test() {
     {name: "Sensor", code: "Sensor"},
   ]
 
-  useEffect(() => {
-    getModels()
-  }, [selectedGroup])
-
+  // only get risk groups on first render
   useEffect(() => {
     getRiskGroups()
   }, [])
 
+  // update models and serial numbers on every render
+  useEffect(() => {
+    getModels()
+  }, [selectedGroup, selectedDevice])
+
   useEffect(() => {
     getSerialNumbers()
-  }, [selectedGroup, selectedModel])
+  }, [selectedGroup, selectedModel, selectedDevice])
 
-
+  // main function for changing the iframe src depending on the filter chosen
   function updateFilter(model = selectedModel, group = selectedGroup, serials = selectedSerials, time = selectedTime, device = selectedDevice) {
     const formattedValue = time.split(" ")[1] + time.split(" ")[2].split("")[0]
     const newTime = `from=now-${formattedValue}&to=now`
@@ -63,18 +65,19 @@ export default function test() {
     updateGrafanaSrc(updated)
   }
 
+  // queries for prometheus to get right filter labels
   function getRiskGroups() {
     fetch("http://localhost:9090/api/v1/label/group/values")
     .then(response => response.json()).then(data => {updateRiskGroups(data["data"].map((group: string) => {return {name: (group.charAt(0).toUpperCase() + group.slice(1)), code: group} }))})
   }
 
   function getModels() {
-    fetch(`http://localhost:9090/api/v1/label/model/values?match[]=device_health{group="${selectedGroup.toLowerCase()}"}`)
+    fetch(`http://localhost:9090/api/v1/label/model/values?match[]=device_health{device_type="${selectedDevice.toLowerCase()}",group="${selectedGroup.toLowerCase()}"}`)
     .then(response => response.json()).then(data => {updateModels(data["data"].map((model: string) => {console.log("Models fetched"); return {name: model, code: model} }))})
   }
 
   function getSerialNumbers() {
-    fetch(`http://localhost:9090/api/v1/label/serial_number/values?match[]=device_health{group="${selectedGroup.toLowerCase()}",model="${selectedModel}"}`)
+    fetch(`http://localhost:9090/api/v1/label/serial_number/values?match[]=device_health{device_type="${selectedDevice.toLowerCase()}",group="${selectedGroup.toLowerCase()}",model="${selectedModel}"}`)
     .then(response => response.json()).then(data => {updateSerialNumbers(data["data"].map((serial: string) => {return {name: serial, code: serial} }))})
   }
 
