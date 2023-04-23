@@ -9,8 +9,8 @@
     font-family: Roboto;
   }
 }
-@layer components {
-    .btn-primary {
-      @apply bg-component2 hover:bg-component1 drop-shadow-md hover:shadow-lg text-text rounded;
-    }
-  }
+
+/*this disables all events from IFrames, ie. making them readonly*/
+iframe {
+    pointer-events: none;
+}
