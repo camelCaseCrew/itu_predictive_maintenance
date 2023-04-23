@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*this disables all events from IFrames, ie. making them readonly*/
+iframe {
+    pointer-events: none;
+}
