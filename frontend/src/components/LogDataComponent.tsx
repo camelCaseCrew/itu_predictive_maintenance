@@ -41,7 +41,7 @@ const LogDataComponent: React.FC<LogDataComponentProps> = ({ metricData }) => {
         src="/img/flag.png"
         alt="Your Image Description"
         href="http://localhost:3001/test"
-        className="inline-block p-4 cursor-pointer"
+        className="cursor-pointer bg-inherit"
       />
     </div>
   );
