@@ -63,6 +63,6 @@ describe('Navbar test', () => {
   it('Ensures functionality of navbar button', () => {
     cy.visit('http://localhost:3001')
     cy.get('#Health-Graphs-id').click()
-    cy.url().should('include', '/healthgraphs')
+    cy.url().should('include', '/health_graphs')
   })
 })
