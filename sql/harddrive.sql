@@ -102,3 +102,5 @@ ALTER TABLE IF EXISTS public."hard_drive_stats"
     OWNER to postgres;
 
 CREATE INDEX ON public.hard_drive_stats (id);
+
+CREATE TABLE public.prediction_feedback AS TABLE hard_drive_stats WITH NO DATA;
