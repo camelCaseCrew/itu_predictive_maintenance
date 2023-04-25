@@ -28,3 +28,10 @@ describe('Check logo for text', () => {
     cy.contains('PredictIT')
   })
 })
+
+describe('Footer mentions ITU', () => {
+  it('Footer mentions ITU', () => {
+    cy.visit('http://localhost:3003')
+    cy.contains('ITU')
+  })
+})
