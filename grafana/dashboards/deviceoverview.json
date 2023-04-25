@@ -35,7 +35,8 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "fixedColor": "dark-red",
+            "mode": "fixed"
           },
           "mappings": [],
           "thresholds": {
@@ -48,65 +49,7 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "count (device_health{group=\"healthy\"})"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-green",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "displayName",
-                "value": "Healthy"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "count (device_health{group=\"critical\"})"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-red",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "displayName",
-                "value": "Critical"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "count (device_health{group=\"risk\"})"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "At risk"
-              },
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "yellow",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 9,
@@ -124,12 +67,12 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "",
+          "fields": "/^Value$/",
           "values": false
         },
         "showUnfilled": true
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "9.4.7",
       "targets": [
         {
           "datasource": {
@@ -137,10 +80,13 @@
             "uid": "TSwyULa4z"
           },
           "editorMode": "code",
+          "exemplar": false,
           "expr": "count (device_health{group=\"critical\"})",
+          "format": "table",
           "hide": false,
+          "instant": true,
           "legendFormat": "__auto",
-          "range": true,
+          "range": false,
           "refId": "Critical"
         },
         {
@@ -167,7 +113,191 @@
           "refId": "Healthy"
         }
       ],
-      "title": "Device Overview",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "TSwyULa4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "yellow",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 6,
+        "y": 9
+      },
+      "id": 3,
+      "options": {
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^Value$/",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "TSwyULa4z"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "count (device_health{group=\"critical\"})",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "Critical"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "TSwyULa4z"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "count (device_health{group=\"risk\"})",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "At risk"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "TSwyULa4z"
+          },
+          "editorMode": "code",
+          "expr": "count (device_health{group=\"healthy\"})",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "Healthy"
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "TSwyULa4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-green",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 6,
+        "y": 18
+      },
+      "id": 4,
+      "options": {
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^Value$/",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "TSwyULa4z"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "count (device_health{group=\"critical\"})",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "Critical"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "TSwyULa4z"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "count (device_health{group=\"risk\"})",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "At risk"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "TSwyULa4z"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "count (device_health{group=\"healthy\"})",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Healthy"
+        }
+      ],
       "type": "bargauge"
     }
   ],
@@ -180,7 +310,7 @@
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "critical",
           "value": "critical"
         },
@@ -246,6 +376,6 @@
   "timezone": "",
   "title": "Overview of devices",
   "uid": "en2yCsa4k",
-  "version": 1,
+  "version": 13,
   "weekStart": ""
 }
