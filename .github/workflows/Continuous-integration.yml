@@ -126,3 +126,24 @@ jobs:
         
       - name: Run Python Unit Tests
         run: docker run --network docker_predictive-maintenance-net unit_tests
+
+  test-feedback-storage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Cached LFS checkout
+        uses: nschloe/action-cached-lfs-checkout@v1.1.2
+
+      - name: Run docker-compose up db
+        run: docker compose -f docker/docker-compose.yml up db --detach
+
+      - name: Build unit_tests image
+        run: docker build -t unit_tests ./unit_tests/feedback-storage/
+      
+      - name: Wait 20 seconds
+        run: sleep 20s
+        
+      - name: Run Python Unit Tests
+        run: docker run --network docker_predictive-maintenance-net unit_tests
