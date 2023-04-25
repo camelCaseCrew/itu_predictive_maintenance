@@ -23,7 +23,7 @@ describe('Navbar test', () => {
 
 describe('Check logo for text', () => {
   it('Logo contains the right text', () => {
-    cy.visit('http://localhost:3003')
+    cy.visit('http://localhost:3001')
     cy.contains('Systematic')
     cy.contains('PredictIT')
   })
@@ -31,7 +31,7 @@ describe('Check logo for text', () => {
 
 describe('Footer mentions ITU', () => {
   it('Footer mentions ITU', () => {
-    cy.visit('http://localhost:3003')
+    cy.visit('http://localhost:3001')
     cy.contains('ITU')
   })
 })
