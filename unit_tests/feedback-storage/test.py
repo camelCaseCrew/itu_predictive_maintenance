@@ -15,7 +15,7 @@ class TestTransactions(unittest.TestCase):
         INSERT INTO prediction_feedback
         SELECT *
         FROM hard_drive_stats
-        WHERE id = 1;
+        LIMIT 1;
         """)
 
         cursor.execute("SELECT COUNT(*) FROM prediction_feedback")
@@ -23,7 +23,7 @@ class TestTransactions(unittest.TestCase):
         self.assertFalse(count == 0, "Entry wasn't added to user feedback table")
 
         cursor.execute("DELETE FROM prediction_feedback")
-
+        
         connection.commit()
 
         cursor.close()
