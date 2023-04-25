@@ -56,7 +56,7 @@ export default function Home() {
       <div className=' w-[90%] md:w-[60%]  mx-auto h-[50%] mt-8'>
         <iframe className=' w-full h-full' src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2&kiosk&refresh=20s"></iframe>
       </div>
-      <div className='flex flex-row gap-2 sm:gap-14 lg:gap-20 justify-center mt-3'>
+      <div className='flex flex-row gap-2 sm:gap-14 lg:gap-20 2xl:gap-28 justify-center mt-3'>
         <OverviewButton Status='Critical' Id='Critical-goto-btn-id' Filter='critical' HexColor='#C4162A' href='/health_graphs' percentage={criticalPercentage} />
         <OverviewButton Status='At risk' Id='Risk-goto-btn-id' Filter='risk' HexColor='#FADE2A' href='/health_graphs' percentage={riskPercentage} />
         <OverviewButton Status='Healthy' Id='Healthy-goto-btn-id' Filter='healthy' HexColor='#37872D' href='/health_graphs' percentage={healthyPercentage} />
