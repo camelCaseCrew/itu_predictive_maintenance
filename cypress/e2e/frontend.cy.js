@@ -22,8 +22,8 @@ describe('Navbar test', () => {
 })
 
 describe('Check logo for text', () => {
-  it('Logo has the right ', () => {
-    cy.visit('http://localhost:3001')
+  it('Logo contains the right text', () => {
+    cy.visit('http://localhost:3003')
     cy.contains('Systematic')
     cy.contains('PredictIT')
   })
