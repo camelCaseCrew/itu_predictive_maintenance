@@ -91,7 +91,7 @@ describe('Health graph button test', () => {
 describe('Grafana Graph test, will break if test page is removed', () => {
   it('Visits the test page', () => {
     cy.visit('http://localhost:3001/health_graphs')
-    cy.get('iframe[src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&from=1679499012553&to=1679520612553&panelId=2"]').should('exist');
+    cy.get('iframe[src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2"]').should('exist');
     // ^hardcoded for the homepage graph^
   })
 })
