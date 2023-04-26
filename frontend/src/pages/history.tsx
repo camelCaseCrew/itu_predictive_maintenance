@@ -53,19 +53,19 @@ export default function History() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <div className="bg-component1 m-4 p-4">
+            <div className="bg-component1 m-4 p-4 flex place-content-between items-center pr-48 pl-16">
 
                 <MultiSelect value={selectedSerialNumbers} onChange={(e) => updateSelectedSerialNumbers(e.value)} options={serialNumbers} optionLabel="name" filter 
                 placeholder="Serial number" maxSelectedLabels={3} className="w-48" />
                 
-                <select className="bg-component2 text-text rounded m-2 p-4" name="dateFilter">
+                <select className="bg-component2 text-text rounded m-2 p-4 w-48" name="dateFilter">
                     <option value="" disabled selected>Date</option>
                     
                     <option value="desc">Newest to oldest</option>
                     <option value="asc">Oldest to newest</option>
                 </select>
 
-                <select className="bg-component2 text-text rounded m-2 p-4" name="deviceTypeFilter">
+                <select className="bg-component2 text-text rounded m-2 p-4 w-48" name="deviceTypeFilter">
                     <option value="" disabled selected>Type</option>
                     <option value="all">All</option>
                     {deviceTypes.map(type => {
@@ -73,7 +73,7 @@ export default function History() {
                     })}
                 </select>
 
-                <select className="bg-component2 text-text rounded m-2 p-4" name="predictionFilter">
+                <select className="bg-component2 text-text rounded m-2 p-4 w-48" name="predictionFilter">
                     <option value="" disabled selected>Prediction</option>
                     <option value="desc">Highest to lowest</option>
                     <option value="asc">Lowest to highest</option>
