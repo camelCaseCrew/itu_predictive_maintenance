@@ -98,10 +98,10 @@ const PrometheusData: React.FC = () => {
         next={loadMoreData}
         hasMore={hasMore}
         scrollableTarget="parent"
-        loader={<h4 className='text-text'>Loading...</h4>}
+        loader={<h4 className='text-text text-center'>Loading...</h4>}
           endMessage={
-            <p className='text-text'>
-              <b>Yay! You have seen it all</b>
+            <p className='text-text text-center'>
+              <b>No more data</b>
             </p>
           }
         >
