@@ -95,6 +95,8 @@ describe('Grafana Graph test, will break if test page is removed', () => {
 })
 
 
+  // History page related tests
+
   describe('Navbar button for history works', () => {
     it('Ensures functionality of navbar button', () => {
       cy.visit('http://localhost:3001')
