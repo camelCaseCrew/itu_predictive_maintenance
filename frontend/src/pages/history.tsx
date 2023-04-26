@@ -23,15 +23,18 @@ export default function History() {
     }
 
     function getSerialNumbers() {
-        var query = `http://localhost:9090/api/v1/label/serial_number/values`
+        console.log("Getting serial numbers")
+        var query = `http://localhost:9090/api/v1/label/serial_number/values?match[]=device_health{group="risk"}`
         if (selectedDeviceType === "all") {
-            query = `http://localhost:9090/api/v1/label/serial_number/values?match[]=device_health{device_type="${selectedDeviceType}"}`
+            query = `http://localhost:9090/api/v1/label/serial_number/values?match[]=device_health{device_type="${selectedDeviceType}",group="risk"}`
         }
         fetch(query)
         .then(response => response.json())
         .then(data => {
             if (data.status === "success") {
-                updateSerialNumbers(data.data)
+                const mappedData = data.data.map((serial: string) => ({name: serial, code: serial}))
+                console.log(mappedData)
+                updateSerialNumbers(mappedData)
             }
         })
     }
@@ -55,14 +58,14 @@ export default function History() {
                 <MultiSelect value={selectedSerialNumbers} onChange={(e) => updateSelectedSerialNumbers(e.value)} options={serialNumbers} optionLabel="name" filter 
                 placeholder="Serial number" maxSelectedLabels={3} className="w-48" />
                 
-                <select className="bg-component2 text-text rounded m-2 py-2 px-2" name="dateFilter">
+                <select className="bg-component2 text-text rounded m-2 p-4" name="dateFilter">
                     <option value="" disabled selected>Date</option>
                     
                     <option value="desc">Newest to oldest</option>
                     <option value="asc">Oldest to newest</option>
                 </select>
 
-                <select className="bg-component2 text-text rounded m-2 py-2 px-2" name="deviceTypeFilter">
+                <select className="bg-component2 text-text rounded m-2 p-4" name="deviceTypeFilter">
                     <option value="" disabled selected>Type</option>
                     <option value="all">All</option>
                     {deviceTypes.map(type => {
@@ -70,7 +73,7 @@ export default function History() {
                     })}
                 </select>
 
-                <select className="bg-component2 text-text rounded m-2 py-2 px-2" name="predictionFilter">
+                <select className="bg-component2 text-text rounded m-2 p-4" name="predictionFilter">
                     <option value="" disabled selected>Prediction</option>
                     <option value="desc">Highest to lowest</option>
                     <option value="asc">Lowest to highest</option>
