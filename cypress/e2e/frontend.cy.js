@@ -8,7 +8,7 @@ describe('Presence of bar graph test', () => {
     it('Tests that the grafana bar graph is on the page', () => {
       cy.viewport(key.viewportWidth, key.viewportHeight)
       cy.visit('http://localhost:3001')
-      cy.get('iframe[src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2&kiosk&refresh=20s"]').should('exist');
+      cy.get('iframe[src="http://localhost:3000/d/enayayaya/overview-of-devices-copy?orgId=1&refresh=60s&kiosk"]').should('exist');
     })
   })
 })
@@ -43,7 +43,7 @@ describe('Check that each row has Max 4 graphs on health_graphs page', () => {
 describe('Grafana Graph test, will break if health_graphs page is removed', () => {
   it('Visits the test page', () => {
     cy.visit('http://localhost:3001/health_graphs')
-    cy.get('iframe[src="http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=60s&kiosk"]').should('exist'); 
+    cy.get('iframe[src="http://localhost:3000/d/enayayaya/overview-of-devices-copy?orgId=1&refresh=60s&kiosk"]').should('exist'); 
   })
 })
 
