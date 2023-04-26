@@ -21,29 +21,34 @@ const LogDataComponent: React.FC<LogDataComponentProps> = ({ metricData }) => {
     useEffect(() => {
         const percentage = parseFloat(metricData.percentage) * 100
         if (percentage > 50) {
-            updateStyle("bg-critical opacity-50")
+            updateStyle("bg-critical bg-opacity-40")
         } else if (percentage < 10) {
-            updateStyle("bg-ok opacity-50")
+            updateStyle("bg-ok bg-opacity-40")
         } else {
-            updateStyle("bg-risk opacity-50")
+            updateStyle("bg-risk bg-opacity-40")
         }
     }, [])
 
     
 
   return (
-    <div className={style + " flex place-content-evenly"}>
-      <p className="text-white inline-block p-4 opacity-100">{ metricData.serial_number }</p>
-      <p className="text-white inline-block p-4 opacity-100">{ metricData.date }</p>
-      <p className="text-white inline-block p-4 opacity-100">{ metricData.type }</p>
-      <p className="text-white inline-block p-4 opacity-100">{ metricData.percentage }</p>
-      <ImageButton
+    <div className="flex place-content-between m-2 p-2 items-center">
+    <div className={style + " flex place-content-between items-center grow p-3 mr-16 pr-8 pl-8"}>
+      <p className="text-white inline-block p-4 opacity-100 align-middle">{ metricData.serial_number }</p>
+      <p className="text-white inline-block p-4 opacity-100 align-middle">{ metricData.date }</p>
+      <p className="text-white inline-block p-4 opacity-100 align-middle">{ metricData.type }</p>
+      <p className="text-white inline-block p-4 opacity-100 align-middle">{ metricData.percentage }</p>
+      
+    </div>
+    <ImageButton
         src="/img/flag.png"
         alt="Your Image Description"
         href="http://localhost:3001/test"
-        className="cursor-pointer p-4 inline-block border-separate bg-white"
+        className="cursor-pointer p-4 inline-block border-separate bg-component1"
       />
+
     </div>
+
   );
 };
 
