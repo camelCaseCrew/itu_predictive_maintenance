@@ -1,3 +1,5 @@
+import BackButton from "@/components/BackButton"
+
 //this is a very hacky solution that essentially detects when the window is no longer the focus
 //ie. you have focused on the Grafana Embed, and changes the focus to the window. This is done
 //to prevent exiting kiosk mode on the Grafana embed, however a better solution could be
@@ -14,6 +16,7 @@ export default function App() {
 
   return (
     <>
+      <BackButton></BackButton>
       <h3 className=" font-bold text-gray-700 text-center" > Health Graphs</h3>
       <div className="h-screen w-[100%]">
         {/*This source is a link to the grafana dashboard with uid=enayayaya in kiosk mode*/}
