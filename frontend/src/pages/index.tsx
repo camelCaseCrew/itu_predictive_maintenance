@@ -54,24 +54,27 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className=' w-[90%] md:w-[80%] mx-auto mt-8 flex flex-wrap  flex-row justify-center'>
-      <ClickableIframe
-        Id='Critical-goto-graph-id'
-        src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2"
-        redirectUrl="http://localhost:3001/health_graphs"
-      />
+      
+      <div className='mt-8 mb-4 flex flex-row justify-center'>
+        
+        <ClickableIframe
+          Id='Critical-goto-graph-id'
+          src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2&refresh=15s"
+          redirectUrl="http://localhost:3001/health_graphs"
+        />
 
-      <ClickableIframe
-        src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=3"
-        Id='Risk-goto-graph-id'
-        redirectUrl="http://localhost:3001/health_graphs"
-      />
+        <ClickableIframe
+          src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=3&refresh=15s"
+          Id='Risk-goto-graph-id'
+          redirectUrl="http://localhost:3001/health_graphs"
+        />
 
-      <ClickableIframe
-        src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=4"
-        Id='Healthy-goto-graph-id'
-        redirectUrl="http://localhost:3001/health_graphs"
-      />
+        <ClickableIframe
+          src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=4&refresh=15s"
+          Id='Healthy-goto-graph-id'
+          redirectUrl="http://localhost:3001/health_graphs"
+        />
+
       </div>
       <div className='flex flex-row gap-2 sm:gap-14 lg:gap-20 2xl:gap-28 justify-center mt-3'>
         <OverviewButton Status='Critical' Id='Critical-goto-btn-id' Filter='critical' HexColor='#C4162A' href='/health_graphs' percentage={criticalPercentage} />

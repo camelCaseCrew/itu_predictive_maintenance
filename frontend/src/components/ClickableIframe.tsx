@@ -9,8 +9,8 @@ const ClickableIframe = (props: { src: string, redirectUrl: string, Id: string }
   };
 
   return (
-    <div id={props.Id} onClick={handleClick} style={{ cursor: 'pointer' }}>
-      <iframe src={props.src} ></iframe>
+    <div className="mx-1 sm:mx-6 lg:mx-8 2xl:mx-14" id={props.Id} onClick={handleClick} style={{ cursor: 'pointer' }}>
+      <iframe className="w-24 sm:w-28 md:w-32 lg:w-48 2xl:w-60 h-52 md:h-64 lg:h-80" src={props.src}></iframe>
     </div>
   );
 };
