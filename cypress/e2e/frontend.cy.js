@@ -91,7 +91,7 @@ describe('Back button test', () => {
     cy.visit('http://localhost:3001')
     cy.visit('http://localhost:3001/health_graphs')
     cy.get('#Back-Button').click()
-    cy.url().should('equal', 'http://localhost:3001')
+    cy.url().should('equal', 'http://localhost:3001/')
   })
 })
 
