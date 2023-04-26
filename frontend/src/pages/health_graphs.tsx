@@ -10,7 +10,12 @@ import React from 'react'
 import { MultiSelect } from 'primereact/multiselect';
 import { Dropdown } from 'primereact/dropdown'
 
+import 'primeicons/primeicons.css';
+import { Button } from 'primereact/button'
+
 export default function App() {
+  const [clickedMenu, setClickedMenu] = useState(false)
+
   const [grafanaSrc, updateGrafanaSrc] = useState(`http://localhost:3000/d/enayayaya/overview-of-devices-copy?orgId=1&refresh=60s&kiosk`)
   
   const [models, updateModels] = useState([])
@@ -122,44 +127,55 @@ export default function App() {
   return (
     
     <div className="m-4 bg-component1">
-      <div className="flex justify-start place-items-center mx-4 pt-6 pb-2">
+      <div>
 
-        <div style={{minWidth: "8%"}} className="m-2">
+        <div className="flex justify-end md:hidden pt-3 pr-3 pb-3">
+          <Button onClick={() => setClickedMenu(current => !current)} severity="secondary" className="bg-component2" icon="pi pi-bars"></Button>
+        </div>
+
+        <div className={"md:flex justify-start place-items-center " + (clickedMenu ? 'hidden' : '')} id="filters">
+
+        <hr className="md:hidden mx-4 h-px my-2 bg-component2 border-0"></hr>
+
+        <div style={{minWidth: "8%"}} className="pt-6 pb-2 m-2">
           <span className="p-float-label">
             <Dropdown inputId="healthFilter" filter value={{name: selectedGroup, code: selectedGroup.toLowerCase()}} onChange={(e) => riskGroupSelect(e.value["name"])} options={riskGroups} optionLabel="name" className="w-full md:w-20rem" />
             <label htmlFor="healthFilter">Select Risk Group</label>
           </span>
         </div>
 
-        <div style={{minWidth: "15%"}} className="m-2">
+        <div style={{minWidth: "15%"}} className="pt-6 pb-2 m-2">
           <span className="p-float-label">
             <Dropdown inputId="modelFilter" filter value={{name: selectedModel, code: selectedModel}} onChange={(e) => modelSelect(e.value["name"])} options={models} optionLabel="name" className="w-full md:w-20rem" />
             <label htmlFor="modelFilter">Select Model</label>
           </span>
         </div>
 
-        <div style={{minWidth: "15%"}} className="m-2 rounded">
+        <div style={{minWidth: "15%"}} className="pt-6 pb-2 m-2">
           <span className="p-float-label">
             <Dropdown inputId="timeFilter" filter value={{name: selectedTime, code: selectedTime}} onChange={(e) => timeSelect(e.value["name"])} options={times} optionLabel="name" className="w-full md:w-20rem" />
             <label htmlFor="timeFilter">Select Time</label>
           </span>
         </div>
 
-        <div style={{minWidth: "15%"}} className="m-2 rounded">
+        <div style={{minWidth: "15%"}} className="pt-6 pb-2 m-2">
           <span className="p-float-label">
             <Dropdown inputId="deviceFilter" filter value={{name: selectedDevice, code: selectedDevice}} onChange={(e) => deviceSelect(e.value["name"])} options={devices} optionLabel="name" className="w-full md:w-20rem" />
             <label htmlFor="deviceFilter">Select Device Type</label>
           </span>
         </div>
 
-        <div style={{minWidth: "20%"}} className="m-2 rounded">
+        <div style={{minWidth: "20%"}} className="pt-6 pb-2 m-2">
           <span className="p-float-label">
             <MultiSelect inputId="serialFilter" value={selectedSerials} onChange={(e) => serialSelect(e.value)} virtualScrollerOptions={{ itemSize: 43 }} options={serialNumbers} optionLabel="name" filter maxSelectedLabels={3} className="w-full md:w-20rem" /> 
             <label htmlFor="serialFilter">Select Serial Numbers</label>
           </span>
         </div>
-      </div>
 
+        </div>
+
+      </div>
+      
       <div className="h-screen w-[100%]">
         {/*This source is a link to the grafana dashboard with uid=enayayaya in kiosk mode*/}
         <iframe id="devices" className="w-full h-full" loading="lazy" src={grafanaSrc}></iframe>
