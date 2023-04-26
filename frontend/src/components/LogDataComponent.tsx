@@ -32,22 +32,21 @@ const LogDataComponent: React.FC<LogDataComponentProps> = ({ metricData }) => {
     
 
   return (
-    <div className="flex place-content-between m-2 p-2 items-center">
-    <div className={style + " flex place-content-between items-center grow p-1 mr-16 pr-8 pl-8"}>
-      <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center">{ metricData.serial_number }</p>
-      <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center">{ date.toUTCString() }</p>
-      <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center">{ metricData.type }</p>
-      <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center">{ metricData.percentage }</p>
-      
-    </div>
-    <ImageButton
-        src="/img/flag.png"
-        alt="Your Image Description"
-        href="http://localhost:3001/test"
-        className="cursor-pointer p-4 inline-block border-separate bg-component1"
-      />
-
-    </div>
+    <div className="flex place-content-between m-2 p-2 items-center" data-testid="container">
+    <div className={style + " flex place-content-between items-center grow p-1 mr-16 pr-8 pl-8"} data-testid="inner-container">
+    <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="serial-number">{ metricData.serial_number }</p>
+    <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="date">{ date.toUTCString() }</p>
+    <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="type">{ metricData.type }</p>
+    <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="percentage">{ metricData.percentage }</p>
+  </div>
+  <ImageButton
+    src="/img/flag.png"
+    alt="Your Image Description"
+    href="http://localhost:3001/test"
+    className="cursor-pointer p-4 inline-block border-separate bg-component1"
+    testid="image-button"
+  />
+</div>
 
   );
 };

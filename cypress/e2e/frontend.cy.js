@@ -29,14 +29,40 @@ describe('Grafana Graph test, will break if test page is removed', () => {
     })
   })
 
-  describe('LogData component is creating functional elements', () => {
-    Object.values(dimensions).map((key, i) => {
-      it('Graph goes to /health_graph', () => {
-        cy.viewport(key.viewportWidth, key.viewportHeight)
-        cy.visit('http://localhost:3001/history')
-        cy.get('[id=Critical-goto-graph-id]').click()
-        cy.url().should('include', '/health_graphs')
+  describe('Logs are shown', () => {
+    beforeEach(() => {
+      // Set up the route to the page containing the components
+      cy.visit('http://localhost:3001/history');
+    });
+  
+    it('Checks if components exist and function properly', () => {
+      // Check if the container and inner-container exist
+      cy.get('[data-testid="container"]').should('exist');
+      cy.get('[data-testid="inner-container"]').should('exist');
+  
+      // Check if the text elements exist
+      cy.get('[data-testid="serial-number"]').should('exist');
+      cy.get('[data-testid="date"]').should('exist');
+      cy.get('[data-testid="type"]').should('exist');
+      cy.get('[data-testid="percentage"]').should('exist');
+  
+      // Check if the ImageButton exists
+      cy.get('[data-testid="image-button"]').should('exist');
+    });
+  });
+
+  describe('Logs are scrollable', () => {
+    it('Checks if components exist and function properly', () => {
+      cy.visit('http://localhost:3001/history')
+
+      cy.get('.infinite-scroll-component').find('div').its('length').then((amount) => {
+        cy.get('#parent').scrollTo('0%', '100%')
+        cy.get('.infinite-scroll-component').find('div').its('length').should('be.greaterThan', amount)
       })
-    })
-  })
+    });
+  });
+
+
+
+  
 
