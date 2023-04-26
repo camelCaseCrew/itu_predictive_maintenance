@@ -22,9 +22,9 @@ interface FlattenedData {
 }
 
 const PrometheusData: React.FC = () => {
-  const [data, setData] = useState<FlattenedData[]>([]);
+  const [data, setData] = useState<FlattenedData[]>([]); // Data from prometheus
   const [hasMore, setHasMore] = useState(true)
-  const [displayedData, setDisplayedData] = useState<FlattenedData[]>([])
+  const [displayedData, setDisplayedData] = useState<FlattenedData[]>([]) // Data which is acutally displayed
   const [itemsAmount, setItemsAmount] = useState(0)
 
   useEffect(() => { // This hook is only run once when the page is loaded.
@@ -47,9 +47,13 @@ const PrometheusData: React.FC = () => {
         });
 
         if (response.data.status === 'success') {
-          console.log(response.data.data.result)
-          const flattenedData: FlattenedData[] = response.data.data.result.map((device: MetricData) => (device.values.map((datapoint: DataPoint) => ({ date: datapoint[0], percentage: datapoint[1], type: device.metric["device_type"], serial_number: device.metric["serial_number"] })))).flat(1) // idk
-          console.log(flattenedData)
+
+          // Yes i know this is ugly. It reformats data into being of type FlattenedData.
+          const flattenedData: FlattenedData[] = 
+            response.data.data.result.map(
+              (device: MetricData) => (device.values.map(
+                (datapoint: DataPoint) => ({ date: datapoint[0], percentage: datapoint[1], type: device.metric["device_type"], serial_number: device.metric["serial_number"] }))))
+                .flat(1) // This final method takes a list of lists: [['a', 'b'], ['c']] and flattens it: ['a', 'b', 'c']
           setData(flattenedData)
           setHasMore(true)
         }
@@ -62,13 +66,14 @@ const PrometheusData: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log("loading")
+    // load data on startup
     loadMoreData()
   }, [data])
 
+
+  // Called every time one scrolls to the bottom.
+  // Data is taken from 'data' to 'displayedData', and thereafter is rendered
   function loadMoreData() {
-    console.log(data)
-    console.log("Loading data")
 
     const prevItemsAmount = itemsAmount
     var newDisplayedData = displayedData
@@ -76,10 +81,7 @@ const PrometheusData: React.FC = () => {
     for (let i = itemsAmount; i < prevItemsAmount + 10; i++) {
       setItemsAmount(i)
 
-      if (i === data.length) {
-        console.log("No more data")
-        console.log(data.length)
-        console.log(data)
+      if (i === data.length) { // If there is no data left which isn't already displayed
         setHasMore(false)
         break
       }
