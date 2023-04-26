@@ -20,6 +20,8 @@ const LogDataComponent: React.FC<LogDataComponentProps> = ({ metricData }) => {
     const date = new Date (metricData.date * 1000)
     useEffect(() => {
         const percentage = parseFloat(metricData.percentage) * 100
+
+        // Set bg-color based on failure prediction
         if (percentage > 50) {
             updateStyle("bg-critical bg-opacity-40")
         } else if (percentage < 10) {
