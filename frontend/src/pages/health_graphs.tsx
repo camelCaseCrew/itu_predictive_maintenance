@@ -14,7 +14,7 @@ import 'primeicons/primeicons.css';
 import { Button } from 'primereact/button'
 
 export default function App() {
-  const [clickedMenu, setClickedMenu] = useState(false)
+  const [clickedMenu, setClickedMenu] = useState(true)
 
   const [grafanaSrc, updateGrafanaSrc] = useState(`http://localhost:3000/d/enayayaya/overview-of-devices-copy?orgId=1&refresh=60s&kiosk`)
   
@@ -69,7 +69,7 @@ export default function App() {
     const formattedValue = time.split(" ")[1] + time.split(" ")[2].split("")[0]
     const newTime = `from=now-${formattedValue}&to=now`
 
-    const newSerials = serials.map(serial => `&var-serial_number=${serial["name"]}` )
+    const newSerials = serials.map(serial => `&var-serial_number=${serial["name"]}` ).toString().replaceAll(",", "")
     
     const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s${newSerials}&var-risk_group=${group.toLowerCase()}&var-model=${model}&${newTime}&var-device_type=${device.toLowerCase()}&kiosk`
     updateGrafanaSrc(updated)
@@ -127,7 +127,7 @@ export default function App() {
   return (
     
     <div className="m-4 bg-component1">
-      <div>
+      <div className="mx-2">
 
         <div className="flex justify-end md:hidden pt-3 pr-3 pb-3">
           <Button onClick={() => setClickedMenu(current => !current)} severity="secondary" className="bg-component2" icon="pi pi-bars"></Button>
@@ -137,7 +137,7 @@ export default function App() {
 
         <hr className="md:hidden mx-4 h-px my-2 bg-component2 border-0"></hr>
 
-        <div style={{minWidth: "8%"}} className="pt-6 pb-2 m-2">
+        <div style={{minWidth: "12%"}} className="pt-6 pb-2 m-2">
           <span className="p-float-label">
             <Dropdown inputId="healthFilter" filter value={{name: selectedGroup, code: selectedGroup.toLowerCase()}} onChange={(e) => riskGroupSelect(e.value["name"])} options={riskGroups} optionLabel="name" className="w-full md:w-20rem" />
             <label htmlFor="healthFilter">Select Risk Group</label>
@@ -165,7 +165,7 @@ export default function App() {
           </span>
         </div>
 
-        <div style={{minWidth: "20%"}} className="pt-6 pb-2 m-2">
+        <div style={{minWidth: "18%"}} className="pt-6 pb-2 m-2">
           <span className="p-float-label">
             <MultiSelect inputId="serialFilter" value={selectedSerials} onChange={(e) => serialSelect(e.value)} virtualScrollerOptions={{ itemSize: 43 }} options={serialNumbers} optionLabel="name" filter maxSelectedLabels={3} className="w-full md:w-20rem" /> 
             <label htmlFor="serialFilter">Select Serial Numbers</label>
