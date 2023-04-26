@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import LogDataComponent from './LogDataComponent'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 interface DataPoint {
   [0]: number;
@@ -22,8 +23,11 @@ interface FlattenedData {
 
 const PrometheusData: React.FC = () => {
   const [data, setData] = useState<FlattenedData[]>([]);
+  const [hasMore, setHasMore] = useState(true)
+  const [displayedData, setDisplayedData] = useState<FlattenedData[]>([])
+  const [itemsAmount, setItemsAmount] = useState(0)
 
-  useEffect(() => {
+  useEffect(() => { // This hook is only run once when the page is loaded.
     async function fetchData() {
       try {
 
@@ -31,7 +35,7 @@ const PrometheusData: React.FC = () => {
         const endTimestamp = Math.floor(Date.now() / 1000);
         const stepDuration = 15;
         //const query = `device_health{serial_number="MJ1311YNG3K3JA"}`;
-        const query = `device_health{group="critical"}`;
+        const query = `device_health{group="risk"}`;
 
         const response = await axios.get('http://localhost:9090/api/v1/query_range', {
           params: {
@@ -44,23 +48,69 @@ const PrometheusData: React.FC = () => {
 
         if (response.data.status === 'success') {
           console.log(response.data.data.result)
-          const flattenedData: FlattenedData[] = response.data.data.result.map((device: MetricData) => (device.values.map((datapoint: DataPoint) => ( { date: datapoint[0], percentage: datapoint[1], type: device.metric["device_type"], serial_number: device.metric["serial_number"] } )))).flat(1) // idk
+          const flattenedData: FlattenedData[] = response.data.data.result.map((device: MetricData) => (device.values.map((datapoint: DataPoint) => ({ date: datapoint[0], percentage: datapoint[1], type: device.metric["device_type"], serial_number: device.metric["serial_number"] })))).flat(1) // idk
           console.log(flattenedData)
-          setData(flattenedData);
+          setData(flattenedData)
+          setHasMore(true)
         }
       } catch (error) {
         console.error('Error fetching data from Prometheus:', error);
       }
     }
 
-    fetchData();
+    fetchData()
   }, []);
 
+  useEffect(() => {
+    console.log("loading")
+    loadMoreData()
+  }, [data])
+
+  function loadMoreData() {
+    console.log(data)
+    console.log("Loading data")
+
+    const prevItemsAmount = itemsAmount
+    var newDisplayedData = displayedData
+
+    for (let i = itemsAmount; i < prevItemsAmount + 10; i++) {
+      setItemsAmount(i)
+
+      if (i === data.length) {
+        console.log("No more data")
+        console.log(data.length)
+        console.log(data)
+        setHasMore(false)
+        break
+      }
+
+      newDisplayedData.push(data[i])
+    }
+
+    setDisplayedData(newDisplayedData)
+  }
+
+
   return (
-    <div>
-      {data.map((metricData, index) => (
-        <LogDataComponent key={index} metricData={metricData} />
-      ))}
+    <div id="parent" className="overflow-auto h-full">
+      <InfiniteScroll 
+        dataLength={displayedData.length} 
+        next={loadMoreData}
+        hasMore={hasMore}
+        scrollableTarget="parent"
+        loader={<h4 className='text-text'>Loading...</h4>}
+          endMessage={
+            <p className='text-text'>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
+        >
+        {displayedData.map((metricData, index) => (
+          <LogDataComponent key={index} metricData={metricData} />
+        ))}
+      </InfiniteScroll>
+
+      
     </div>
   );
 };
