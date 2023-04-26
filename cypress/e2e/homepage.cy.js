@@ -44,6 +44,7 @@ describe('Risk button goes to /health_graph', () => {
   })
 })
 
+
 describe('Healthy button goes to /health_graph', () => {
   Object.values(dimensions).map((key, i) => {
     it('Healthy button goes to /health_graph', () => {
@@ -60,7 +61,8 @@ describe('Healthy button goes to /health_graph', () => {
 describe('Presence of Logo', () => {
   it('Checks for the presence of and "PredictIT"', () => {
     cy.visit('http://localhost:3001')
-    cy.contains('PredictIT') 
+    cy.contains('Systematic')
+    cy.contains('PredictIT')
   })
 })
 
