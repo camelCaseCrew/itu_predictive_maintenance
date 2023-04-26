@@ -7,7 +7,18 @@ describe('Grafana Graph test, will break if test page is removed', () => {
       cy.get('iframe').should('exist');
     })
   })
-  
+
+// Back button test
+
+describe('Back button test', () => {
+    it('Tests that the back button leads to the previous page', () => {
+        cy.visit('http://localhost:3001')
+        cy.visit('http://localhost:3001/health_graphs')
+        cy.get('#Back-Button').click()
+        cy.url().should('equal', 'http://localhost:3001/')
+    })
+})
+
 // Filtering tests
 
 describe('Filtering buttons exist', () => {
