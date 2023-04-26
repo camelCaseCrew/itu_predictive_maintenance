@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useState, useEffect } from "react"
 import { Inter } from 'next/font/google'
+import ClickableIframe from '@/components/ClickableIframe'
 import OverviewButton from '@/components/OverviewButton'
 
 export default function Home() {
@@ -53,8 +54,22 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className=' w-[90%] md:w-[60%]  mx-auto h-[50%] mt-8'>
-        <iframe className=' w-full h-full' src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2&kiosk&refresh=20s"></iframe>
+      <div className=' w-[90%] md:w-[80%] mx-auto mt-8 flex flex-wrap  flex-row justify-center'>
+      <ClickableIframe
+        
+        src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2"
+        redirectUrl="http://localhost:3003/health_graphs"
+      />
+
+      <ClickableIframe
+        src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=3"
+        redirectUrl="http://localhost:3003/health_graphs"
+      />
+
+      <ClickableIframe
+        src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=4"
+        redirectUrl="http://localhost:3003/health_graphs"
+      />
       </div>
       <div className='flex flex-row gap-2 sm:gap-14 lg:gap-20 2xl:gap-28 justify-center mt-3'>
         <OverviewButton Status='Critical' Id='Critical-goto-btn-id' Filter='critical' HexColor='#C4162A' href='/health_graphs' percentage={criticalPercentage} />
