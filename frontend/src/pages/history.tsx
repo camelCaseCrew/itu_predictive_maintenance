@@ -12,7 +12,7 @@ export default function History() {
     const [selectedSerialNumbers, updateSelectedSerialNumbers] = useState([])
     const [serialNumbers, updateSerialNumbers] = useState([])
 
-    function getDeviceTypes() {
+    function getDeviceTypes() { // Get device types from prometheus
         fetch(`http://localhost:9090/api/v1/label/device_type/values`)
         .then(response => response.json())
         .then(data => {
@@ -23,7 +23,6 @@ export default function History() {
     }
 
     function getSerialNumbers() {
-        console.log("Getting serial numbers")
         var query = `http://localhost:9090/api/v1/label/serial_number/values?match[]=device_health{group="risk"}`
         if (selectedDeviceType === "all") {
             query = `http://localhost:9090/api/v1/label/serial_number/values?match[]=device_health{device_type="${selectedDeviceType}",group="risk"}`
@@ -32,8 +31,7 @@ export default function History() {
         .then(response => response.json())
         .then(data => {
             if (data.status === "success") {
-                const mappedData = data.data.map((serial: string) => ({name: serial, code: serial}))
-                console.log(mappedData)
+                const mappedData = data.data.map((serial: string) => ({name: serial, code: serial})) // Map serial numbers from string to {name: string, code: string}
                 updateSerialNumbers(mappedData)
             }
         })
