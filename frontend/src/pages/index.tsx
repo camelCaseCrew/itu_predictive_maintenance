@@ -56,19 +56,21 @@ export default function Home() {
       </Head>
       <div className=' w-[90%] md:w-[80%] mx-auto mt-8 flex flex-wrap  flex-row justify-center'>
       <ClickableIframe
-        
+        Id='Critical-goto-graph-id'
         src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2"
-        redirectUrl="http://localhost:3003/health_graphs"
+        redirectUrl="http://localhost:3001/health_graphs"
       />
 
       <ClickableIframe
         src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=3"
-        redirectUrl="http://localhost:3003/health_graphs"
+        Id='Risk-goto-graph-id'
+        redirectUrl="http://localhost:3001/health_graphs"
       />
 
       <ClickableIframe
         src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=4"
-        redirectUrl="http://localhost:3003/health_graphs"
+        Id='Healthy-goto-graph-id'
+        redirectUrl="http://localhost:3001/health_graphs"
       />
       </div>
       <div className='flex flex-row gap-2 sm:gap-14 lg:gap-20 2xl:gap-28 justify-center mt-3'>
