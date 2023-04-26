@@ -3,8 +3,8 @@ import Link from "next/link";
 
 const OverviewButton = ( props: {Status: string, Id: string, Filter: string, HexColor: string, href: string, percentage: number} ) => {
     return (
-        <div id={props.Id} className=" w-[25%] sm:w-[18%] md:w-[13%] h-32 ">
-            <Link href={props.href}>
+        <div className=" w-[25%] sm:w-[18%] md:w-[13%] h-32 ">
+            <Link id={props.Id} href={props.href}>
             
             <div className=" w-full h-32 lg:h-36 bg-component1 text-center rounded-[3px] shadow-2xl">
                 <div style={{backgroundColor: props.HexColor}} className={`w-[40%] aspect-square max-w-[80px] outline outline-1 inline-block mt-2`}>
