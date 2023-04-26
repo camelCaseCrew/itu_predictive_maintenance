@@ -33,11 +33,11 @@ const LogDataComponent: React.FC<LogDataComponentProps> = ({ metricData }) => {
 
   return (
     <div className="flex place-content-between m-2 p-2 items-center">
-    <div className={style + " flex place-content-between items-center grow p-3 mr-16 pr-8 pl-8"}>
-      <p className="text-white inline-block p-4 opacity-100 align-middle">{ metricData.serial_number }</p>
-      <p className="text-white inline-block p-4 opacity-100 align-middle">{ metricData.date }</p>
-      <p className="text-white inline-block p-4 opacity-100 align-middle">{ metricData.type }</p>
-      <p className="text-white inline-block p-4 opacity-100 align-middle">{ metricData.percentage }</p>
+    <div className={style + " flex place-content-between items-center grow p-1 mr-16 pr-8 pl-8"}>
+      <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center">{ metricData.serial_number }</p>
+      <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center">{ metricData.date }</p>
+      <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center">{ metricData.type }</p>
+      <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center">{ metricData.percentage }</p>
       
     </div>
     <ImageButton
