@@ -128,7 +128,7 @@ export default function App() {
 
   return (
 
-    <div className="m-4 bg-component1">
+    <div className="m-4 bg-component1 h-[100%]">
       <div className="mx-2">
 
         <div className="flex justify-end md:hidden pt-3 pr-3 pb-3">
@@ -179,9 +179,9 @@ export default function App() {
 
       </div>
 
-      <div className="h-screen w-[100%]">
+      <div className="h-full w-full flex">
         {/*This source is a link to the grafana dashboard with uid=enayayaya in kiosk mode*/}
-        <iframe id="devices" className="w-full h-full" loading="lazy" src={grafanaSrc}></iframe>
+        <iframe id="devices" className="h-full grow" loading="lazy" src={grafanaSrc}></iframe>
       </div>
 
     </div>
