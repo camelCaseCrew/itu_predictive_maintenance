@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import { useState, useEffect } from "react"
-import { Inter } from 'next/font/google'
 import OverviewButton from '@/components/OverviewButton'
 
 export default function Home() {

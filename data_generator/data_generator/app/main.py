@@ -51,7 +51,12 @@ def simulate():
     while True:
         msg = get_record()
         del msg['failure'] # Remove failure key
-        msg['device_type'] = 'harddrive'
+        type_int = random.randint(0, 1)
+        # Choose between 'harddrive' and 'sensor' device type at random
+        if type_int == 0:
+            msg['device_type'] = 'harddrive'
+        else:
+            msg['device_type'] = 'sensor'
         publish_message(msg)
         time.sleep(60./frequency)
 

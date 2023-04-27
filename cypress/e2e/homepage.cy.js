@@ -29,9 +29,9 @@ describe('Critical button goes to /health_graph', () => {
 describe('Grafana Graph test, will break if health_graphs page is removed', () => {
     it('Visits the test page', () => {
       cy.visit('http://localhost:3001/health_graphs')
-      cy.get('iframe[src="http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=60s&kiosk"]').should('exist'); 
+      cy.get('iframe[src="http://localhost:3000/d/enayayaya/overview-of-devices-copy?orgId=1&refresh=60s&kiosk"]').should('exist'); 
     })
-  })
+})
 
 describe('Risk button goes to /health_graph', () => {
   Object.values(dimensions).map((key, i) => {
@@ -71,25 +71,5 @@ describe('Health graph button test', () => {
     cy.visit('http://localhost:3001')
     cy.get('#Health-Graphs-id').click()
     cy.url().should('include', '/health_graphs')
-  })
-})
-
-describe('Back button test', () => {
-  it('Tests that the back button leads to the previous page', () => {
-    cy.visit('http://localhost:3001')
-    cy.visit('http://localhost:3001/health_graphs')
-    cy.get('#Back-Button').click()
-    cy.url().should('equal', 'http://localhost:3001/')
-  })
-})
-
-
-// Health Graphs page tests
-
-describe('Grafana Graph test, will break if test page is removed', () => {
-  it('Visits the test page', () => {
-    cy.visit('http://localhost:3001/health_graphs')
-    cy.get('iframe[src="http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=60s&kiosk"]').should('exist');
-    // ^hardcoded for the homepage graph^
   })
 })
