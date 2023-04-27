@@ -1,264 +1,263 @@
 {
-    "annotations": {
-      "list": [
-        {
-          "builtIn": 1,
-          "datasource": {
-            "type": "grafana",
-            "uid": "-- Grafana --"
-          },
-          "enable": true,
-          "hide": true,
-          "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations & Alerts",
-          "target": {
-            "limit": 100,
-            "matchAny": false,
-            "tags": [],
-            "type": "dashboard"
-          },
-          "type": "dashboard"
-        }
-      ]
-    },
-    "editable": true,
-    "fiscalYearStartMonth": 0,
-    "graphTooltip": 0,
-    "links": [],
-    "liveNow": false,
-    "panels": [
+  "annotations": {
+    "list": [
       {
-        "collapsed": false,
-        "gridPos": {
-          "h": 1,
-          "w": 24,
-          "x": 0,
-          "y": 0
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
         },
-        "id": 11,
-        "panels": [],
-        "title": "Health Graphs",
-        "type": "row"
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
       },
+      "id": 11,
+      "panels": [],
+      "title": "Health Graphs",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "TSwyULa4z"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "id": 4,
+      "maxPerRow": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "repeat": "serial_number",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "TSwyULa4z"
+          },
+          "editorMode": "builder",
+          "expr": "device_health{group=\"$risk_group\", serial_number=\"$serial_number\", model=\"$model\", device_type=\"$device_type\"}",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "$serial_number - $model - $device_type",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "",
+  "revision": 1,
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
       {
+        "current": {
+          "selected": true,
+          "text": "critical",
+          "value": "critical"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "TSwyULa4z"
         },
-        "description": "",
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 0,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "auto",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                }
-              ]
-            }
-          },
-          "overrides": []
+        "definition": "label_values(device_health, group)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Risk group",
+        "multi": false,
+        "name": "risk_group",
+        "options": [],
+        "query": {
+          "query": "label_values(device_health, group)",
+          "refId": "StandardVariableQuery"
         },
-        "gridPos": {
-          "h": 8,
-          "w": 6,
-          "x": 0,
-          "y": 1
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
-        "id": 4,
-        "maxPerRow": 4,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "mode": "single",
-            "sort": "none"
-          }
+        "datasource": {
+          "type": "prometheus",
+          "uid": "TSwyULa4z"
         },
-        "repeat": "serial_number",
-        "repeatDirection": "h",
-        "targets": [
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "TSwyULa4z"
-            },
-            "editorMode": "builder",
-            "expr": "device_health{group=\"$risk_group\", serial_number=\"$serial_number\", model=\"$model\", device_type=\"$device_type\"}",
-            "legendFormat": "__auto",
-            "range": true,
-            "refId": "A"
-          }
-        ],
-        "title": "$serial_number - $model - $device_type",
-        "type": "timeseries"
+        "definition": "label_values(device_health{group=\"$risk_group\", model=\"$model\", device_type=\"$device_type\"}, serial_number)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Serial number",
+        "multi": true,
+        "name": "serial_number",
+        "options": [],
+        "query": {
+          "query": "label_values(device_health{group=\"$risk_group\", model=\"$model\", device_type=\"$device_type\"}, serial_number)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "ST4000DM000",
+          "value": "ST4000DM000"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "TSwyULa4z"
+        },
+        "definition": "label_values(device_health{group=\"$risk_group\"}, model)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Model",
+        "multi": false,
+        "name": "model",
+        "options": [],
+        "query": {
+          "query": "label_values(device_health{group=\"$risk_group\"}, model)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "harddrive",
+          "value": "harddrive"
+        },
+        "definition": "label_values(device_health, device_type)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Device Type",
+        "multi": false,
+        "name": "device_type",
+        "options": [],
+        "query": {
+          "query": "label_values(device_health, device_type)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
-    ],
-    "refresh": "",
-    "revision": 1,
-    "schemaVersion": 38,
-    "style": "dark",
-    "tags": [],
-    "templating": {
-      "list": [
-        {
-          "current": {
-            "selected": true,
-            "text": "critical",
-            "value": "critical"
-          },
-          "datasource": {
-            "type": "prometheus",
-            "uid": "TSwyULa4z"
-          },
-          "definition": "label_values(device_health, group)",
-          "hide": 0,
-          "includeAll": false,
-          "label": "Risk group",
-          "multi": false,
-          "name": "risk_group",
-          "options": [],
-          "query": {
-            "query": "label_values(device_health, group)",
-            "refId": "StandardVariableQuery"
-          },
-          "refresh": 1,
-          "regex": "",
-          "skipUrlSync": false,
-          "sort": 0,
-          "type": "query"
-        },
-        {
-          "current": {
-            "selected": true,
-            "text": [
-              "All"
-            ],
-            "value": [
-              "$__all"
-            ]
-          },
-          "datasource": {
-            "type": "prometheus",
-            "uid": "TSwyULa4z"
-          },
-          "definition": "label_values(device_health{group=\"$risk_group\", model=\"$model\", device_type=\"$device_type\"}, serial_number)",
-          "hide": 0,
-          "includeAll": true,
-          "label": "Serial number",
-          "multi": true,
-          "name": "serial_number",
-          "options": [],
-          "query": {
-            "query": "label_values(device_health{group=\"$risk_group\", model=\"$model\", device_type=\"$device_type\"}, serial_number)",
-            "refId": "StandardVariableQuery"
-          },
-          "refresh": 1,
-          "regex": "",
-          "skipUrlSync": false,
-          "sort": 1,
-          "type": "query"
-        },
-        {
-          "current": {
-            "selected": true,
-            "text": "ST4000DM000",
-            "value": "ST4000DM000"
-          },
-          "datasource": {
-            "type": "prometheus",
-            "uid": "TSwyULa4z"
-          },
-          "definition": "label_values(device_health{group=\"$risk_group\"}, model)",
-          "hide": 0,
-          "includeAll": false,
-          "label": "Model",
-          "multi": false,
-          "name": "model",
-          "options": [],
-          "query": {
-            "query": "label_values(device_health{group=\"$risk_group\"}, model)",
-            "refId": "StandardVariableQuery"
-          },
-          "refresh": 1,
-          "regex": "",
-          "skipUrlSync": false,
-          "sort": 0,
-          "type": "query"
-        },
-        {
-          "current": {
-            "selected": false,
-            "text": "harddrive",
-            "value": "harddrive"
-          },
-          "definition": "label_values(device_health, device_type)",
-          "hide": 0,
-          "includeAll": false,
-          "label": "Device Type",
-          "multi": false,
-          "name": "device_type",
-          "options": [],
-          "query": {
-            "query": "label_values(device_health, device_type)",
-            "refId": "StandardVariableQuery"
-          },
-          "refresh": 1,
-          "regex": "",
-          "skipUrlSync": false,
-          "sort": 0,
-          "type": "query"
-        }
-      ]
-    },
-    "time": {
-      "from": "now-6h",
-      "to": "now"
-    },
-    "timepicker": {},
-    "timezone": "",
-    "title": "Health Graphs",
-    "uid": "enayayaya",
-    "version": 4,
-    "weekStart": ""
-  }
-
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Health Graphs",
+  "uid": "enayayaya",
+  "version": 4,
+  "weekStart": ""
+}
