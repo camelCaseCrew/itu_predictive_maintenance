@@ -1,6 +1,9 @@
 compose_up:
 	docker compose -f docker/docker-compose.yml up -d
 
+compose_up_attached:
+	docker compose -f docker/docker-compose.yml up
+
 build_and_run_docker:
 	./scripts/docker/build_and_run_postgres.sh
 	
