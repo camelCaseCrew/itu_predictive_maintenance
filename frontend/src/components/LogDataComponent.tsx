@@ -21,7 +21,7 @@ const LogDataComponent: React.FC<LogDataComponentProps> = ({ metricData }) => {
     useEffect(() => {
         const percentage = parseFloat(metricData.percentage) * 100
 
-        // Set bg-color based on failure prediction
+        // Set b-color based on failure prediction
         if (percentage > 50) {
             updateStyle("bg-critical bg-opacity-40")
         } else if (percentage < 10) {
@@ -38,8 +38,8 @@ const LogDataComponent: React.FC<LogDataComponentProps> = ({ metricData }) => {
     <div className={style + " flex place-content-between items-center grow p-1 mr-16 pr-8 pl-8"} data-testid="inner-container">
     <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="serial-number">{ metricData.serial_number }</p>
     <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="date">{ date.toUTCString() }</p>
-    <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="type">{ metricData.type }</p>
-    <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="percentage">{ metricData.percentage }</p>
+    <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="type">{ metricData.type.charAt(0).toLocaleUpperCase() + metricData.type.slice(1) }</p>
+    <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="percentage">{ (parseFloat(metricData.percentage) * 100).toFixed(5) + '%' }</p>
   </div>
   <ImageButton
     src="/img/flag.png"
