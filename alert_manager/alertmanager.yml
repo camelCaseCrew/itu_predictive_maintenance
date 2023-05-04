@@ -1,0 +1,22 @@
+route:
+  group_by: ['alertname']
+  group_wait: 30s
+  group_interval: 45s
+  repeat_interval: 1m
+  receiver: 'mail'
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']
+receivers:
+  - name: 'mail'
+    email_configs:
+      - to: 'sijokir745@meidecn.com'
+        require_tls: false
+        from: 'alice@example.com'
+        smarthost: 'mail:25'
+        hello: 'mail'
+        auth_username: 'alice@example.com'
+        auth_password: 'secretpassword'
