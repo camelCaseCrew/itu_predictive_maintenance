@@ -83,7 +83,7 @@ export default function App() {
     const newTime = `from=now-${formattedValue}&to=now`
 
     var allDevicesInArray: any[] = [];
-    
+
     serialNumbers.forEach(v => allDevicesInArray.push(v["name"]))
     
     let newSerials
@@ -149,8 +149,8 @@ export default function App() {
 
   return (
 
-    <div className="m-4 bg-component1 h-[100%]">
-      <div className="mx-2">
+    <div className="m-4">
+      <div className="mx-2 bg-component1 h-[100%]">
 
         <div className="flex justify-end md:hidden pt-3 pr-3 pb-3">
           <Button onClick={() => setClickedMenu(current => !current)} severity="secondary" className="bg-component2" icon="pi pi-bars"></Button>
@@ -200,7 +200,7 @@ export default function App() {
 
       </div>
 
-      <div className="h-full w-full flex">
+      <div className="h-[60vh] w-full flex mt-2">
         {/*This source is a link to the grafana dashboard with uid=enayayaya in kiosk mode*/}
         <iframe id="devices" className="h-full grow" loading="lazy" src={grafanaSrc}></iframe>
       </div>
