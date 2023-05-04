@@ -82,6 +82,21 @@ export default function App() {
     const formattedValue = time.split(" ")[1] + time.split(" ")[2].split("")[0]
     const newTime = `from=now-${formattedValue}&to=now`
 
+    var allDevicesInArray: any[] = [];
+    
+    serialNumbers.forEach(v => allDevicesInArray.push(v["name"]))
+    
+    let newSerials
+
+    if(serials.length > 0) {
+      updateMaxPages(Math.ceil(serials.map(v => v["name"]).length/maxPerPage)) // Math that gets 
+      //console.log("1: " + Math.ceil(serials.map(v => v["name"]).length/maxPerPage))
+      newSerials = getNewSerials(serials.map(v => v["name"]).slice((pageNumber-1)*maxPerPage, (pageNumber-1)*maxPerPage+maxPerPage))
+    } else { // we no serial numbers were selected:
+      updateMaxPages(Math.ceil(allDevicesInArray.length/maxPerPage))
+      //console.log("2: " + Math.ceil(allDevicesInArray.length/maxPerPage))
+      newSerials = getNewSerials(allDevicesInArray.slice((pageNumber-1)*maxPerPage, (pageNumber-1)*maxPerPage+maxPerPage))
+    }
 
     const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s${newSerials}&var-risk_group=${group.toLowerCase()}&var-model=${model}&${newTime}&var-device_type=${device.toLowerCase()}&kiosk`
     updateGrafanaSrc(updated)
