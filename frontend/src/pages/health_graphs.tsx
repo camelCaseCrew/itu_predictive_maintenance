@@ -140,7 +140,6 @@ export default function App() {
   function serialSelect(value: []) {
     updateSelectedSerials(value)
     updateCurrentPage(1) //when filter is updated, set current page to 1
-    updateSelectedSerials([]) //resetting selectedSerials when changing filter
     updateFilter(undefined, undefined, value)
   }
 
