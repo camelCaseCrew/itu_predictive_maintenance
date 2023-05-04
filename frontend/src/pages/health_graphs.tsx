@@ -32,7 +32,7 @@ export default function App() {
   const [selectedTime, updateSelectedTime] = useState('Last 6 hours')
   const [selectedDevice, updateSelectedDevice] = useState('Harddrive')
 
-  const [pages, updatePages] = useState(230)
+  const [maxPages, updateMaxPages] = useState(1)
   const [currentPage, updateCurrentPage] = useState(1)
 
   const times = [
