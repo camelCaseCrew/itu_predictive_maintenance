@@ -119,30 +119,35 @@ export default function App() {
   function riskGroupSelect(value: string) {
     updateSelectedGroup(value)
     updateCurrentPage(1) //when filter is updated, set current page to 1
+    updateSelectedSerials([]) //resetting selectedSerials when changing filter
     updateFilter(undefined, value)
   }
 
   function timeSelect(value: string) {
     updateSelectedTime(value)
     updateCurrentPage(1) //when filter is updated, set current page to 1
+    updateSelectedSerials([]) //resetting selectedSerials when changing filter
     updateFilter(undefined, undefined, undefined, value)
   }
 
   function modelSelect(value: string) {
     updateSelectedModel(value)
     updateCurrentPage(1) //when filter is updated, set current page to 1
+    updateSelectedSerials([]) //resetting selectedSerials when changing filter
     updateFilter(value)
   }
 
   function serialSelect(value: []) {
     updateSelectedSerials(value)
     updateCurrentPage(1) //when filter is updated, set current page to 1
+    updateSelectedSerials([]) //resetting selectedSerials when changing filter
     updateFilter(undefined, undefined, value)
   }
 
   function deviceSelect(device: string) {
     updateSelectedDevice(device)
     updateCurrentPage(1) //when filter is updated, set current page to 1
+    updateSelectedSerials([]) //resetting selectedSerials when changing filter
     updateFilter(undefined, undefined, undefined, undefined, device)
   }
 
