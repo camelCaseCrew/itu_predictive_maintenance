@@ -15,6 +15,8 @@ import { Dropdown } from 'primereact/dropdown'
 import 'primeicons/primeicons.css';
 import { Button } from 'primereact/button'
 
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline'
+
 export default function App() {
   const [clickedMenu, setClickedMenu] = useState(true)
 
@@ -180,16 +182,18 @@ export default function App() {
       </div>
 
       <div className=" justify-center my-2 flex">
-        <div onClick={() => updateCurrentPage(prevPage => prevPage > 1 ? prevPage-1 : prevPage)} className=" w-12 leading-[48px] rounded-md text-center aspect-square bg-component2 text-text cursor-pointer">left</div>
-        <div onClick={() => updateCurrentPage(1)} className=" relative w-5 text-center mx-4 leading-[48px] bg-componen2 text-text cursor-pointer"> 1 
-        <span className=" absolute flex text-xs justify-center bottom-1">min</span> </div>
+        <div onClick={() => updateCurrentPage(prevPage => prevPage > 1 ? prevPage-1 : prevPage)} className=" w-12 leading-[48px] rounded-md text-center aspect-square bg-component2 text-text cursor-pointer">
+          <ChevronLeftIcon className=" scale-50" />
+        </div>
+        <div onClick={() => updateCurrentPage(1)} className=" select-none relative w-5 text-center mx-4 leading-[48px] bg-componen2 text-text cursor-pointer"> 1 </div>
         <input type="number" defaultValue={currentPage} value={currentPage} 
           onChange={(e)=>updateCurrentPage(e.target.valueAsNumber < 1 || Number.isNaN(e.target.valueAsNumber) ? 1 : e.target.valueAsNumber > pages ? pages : e.target.valueAsNumber)} 
           className="bg-component1 border-0 text-text text-md rounded-md w-12 text-center "
         />
-        <div onClick={() => updateCurrentPage(pages)} className=" relative w-5 text-center mx-4 leading-[48px]  bg-componen2 text-text cursor-pointer"> {pages} 
-        <span className=" absolute flex text-xs justify-center bottom-1">max</span> </div>
-        <div onClick={() => updateCurrentPage(prevPage => prevPage < pages ? prevPage+1 : prevPage)} className=" w-12 leading-[48px] rounded-md text-center aspect-square bg-component2 text-text cursor-pointer">right</div>
+        <div onClick={() => updateCurrentPage(pages)} className=" select-none relative w-5 text-center mx-4 leading-[48px]  bg-componen2 text-text cursor-pointer"> {pages}  </div>
+        <div onClick={() => updateCurrentPage(prevPage => prevPage < pages ? prevPage+1 : prevPage)} className=" w-12 leading-[48px] rounded-md text-center aspect-square bg-component2 text-text cursor-pointer">
+          <ChevronRightIcon className=" scale-50" />
+        </div>
       </div>
 
     </div>
