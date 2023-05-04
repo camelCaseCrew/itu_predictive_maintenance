@@ -89,12 +89,10 @@ export default function App() {
     let newSerials
 
     if(serials.length > 0) {
-      updateMaxPages(Math.ceil(serials.map(v => v["name"]).length/maxPerPage)) // Math that gets 
-      //console.log("1: " + Math.ceil(serials.map(v => v["name"]).length/maxPerPage))
+      updateMaxPages(Math.ceil(serials.map(v => v["name"]).length/maxPerPage))
       newSerials = getNewSerials(serials.map(v => v["name"]).slice((pageNumber-1)*maxPerPage, (pageNumber-1)*maxPerPage+maxPerPage))
     } else { // we no serial numbers were selected:
       updateMaxPages(Math.ceil(allDevicesInArray.length/maxPerPage))
-      //console.log("2: " + Math.ceil(allDevicesInArray.length/maxPerPage))
       newSerials = getNewSerials(allDevicesInArray.slice((pageNumber-1)*maxPerPage, (pageNumber-1)*maxPerPage+maxPerPage))
     }
 
