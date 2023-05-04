@@ -1,0 +1,10 @@
+groups:
+  - name: DemoAlerts
+    rules:
+      - alert: InstanceDown 
+        expr: count(device_health{group="critical"})
+        for: 1m
+        labels:
+          severity: low
+        annotations:
+          summary: 'Testing...'
