@@ -121,14 +121,6 @@ export default function App() {
     updateFilter(undefined, undefined, undefined, undefined, device)
   }
 
-  if (typeof window !== "undefined" && window.document) {
-    window.addEventListener("blur", function (e) {
-      setTimeout(function () {
-        window.focus();
-      }, 0);
-    });
-  }
-
   return (
 
     <div className="m-4 bg-component1 h-[100%]">
