@@ -214,16 +214,16 @@ export default function App() {
 
       <div className=" justify-center my-2 flex">
         <div onClick={() => updateCurrentPage(prevPage => prevPage > 1 ? prevPage-1 : prevPage)} className=" w-12 leading-[48px] rounded-md text-center aspect-square bg-component2 text-text cursor-pointer">
-          <ChevronLeftIcon className=" scale-50" />
+          <ChevronLeftIcon className=" scale-50 min-w-[50px]" />
         </div>
-        <div onClick={() => updateCurrentPage(1)} className=" select-none relative w-5 text-center mx-4 leading-[48px] bg-componen2 text-text cursor-pointer"> 1 </div>
+        <div onClick={() => updateCurrentPage(1)} className=" select-none relative w-7 text-center mx-4 leading-[48px] bg-componen2 text-text cursor-pointer"> 1 </div>
         <input type="number" defaultValue={currentPage} value={currentPage} 
           onChange={(e)=>updateCurrentPage(e.target.valueAsNumber < 1 || Number.isNaN(e.target.valueAsNumber) ? 1 : e.target.valueAsNumber > maxPages ? maxPages : e.target.valueAsNumber)} 
           className="bg-component1 border-0 text-text text-md rounded-md w-12 text-center "
         />
-        <div onClick={() => updateCurrentPage(maxPages)} className=" select-none relative w-5 text-center mx-4 leading-[48px]  bg-componen2 text-text cursor-pointer"> {maxPages}  </div>
+        <div onClick={() => updateCurrentPage(maxPages)} className=" select-none relative w-7 text-center mx-4 leading-[48px] bg-componen2 text-text cursor-pointer">{maxPages}</div>
         <div onClick={() => updateCurrentPage(prevPage => prevPage < maxPages ? prevPage+1 : prevPage)} className=" w-12 leading-[48px] rounded-md text-center aspect-square bg-component2 text-text cursor-pointer">
-          <ChevronRightIcon className=" scale-50" />
+          <ChevronRightIcon className=" scale-50 min-w-[50px]" />
         </div>
       </div>
 
