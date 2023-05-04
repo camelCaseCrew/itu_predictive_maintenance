@@ -35,6 +35,8 @@ export default function App() {
   const [maxPages, updateMaxPages] = useState(1)
   const [currentPage, updateCurrentPage] = useState(1)
 
+  const maxPerPage: number = 100
+
   const times = [
     { name: "Last 5 minutes", code: "Last 5 minutes" },
     { name: "Last 15 minutes", code: "Last 15 minutes" },
