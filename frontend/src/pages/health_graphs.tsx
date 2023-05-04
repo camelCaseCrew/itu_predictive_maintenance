@@ -78,7 +78,7 @@ export default function App() {
   }
 
   // main function for changing the iframe src depending on the filter chosen
-  function updateFilter(model = selectedModel, group = selectedGroup, serials = selectedSerials, time = selectedTime, device = selectedDevice) {
+  function updateFilter(model = selectedModel, group = selectedGroup, serials = selectedSerials, time = selectedTime, device = selectedDevice, pageNumber = currentPage) {
     const formattedValue = time.split(" ")[1] + time.split(" ")[2].split("")[0]
     const newTime = `from=now-${formattedValue}&to=now`
 
