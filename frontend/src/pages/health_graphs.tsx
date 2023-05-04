@@ -73,6 +73,10 @@ export default function App() {
     getSerialNumbers()
   }, [selectedGroup, selectedModel, selectedDevice])
 
+  const getNewSerials = (lst: string[]) => {
+    return lst.map(serial => `&var-serial_number=${serial}`).toString().replaceAll(",", "")
+  }
+
   // main function for changing the iframe src depending on the filter chosen
   function updateFilter(model = selectedModel, group = selectedGroup, serials = selectedSerials, time = selectedTime, device = selectedDevice) {
     const formattedValue = time.split(" ")[1] + time.split(" ")[2].split("")[0]
