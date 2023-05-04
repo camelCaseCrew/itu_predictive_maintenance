@@ -143,6 +143,10 @@ export default function App() {
     updateFilter(undefined, undefined, undefined, undefined, device)
   }
 
+  useEffect(() => {
+    updateFilter()
+  }, [currentPage,[]])
+
   return (
 
     <div className="m-4 bg-component1 h-[100%]">
