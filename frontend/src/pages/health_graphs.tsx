@@ -82,7 +82,6 @@ export default function App() {
     const formattedValue = time.split(" ")[1] + time.split(" ")[2].split("")[0]
     const newTime = `from=now-${formattedValue}&to=now`
 
-    const newSerials = serials.map(serial => `&var-serial_number=${serial["name"]}`).toString().replaceAll(",", "")
 
     const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s${newSerials}&var-risk_group=${group.toLowerCase()}&var-model=${model}&${newTime}&var-device_type=${device.toLowerCase()}&kiosk`
     updateGrafanaSrc(updated)
