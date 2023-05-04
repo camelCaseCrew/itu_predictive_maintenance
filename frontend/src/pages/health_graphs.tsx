@@ -30,6 +30,9 @@ export default function App() {
   const [selectedTime, updateSelectedTime] = useState('Last 6 hours')
   const [selectedDevice, updateSelectedDevice] = useState('Harddrive')
 
+  const [pages, updatePages] = useState(230)
+  const [currentPage, updateCurrentPage] = useState(1)
+
   const times = [
     { name: "Last 5 minutes", code: "Last 5 minutes" },
     { name: "Last 15 minutes", code: "Last 15 minutes" },
@@ -182,6 +185,19 @@ export default function App() {
       <div className="h-full w-full flex">
         {/*This source is a link to the grafana dashboard with uid=enayayaya in kiosk mode*/}
         <iframe id="devices" className="h-full grow" loading="lazy" src={grafanaSrc}></iframe>
+      </div>
+
+      <div className=" justify-center my-2 flex">
+        <div onClick={() => updateCurrentPage(prevPage => prevPage > 1 ? prevPage-1 : prevPage)} className=" w-12 leading-[48px] rounded-md text-center aspect-square bg-component2 text-text cursor-pointer">left</div>
+        <div onClick={() => updateCurrentPage(1)} className=" relative w-5 text-center mx-4 leading-[48px] bg-componen2 text-text cursor-pointer"> 1 
+        <span className=" absolute flex text-xs justify-center bottom-1">min</span> </div>
+        <input type="number" defaultValue={currentPage} value={currentPage} 
+          onChange={(e)=>updateCurrentPage(e.target.valueAsNumber < 1 || Number.isNaN(e.target.valueAsNumber) ? 1 : e.target.valueAsNumber > pages ? pages : e.target.valueAsNumber)} 
+          className="bg-component1 border-0 text-text text-md rounded-md w-12 text-center "
+        />
+        <div onClick={() => updateCurrentPage(pages)} className=" relative w-5 text-center mx-4 leading-[48px]  bg-componen2 text-text cursor-pointer"> {pages} 
+        <span className=" absolute flex text-xs justify-center bottom-1">max</span> </div>
+        <div onClick={() => updateCurrentPage(prevPage => prevPage < pages ? prevPage+1 : prevPage)} className=" w-12 leading-[48px] rounded-md text-center aspect-square bg-component2 text-text cursor-pointer">right</div>
       </div>
 
     </div>
