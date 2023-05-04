@@ -31,3 +31,12 @@ scrape_configs:
   # - job_name: 'cadvisor'
   #   static_configs:
   #     - targets: ['cadvisor:8080']
+
+rule_files:
+  - alert.yml
+
+alerting:
+  alertmanagers:
+    - scheme: http
+      static_configs:
+        - targets: [ 'alert_manager:9093' ]
