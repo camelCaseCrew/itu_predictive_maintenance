@@ -139,6 +139,7 @@ services:
       dockerfile: ./docker/alert_manager/Dockerfile
     ports:
       - "9093:9093"
+      - "5000:5000"
     networks:
       - predictive-maintenance-net
     depends_on:
