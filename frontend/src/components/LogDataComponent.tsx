@@ -40,14 +40,17 @@ const LogDataComponent: React.FC<LogDataComponentProps> = ({ metricData }) => {
     <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="date">{ date.toUTCString() }</p>
     <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="type">{ metricData.type.charAt(0).toLocaleUpperCase() + metricData.type.slice(1) }</p>
     <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="percentage">{ (parseFloat(metricData.percentage) * 100).toFixed(5) + '%' }</p>
-  </div>
+    </div>
+  <div className={ " flex place-content-between items-center "} data-testid="img-container">
   <ImageButton
     src="/img/flag.png"
     alt="Your Image Description"
     href="http://localhost:3001/test"
-    className="cursor-pointer p-4 inline-block border-separate bg-component1"
+    className="inline-block cursor-pointer items-center p-4 w-20  bg-component1  "
     testid="image-button"
   />
+  </div>
+ 
 </div>
 
   );

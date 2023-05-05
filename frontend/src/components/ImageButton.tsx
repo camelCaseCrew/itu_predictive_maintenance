@@ -12,7 +12,7 @@ function ImageButton (props:{ src:string, alt:string, href:string, className:str
   };
   
   return <div className={props.className} onClick={handleClick} data-testid={props.testid} role="button">
-  <Image src={props.src} alt={props.alt} width={40} height={40} />
+  <Image src={props.src} alt={props.alt} priority={true} width={40} height={40} />
 </div>
 };
 
