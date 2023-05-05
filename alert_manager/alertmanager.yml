@@ -13,10 +13,10 @@ inhibit_rules:
 receivers:
   - name: 'mail'
     email_configs:
-      - to: 'sijokir745@meidecn.com'
-        require_tls: false
+      - require_tls: false
         from: 'alice@example.com'
         smarthost: 'mail:25'
         hello: 'mail'
         auth_username: 'alice@example.com'
         auth_password: 'secretpassword'
+        to: 'danyal2660@outlook.com'
