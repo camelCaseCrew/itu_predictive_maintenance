@@ -19,4 +19,4 @@ receivers:
         hello: 'mail'
         auth_username: 'alice@example.com'
         auth_password: 'secretpassword'
-        to: 'danyal2660@outlook.com'
+        to: ''
