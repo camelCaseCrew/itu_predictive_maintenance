@@ -61,19 +61,19 @@ export default function Home() {
         <ClickableIframe
           Id='Critical-goto-graph-id'
           src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2&refresh=15s"
-          redirectUrl="http://localhost:3003/health_graphs"
+          redirectUrl="/health_graphs"
         />
 
         <ClickableIframe
           src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=3&refresh=15s"
           Id='Risk-goto-graph-id'
-          redirectUrl="http://localhost:3003/health_graphs"
+          redirectUrl="/health_graphs"
         />
 
         <ClickableIframe
           src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=4&refresh=15s"
           Id='Healthy-goto-graph-id'
-          redirectUrl="http://localhost:3003/health_graphs"
+          redirectUrl="/health_graphs"
         />
 
       </div>
