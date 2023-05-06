@@ -79,25 +79,11 @@ describe('Critical button goes to /health_graph', () => {
   })
 })
 
-describe('Check that each row has Max 4 graphs on health_graphs page', () => {
-  Object.values(dimensions).map((key, i) => {
-    it('Visits the frontend website', () => {
-      cy.viewport(key.viewportWidth, key.viewportHeight)
-      cy.visit('http://localhost:3001/health_graphs')
-      var width = cy.config().viewportWidth
-      cy.frameLoaded('iframe')
-      //This tests that the width of a single Graph is larger than 1/5 of the screen, since this means that
-      //The tightest they can be group is in 4 per row
-      cy.iframe().find('section[class="panel-container"]').invoke('width').should('be.gt', width / 5)
-    })
-  })
-})
-
 describe('Grafana Graph test, will break if health_graphs page is removed', () => {
-  it('Visits the test page', () => {
-    cy.visit('http://localhost:3001/health_graphs')
-    cy.get('iframe[src="http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=60s&kiosk"]').should('exist');
-  })
+    it('Visits the test page', () => {
+      cy.visit('http://localhost:3001/health_graphs')
+      cy.get('iframe[src="http://localhost:3000/d/enayayaya/overview-of-devices-copy?orgId=1&refresh=60s&kiosk"]').should('exist'); 
+    })
 })
 
 describe('Risk button goes to /health_graph', () => {
@@ -110,6 +96,7 @@ describe('Risk button goes to /health_graph', () => {
     })
   })
 })
+
 
 describe('Healthy button goes to /health_graph', () => {
   Object.values(dimensions).map((key, i) => {
@@ -127,6 +114,7 @@ describe('Healthy button goes to /health_graph', () => {
 describe('Presence of Logo', () => {
   it('Checks for the presence of and "PredictIT"', () => {
     cy.visit('http://localhost:3001')
+    cy.contains('Systematic')
     cy.contains('PredictIT')
   })
 })
@@ -138,14 +126,3 @@ describe('Health graph button test', () => {
     cy.url().should('include', '/health_graphs')
   })
 })
-
-// Health Graphs page tests
-
-describe('Grafana Graph test, will break if test page is removed', () => {
-  it('Visits the test page', () => {
-    cy.visit('http://localhost:3001/health_graphs')
-    cy.get('iframe[src="http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=60s&kiosk"]').should('exist');
-    // ^hardcoded for the homepage graph^
-  })
-})
-

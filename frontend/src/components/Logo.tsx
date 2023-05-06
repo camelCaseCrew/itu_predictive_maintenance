@@ -1,14 +1,13 @@
 import React from 'react';
-import Systematic from '../assets/Systematic.png';
-import Image from 'next/image';
 import Link from 'next/link';
 
-function Logo() {
-    return <div className='m-6 text-bold text-4xl'>
+const Logo = () => (
+    <div id='Logo-id' className='m-6'>
         <Link href="/">
-            <h1>PredictIT</h1>
+            <h1 className=' italic relative font-semibold top-2'>Systematic</h1>
+            <h1 className=' text-4xl'>PredictIT</h1>
         </Link>
     </div>
-}
+)
 
 export default Logo;

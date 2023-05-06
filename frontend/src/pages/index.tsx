@@ -1,8 +1,7 @@
 import Head from 'next/head'
 import { useState, useEffect } from "react"
-import { Inter } from 'next/font/google'
-import ClickableIframe from '@/components/ClickableIframe'
 import OverviewButton from '@/components/OverviewButton'
+import ClickableIframe from '@/components/ClickableIframe'
 
 export default function Home() {
   const [healthyPercentage, updateHealthyPercentage] = useState(0.0)
