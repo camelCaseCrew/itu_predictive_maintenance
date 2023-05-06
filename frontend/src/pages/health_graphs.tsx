@@ -192,7 +192,7 @@ export default function App() {
 
       </div>
 
-      <div className="h-full w-full flex">
+      <div id="iframeContainer" className="h-full w-full flex">
         {/*This source is a link to the grafana dashboard with uid=enayayaya in kiosk mode*/}
         <iframe id="devices" className="h-full grow" loading="lazy" src={grafanaSrc}></iframe>
       </div>

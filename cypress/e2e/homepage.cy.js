@@ -8,7 +8,7 @@ describe('Presence of bar graph test', () => {
     it('Tests that the critical grafana bar graph is on the page', () => {
       cy.viewport(key.viewportWidth, key.viewportHeight)
       cy.visit('http://localhost:3001')
-      cy.get('iframe[src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2"]').should('exist');
+      cy.get('#Critical-goto-graph-id').should('exist')
     })
   })
 })
@@ -17,7 +17,7 @@ describe('Presence of bar graph test', () => {
     it('Tests that the risky grafana bar graph is on the page', () => {
       cy.viewport(key.viewportWidth, key.viewportHeight)
       cy.visit('http://localhost:3001')
-      cy.get('iframe[src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=3"]').should('exist');
+      cy.get('#Risk-goto-graph-id').should('exist')
     })
   })
 })
@@ -26,7 +26,7 @@ describe('Presence of bar graph test', () => {
     it('Tests that the healthy grafana bar graph is on the page', () => {
       cy.viewport(key.viewportWidth, key.viewportHeight)
       cy.visit('http://localhost:3001')
-      cy.get('iframe[src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=4"]').should('exist');
+      cy.get('#Healthy-goto-graph-id').should('exist')
     })
   })
 })
@@ -44,6 +44,18 @@ describe('Critical Graph goes to /health_graph', () => {
   })
 })
 
+describe('Critical Graph filters for Critical', () => {
+  Object.values(dimensions).map((key, i) => {
+    it('Graph goes to /health_graph', () => {
+      cy.viewport(key.viewportWidth, key.viewportHeight)
+      cy.visit('http://localhost:3001')
+      cy.get('[id=Critical-goto-graph-id]').click()
+      cy.wait(1000)
+      cy.get('#iframeContainer').children().invoke('attr', 'src').should('contain', 'var-risk_group=critical')
+    })
+  })
+})
+
 describe('Risk Graph goes to /health_graph', () => {
   Object.values(dimensions).map((key, i) => {
     it('Graph goes to /health_graph', () => {
@@ -55,13 +67,37 @@ describe('Risk Graph goes to /health_graph', () => {
   })
 })
 
-describe('Health graph goes to /health_graph', () => {
+describe('Risk Graph filters for Risk', () => {
+  Object.values(dimensions).map((key, i) => {
+    it('Graph goes to /health_graph', () => {
+      cy.viewport(key.viewportWidth, key.viewportHeight)
+      cy.visit('http://localhost:3001')
+      cy.get('[id=Risk-goto-graph-id]').click()
+      cy.wait(1000)
+      cy.get('#iframeContainer').children().invoke('attr', 'src').should('contain', 'var-risk_group=risk')
+    })
+  })
+})
+
+describe('Healthy graph goes to /health_graph', () => {
   Object.values(dimensions).map((key, i) => {
     it('Graph goes to /health_graph', () => {
       cy.viewport(key.viewportWidth, key.viewportHeight)
       cy.visit('http://localhost:3001')
       cy.get('[id=Healthy-goto-graph-id]').click()
       cy.url().should('include', '/health_graphs')
+    })
+  })
+})
+
+describe('Healthy Graph filters for Healthy', () => {
+  Object.values(dimensions).map((key, i) => {
+    it('Graph goes to /health_graph', () => {
+      cy.viewport(key.viewportWidth, key.viewportHeight)
+      cy.visit('http://localhost:3001')
+      cy.get('[id=Healthy-goto-graph-id]').click()
+      cy.wait(1000)
+      cy.get('#iframeContainer').children().invoke('attr', 'src').should('contain', 'var-risk_group=healthy')
     })
   })
 })
@@ -73,8 +109,31 @@ describe('Critical button goes to /health_graph', () => {
     it('Critical button goes to /health_graph', () => {
       cy.viewport(key.viewportWidth, key.viewportHeight)
       cy.visit('http://localhost:3001')
-      cy.get('[id=Critical-goto-btn-id]').click()
+      cy.get('#Critical-goto-btn-idsquare').click()
       cy.url().should('include', '/health_graphs')
+    })
+  })
+})
+describe('Critical got-to button goes to /health_graph', () => {
+  Object.values(dimensions).map((key, i) => {
+    it('Healthy button goes to /health_graph', () => {
+      cy.viewport(key.viewportWidth, key.viewportHeight)
+      cy.visit('http://localhost:3001')
+      cy.get('#Critical-goto-btn-idbutton').click()
+      cy.url().should('include', '/health_graphs')
+    })
+  })
+})
+
+describe('Critical button filters for Critical', () => {
+  Object.values(dimensions).map((key, i) => {
+    it('Critical button goes to /health_graph', () => {
+      cy.viewport(key.viewportWidth, key.viewportHeight)
+      cy.visit('http://localhost:3001')
+      cy.get('#Critical-goto-btn-idsquare').click()
+      cy.wait(1000)
+      cy.get('#iframeContainer').children().invoke('attr', 'src').should('contain', 'var-risk_group=critical')
+      
     })
   })
 })
@@ -82,6 +141,7 @@ describe('Critical button goes to /health_graph', () => {
 describe('Grafana Graph test, will break if health_graphs page is removed', () => {
     it('Visits the test page', () => {
       cy.visit('http://localhost:3001/health_graphs')
+      
       cy.get('iframe[src="http://localhost:3000/d/enayayaya/overview-of-devices-copy?orgId=1&refresh=60s&kiosk"]').should('exist'); 
     })
 })
@@ -91,8 +151,32 @@ describe('Risk button goes to /health_graph', () => {
     it('Risk button goes to /health_graph', () => {
       cy.viewport(key.viewportWidth, key.viewportHeight)
       cy.visit('http://localhost:3001')
-      cy.get('[id=Risk-goto-btn-id]').click()
+      cy.get('#Risk-goto-btn-idsquare').click()
       cy.url().should('include', '/health_graphs')
+    })
+  })
+})
+
+describe('Risk got-to button goes to /health_graph', () => {
+  Object.values(dimensions).map((key, i) => {
+    it('Risk got-to button goes to /health_graph', () => {
+      cy.viewport(key.viewportWidth, key.viewportHeight)
+      cy.visit('http://localhost:3001')
+      cy.get('#Risk-goto-btn-idbutton').click({multiple: true})
+      cy.url().should('include', '/health_graphs')
+    })
+  })
+})
+
+describe('Risk button filters for Risk', () => {
+  Object.values(dimensions).map((key, i) => {
+    it('Risk button filters for Risk', () => {
+      cy.viewport(key.viewportWidth, key.viewportHeight)
+      cy.visit('http://localhost:3001')
+      cy.get('#Risk-goto-btn-idsquare').click()
+      cy.wait(1000)
+      cy.get('#iframeContainer').children().invoke('attr', 'src').should('contain', 'var-risk_group=risk')
+      
     })
   })
 })
@@ -103,7 +187,31 @@ describe('Healthy button goes to /health_graph', () => {
     it('Healthy button goes to /health_graph', () => {
       cy.viewport(key.viewportWidth, key.viewportHeight)
       cy.visit('http://localhost:3001')
-      cy.get('[id=Healthy-goto-btn-id]').click()
+      cy.get('#Healthy-goto-btn-idsquare').click()
+      cy.url().should('include', '/health_graphs')
+    })
+  })
+})
+
+describe('Healthy button filters for Healthy', () => {
+  Object.values(dimensions).map((key, i) => {
+    it('Healthy button goes to /health_graph', () => {
+      cy.viewport(key.viewportWidth, key.viewportHeight)
+      cy.visit('http://localhost:3001')
+      cy.get('#Healthy-goto-btn-idsquare').click()
+      cy.wait(1000)
+      cy.get('#iframeContainer').children().invoke('attr', 'src').should('contain', 'var-risk_group=healthy')
+     
+    })
+  })
+})
+
+describe('Healthy got-to button goes to /health_graph', () => {
+  Object.values(dimensions).map((key, i) => {
+    it('Healthy button goes to /health_graph', () => {
+      cy.viewport(key.viewportWidth, key.viewportHeight)
+      cy.visit('http://localhost:3001')
+      cy.get('#Healthy-goto-btn-idbutton').click({multiple: true})
       cy.url().should('include', '/health_graphs')
     })
   })
@@ -119,10 +227,3 @@ describe('Presence of Logo', () => {
   })
 })
 
-describe('Health graph button test', () => {
-  it('Tests that the health graph button leads to healthgraphs page', () => {
-    cy.visit('http://localhost:3001')
-    cy.get('#Health-Graphs-id').click()
-    cy.url().should('include', '/health_graphs')
-  })
-})
