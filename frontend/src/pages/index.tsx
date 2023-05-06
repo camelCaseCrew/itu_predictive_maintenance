@@ -2,11 +2,13 @@ import Head from 'next/head'
 import { useState, useEffect } from "react"
 import OverviewButton from '@/components/OverviewButton'
 import ClickableIframe from '@/components/ClickableIframe'
+import { useGlobal } from '@/context/global'
 
 export default function Home() {
   const [healthyPercentage, updateHealthyPercentage] = useState(0.0)
   const [riskPercentage, updateRiskPercentage] = useState(0.0)
   const [criticalPercentage, updateCriticalPercentage] = useState(0.0)
+  const {filterInt, changeFilter} = useGlobal();
 
   function getHealthyPercentage() {
     //Finds percentage of healthy devices, ( gets amount of healthy devices divided by amount of all devices times 100 )
@@ -59,19 +61,19 @@ export default function Home() {
         <ClickableIframe
           Id='Critical-goto-graph-id'
           src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=2&refresh=15s"
-          redirectUrl="http://localhost:3001/health_graphs"
+          redirectUrl="http://localhost:3003/health_graphs"
         />
 
         <ClickableIframe
           src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=3&refresh=15s"
           Id='Risk-goto-graph-id'
-          redirectUrl="http://localhost:3001/health_graphs"
+          redirectUrl="http://localhost:3003/health_graphs"
         />
 
         <ClickableIframe
           src="http://localhost:3000/d-solo/en2yCsa4k/overview-of-devices?orgId=1&panelId=4&refresh=15s"
           Id='Healthy-goto-graph-id'
-          redirectUrl="http://localhost:3001/health_graphs"
+          redirectUrl="http://localhost:3003/health_graphs"
         />
 
       </div>
