@@ -2,13 +2,12 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-function ImageButton (props:{ src:string, alt:string, href:string, className:string, testid:string }) {
+function FeedbackButton (props:{ src:string, alt:string, href:string, className:string, testid:string, id:string}) {
 
   const router = useRouter();
 
-  const handleClick = (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
-    router.push(props.href);
+  const handleClick = () => {
+    alert(props.id)
   };
   
   return <div className={props.className} onClick={handleClick} data-testid={props.testid} role="button">
@@ -16,4 +15,4 @@ function ImageButton (props:{ src:string, alt:string, href:string, className:str
 </div>
 };
 
-export default ImageButton;
+export default FeedbackButton;

@@ -1,13 +1,14 @@
 // ReactComponentForMetric.tsx
 import React from 'react';
 import { useState, useEffect } from "react"
-import ImageButton from './ImageButton';
+import FeedbackButton from './FeedbackButton';
 
 interface MetricData {
   date: number,
   percentage: string,
   type: string,
-  serial_number: string
+  serial_number: string,
+  id : string
 }
 
 interface LogDataComponentProps {
@@ -41,12 +42,13 @@ const LogDataComponent: React.FC<LogDataComponentProps> = ({ metricData }) => {
     <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="type">{ metricData.type.charAt(0).toLocaleUpperCase() + metricData.type.slice(1) }</p>
     <p className="text-white inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="percentage">{ (parseFloat(metricData.percentage) * 100).toFixed(5) + '%' }</p>
   </div>
-  <ImageButton
+  <FeedbackButton
     src="/img/flag.png"
     alt="Your Image Description"
     href="http://localhost:3001/test"
     className="cursor-pointer p-4 inline-block border-separate bg-component1"
     testid="image-button"
+    id={metricData.id}
   />
 </div>
 
