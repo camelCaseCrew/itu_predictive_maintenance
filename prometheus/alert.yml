@@ -1,9 +1,8 @@
 groups:
-  - name: DemoAlerts
+  - name: NewCriticalDevice
     rules:
-      - alert: InstanceDown 
-        expr: count(device_health{group="critical"})
-        for: 1m
+      - alert: CriticalDevice 
+        expr: sum by (serial_number, device_type) (device_health{group="critical"})
         labels:
           severity: low
         annotations:
