@@ -27,7 +27,6 @@ const PrometheusData: React.FC = () => {
   const [hasMore, setHasMore] = useState(true)
   const [displayedData, setDisplayedData] = useState<FlattenedData[]>([]) // Data which is acutally displayed
   const [itemsAmount, setItemsAmount] = useState(0)
-  
   function removeDuplicates(flattenedData: any[]) {
     const seenIds = new Set();
     const uniqueData: any[] = [];
@@ -95,9 +94,10 @@ const PrometheusData: React.FC = () => {
 
     const prevItemsAmount = itemsAmount
     var newDisplayedData = displayedData
+    const nextItemsAmount = Math.min(prevItemsAmount + 10, data.length)
+    setItemsAmount(nextItemsAmount)
 
     for (let i = itemsAmount; i < prevItemsAmount + 10; i++) {
-      setItemsAmount(i)
 
       if (i === data.length) { // If there is no data left which isn't already displayed
         setHasMore(false)
