@@ -6,9 +6,14 @@ import { MultiSelect } from 'primereact/multiselect';
 import { useState, useEffect } from "react"
 
 
+interface MultiSelectType {
+    name: string,
+    code: string
+}
+
+
 export default function History() {
-    const [data, setData] = useState<FlattenedData[]>([]); // Data from prometheus
-    const [selectedDeviceTypes, updateSelectedDeviceTypes] = useState([])
+    const [selectedDeviceTypes, updateSelectedDeviceTypes] = useState<MultiSelectType[]>([])
     const [deviceTypes, updateDeviceTypes] = useState([])
     const [selectedSerialNumbers, updateSelectedSerialNumbers] = useState([])
     const [serialNumbers, updateSerialNumbers] = useState([])
@@ -42,7 +47,7 @@ export default function History() {
 
     useEffect(() => {
         getDeviceTypes()
-        getSerialNumbers()
+        getSerialNumbers()        
     }, [])
 
     return (
@@ -80,7 +85,7 @@ export default function History() {
             </div>
 
             <div className="bg-component ml-4 mr-4 mt-2 p-4 h-4/6 overflow-x-auto">
-                <LogData />
+                <LogData types={ selectedDeviceTypes.map(( deviceType ) => {return deviceType.code }) }/>
             </div>
 
         </>
