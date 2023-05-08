@@ -35,7 +35,7 @@ const PrometheusData: React.FC = () => {
         const endTimestamp = Math.floor(Date.now() / 1000);
         const stepDuration = 15;
         //const query = `device_health{serial_number="MJ1311YNG3K3JA"}`;
-        const query = `device_health{group="risk"}`;
+        const query = `device_health{group="healthy"}`;
 
         const response = await axios.get('http://localhost:9090/api/v1/query_range', {
           params: {
