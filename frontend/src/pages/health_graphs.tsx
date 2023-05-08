@@ -168,7 +168,6 @@ export default function App() {
   }, [currentPage,[]])
 
   return (
-
     <div className="m-4">
       <div className="mx-2 bg-component1 h-[100%]">
 
@@ -220,7 +219,7 @@ export default function App() {
 
       </div>
 
-      <div id="iframeContainer className="h-[60vh] w-full flex mt-2">
+      <div id="iframeContainer" className="h-[60vh] w-full flex mt-2">
 
         {/*This source is a link to the grafana dashboard with uid=enayayaya in kiosk mode*/}
         <iframe id="devices" className="h-full grow" loading="lazy" src={grafanaSrc}></iframe>
