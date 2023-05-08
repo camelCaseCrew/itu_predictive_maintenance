@@ -27,10 +27,26 @@ const PrometheusData: React.FC = () => {
   const [hasMore, setHasMore] = useState(true)
   const [displayedData, setDisplayedData] = useState<FlattenedData[]>([]) // Data which is acutally displayed
   const [itemsAmount, setItemsAmount] = useState(0)
+  
+  function removeDuplicates(flattenedData: any[]) {
+    const seenIds = new Set();
+    const uniqueData: any[] = [];
 
+    flattenedData.forEach((data: { id: any; }) => {
+      const dataId = data.id;
+      if (!seenIds.has(dataId)) {
+        seenIds.add(dataId);
+        uniqueData.push(data);
+      }
+    });
+
+    return uniqueData;
+  }
   useEffect(() => { // This hook is only run once when the page is loaded.
     async function fetchData() {
       try {
+
+
 
         const startTimestamp = Math.floor((Date.now() / 1000) - 60 * 60);
         const endTimestamp = Math.floor(Date.now() / 1000);
@@ -50,12 +66,13 @@ const PrometheusData: React.FC = () => {
         if (response.data.status === 'success') {
 
           // Yes i know this is ugly. It reformats data into being of type FlattenedData.
-          const flattenedData: FlattenedData[] = 
+          const flattenedData: FlattenedData[] =
             response.data.data.result.map(
               (device: MetricData) => (device.values.map(
                 (datapoint: DataPoint) => ({ date: datapoint[0], percentage: datapoint[1], type: device.metric["device_type"], serial_number: device.metric["serial_number"], id: device.metric["id"] }))))
-                .flat(1) // This final method takes a list of lists: [['a', 'b'], ['c']] and flattens it: ['a', 'b', 'c']
-          setData(flattenedData)
+              .flat(1) // This final method takes a list of lists: [['a', 'b'], ['c']] and flattens it: ['a', 'b', 'c']
+          const uniqueData = removeDuplicates(flattenedData)
+          setData(uniqueData)
           setHasMore(true)
         }
       } catch (error) {
@@ -96,24 +113,24 @@ const PrometheusData: React.FC = () => {
 
   return (
     <div id="parent" className="overflow-auto h-full">
-      <InfiniteScroll 
-        dataLength={displayedData.length} 
+      <InfiniteScroll
+        dataLength={displayedData.length}
         next={loadMoreData}
         hasMore={hasMore}
         scrollableTarget="parent"
         loader={<h4 className='text-text text-center'>Loading...</h4>}
-          endMessage={
-            <p className='text-text text-center'>
-              <b>No more data</b>
-            </p>
-          }
-        >
+        endMessage={
+          <p className='text-text text-center'>
+            <b>No more data</b>
+          </p>
+        }
+      >
         {displayedData.map((metricData, index) => (
           <LogDataComponent key={index} metricData={metricData} />
         ))}
       </InfiniteScroll>
 
-      
+
     </div>
   );
 };
