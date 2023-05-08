@@ -21,18 +21,18 @@ interface FlattenedData {
   serial_number: string
 }
 
-interface Data {
-  date: number,
-  percentage: string,
-  type: string,
-  serial_number: string
+interface MultiSelectType {
+  name: string,
+  code: string
 }
 
-interface LogDataProps {
-  data: Data
+interface TypeList {
+  types: string[]
 }
 
-const PrometheusData: React.FC<LogDataProps> = ({data}) => {
+const PrometheusData: React.FC<TypeList>= ({ types }) => {
+  const [data, setData] = useState<FlattenedData[]>([]); // Data from prometheus
+  const [filteredData, setFilteredData] = useState<FlattenedData[]>([]); // Filtered data
   const [hasMore, setHasMore] = useState(true)
   const [displayedData, setDisplayedData] = useState<FlattenedData[]>([]) // Data which is acutally displayed
   const [itemsAmount, setItemsAmount] = useState(0)
@@ -76,6 +76,12 @@ const PrometheusData: React.FC<LogDataProps> = ({data}) => {
   }, []);
 
   useEffect(() => {
+    var filtered = data.filter(( dataPoint ) => { return types.includes(dataPoint.type) })
+    setFilteredData(filtered)
+    loadMoreData()
+  }, [types])
+
+  useEffect(() => {
     // load data on startup
     loadMoreData()
   }, [data])
@@ -91,12 +97,12 @@ const PrometheusData: React.FC<LogDataProps> = ({data}) => {
     for (let i = itemsAmount; i < prevItemsAmount + 10; i++) {
       setItemsAmount(i)
 
-      if (i === data.length) { // If there is no data left which isn't already displayed
+      if (i > filteredData.length) { // If there is no data left which isn't already displayed
         setHasMore(false)
         break
       }
 
-      newDisplayedData.push(data[i])
+      newDisplayedData.push(filteredData[i])
     }
 
     setDisplayedData(newDisplayedData)
