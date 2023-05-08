@@ -21,8 +21,18 @@ interface FlattenedData {
   serial_number: string
 }
 
-const PrometheusData: React.FC = () => {
-  const [data, setData] = useState<FlattenedData[]>([]); // Data from prometheus
+interface Data {
+  date: number,
+  percentage: string,
+  type: string,
+  serial_number: string
+}
+
+interface LogDataProps {
+  data: Data
+}
+
+const PrometheusData: React.FC<LogDataProps> = ({data}) => {
   const [hasMore, setHasMore] = useState(true)
   const [displayedData, setDisplayedData] = useState<FlattenedData[]>([]) // Data which is acutally displayed
   const [itemsAmount, setItemsAmount] = useState(0)
