@@ -13,7 +13,6 @@ const globalContextDefaultValues: globalContextType = {
     changeFilter: (x: number) => x
 };
 
-
 const globalContext = createContext<globalContextType>(globalContextDefaultValues);
 
 export function useGlobal() {
