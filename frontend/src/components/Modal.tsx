@@ -15,6 +15,11 @@ export default function Modal() {
     modalContext.updateShowModal(false)
   }
 
+  const removeMail = (email: string) => {
+    fetch(`localhost:5000/remove/${email}`)
+    modalContext.updateShowModal(false)
+  }
+
   const [email, setEmail] = useState('')
 
   const inputText = useRef(null)
@@ -62,7 +67,9 @@ export default function Modal() {
                     </div>
                   </div>
                 </div>
+                
                 <div className="bg-background px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                  
                   <button
                     type="button"
                     className={`inline-flex w-full justify-center rounded-md bg-component2 md:hover:scale-105 px-3 py-2 text-sm font-semibold text-text shadow-sm transition duration-200 shadow-2xl sm:ml-3 sm:w-auto
@@ -77,6 +84,14 @@ export default function Modal() {
                     onClick={() => modalContext.updateShowModal(false)}
                   >
                     Cancel
+                  </button>
+                  <button 
+                    type="button"
+                    className={`inline-flex w-full justify-center rounded-md bg-critical md:hover:scale-105 px-3 py-2 text-sm font-semibold text-text shadow-sm transition duration-200 shadow-2xl sm:ml-3 sm:w-auto
+                                      ${validateEmail(email) ? '' : ` cursor-not-allowed opacity-30 pointer-events-none` } `}
+                    onClick={() => removeMail(email)}
+                  >
+                    Unsubscribe
                   </button>
                 </div>
               </Dialog.Panel>
