@@ -2,6 +2,13 @@ import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 export default function Modal() {
+  
+  function validateEmail(email: string) {
+    return String(email).toLowerCase().match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)
+  }
+
+  const [email, setEmail] = useState('')
+
   const [open, setOpen] = useState(true)
 
   const inputText = useRef(null)
@@ -37,9 +44,15 @@ export default function Modal() {
                   <div className="sm:flex sm:items-start">
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                       <Dialog.Title as="h3" className="font-semibold leading-6 text-text">
-                        Subscribe to email notifications:
+                        Subscribe to Email notifications:
                       </Dialog.Title>
-                      <input type="text" className='rounded bg-white mt-2 focus:outline outline-blue-500 outline-offset-2 outline-1 shadow-2xl p-2' ref={inputText} placeholder='Email'/>
+                      <input type="email" 
+                             pattern='/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/' 
+                             className='rounded required bg-white mt-2 outline outline-component1 focus:outline-blue-500 outline-offset-2 outline-1 shadow-2xl p-2 peer invalid:[&:not(:placeholder-shown):not(:focus)]:outline-red-500' 
+                             ref={inputText} 
+                             placeholder='Email' 
+                      />
+                      <span className="mt-2 text-sm text-red-400 hidden peer peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please enter a valid Email address</span>
                     </div>
                   </div>
                 </div>
