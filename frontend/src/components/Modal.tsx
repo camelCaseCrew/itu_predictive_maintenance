@@ -50,6 +50,7 @@ export default function Modal() {
                              className={`rounded required bg-white mt-2 outline outline-component1 focus:outline-blue-500 outline-offset-2 outline-1 shadow-2xl p-2 peer ${!validateEmail(email) ? `focus:outline-red-500` : ``} `} 
                              ref={inputText} 
                              placeholder='Email' 
+                             onChange={(e) => setEmail(e.target.value)}
                       />
                       <span className="mt-2 text-sm text-red-400 hidden peer peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please enter a valid Email address</span>
                     </div>
