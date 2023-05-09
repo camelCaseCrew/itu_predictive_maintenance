@@ -52,14 +52,15 @@ export default function Modal() {
                              placeholder='Email' 
                              onChange={(e) => setEmail(e.target.value)}
                       />
-                      <span className="mt-2 text-sm text-red-400 hidden peer peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please enter a valid Email address</span>
+                      {!validateEmail(email) && <span className="mt-2 text-sm text-red-400 block">Please enter a valid Email address</span>}
                     </div>
                   </div>
                 </div>
                 <div className="bg-background px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <button
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-component2 md:hover:scale-105 px-3 py-2 text-sm font-semibold text-text shadow-sm transition duration-200 shadow-2xl sm:ml-3 sm:w-auto"
+                    className={`inline-flex w-full justify-center rounded-md bg-component2 md:hover:scale-105 px-3 py-2 text-sm font-semibold text-text shadow-sm transition duration-200 shadow-2xl sm:ml-3 sm:w-auto
+                                ${validateEmail(email) ? '' : ` cursor-not-allowed opacity-30 pointer-events-none` } `}
                     onClick={() => setOpen(false)}
                   >
                     Subscribe
