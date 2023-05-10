@@ -17,6 +17,7 @@ describe('Alert activated', () => {
 
             cy.request('POST', 'https://api.mail.tm/accounts', { address: accountName, password: password})
             cy.request('PUT', 'http://localhost:5000/update/'+accountName)
+            cy.request('POST', 'http://localhost:9093/-/reload')
             cy.request('POST', 'https://api.mail.tm/token', { address: accountName, password: password}).then(( response ) => {
                 const token = response.body.token
                 const id = response.body.id
