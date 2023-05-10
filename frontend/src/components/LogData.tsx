@@ -27,9 +27,10 @@ interface LogDataProps {
   types: string[]
   serialNumbers: string[]
   predictionSort: string
+  dateSort: string
 }
 
-const PrometheusData: React.FC<LogDataProps> = ({ types, serialNumbers, predictionSort}) => {
+const PrometheusData: React.FC<LogDataProps> = ({ types, serialNumbers, predictionSort, dateSort}) => {
   const [data, setData] = useState<FlattenedData[]>([]); // Data from prometheus
   const [filteredData, setFilteredData] = useState<FlattenedData[]>([]); // Filtered data
   const [hasMore, setHasMore] = useState(true)
@@ -96,6 +97,16 @@ const PrometheusData: React.FC<LogDataProps> = ({ types, serialNumbers, predicti
     setData(sortedData)
   }
 
+  function applyDateSort() {
+    var sortedData = data
+    if(dateSort == "asc"){
+      sortedData.sort((a,b) => a.date - b.date); // b - a for reverse sort
+    } else if (dateSort == "desc") {
+      sortedData.sort((a,b) => b.date - a.date); // b - a for reverse sort
+    }
+    setData(sortedData)
+  }
+
   function reloadDisplayedData() {
     setDisplayedData([])
     setItemsAmount(0)
@@ -125,6 +136,10 @@ const PrometheusData: React.FC<LogDataProps> = ({ types, serialNumbers, predicti
   useEffect(() => {
     applyPredictionSort()
   }, [predictionSort])
+
+  useEffect(() => {
+    applyDateSort()
+  }, [dateSort])
 
   useEffect(() => { // This hook is only run once when the page is loaded
     fetchData()
