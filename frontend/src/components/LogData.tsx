@@ -87,8 +87,8 @@ const PrometheusData: React.FC<LogDataProps> = ({ types, serialNumbers, predicti
   }
 
   function applyPredictionSort() {
-    let sortedData = [...data]
-    if(predictionSort == "desc"){
+    let sortedData = [...filteredData]
+    if(predictionSort == "asc"){
       sortedData.sort((a,b) => Number(a.percentage) - Number(b.percentage)); // b - a for reverse sort
       setData(sortedData)
     } else {

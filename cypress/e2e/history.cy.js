@@ -33,6 +33,38 @@ describe('Checks the filtering works for Sensor', () => {
     })
   })
 
+// Sorting tests
+
+describe('Prediction sorting test ascending', () => {
+  it('Checks that sorting predictions works', () => {
+    cy.visit('http://localhost:3001/history')
+    cy.wait(10000)
+    cy.get('input[id="PredictionSort"]').parent().parent().click()
+    cy.get('ul[class="p-dropdown-items"]').contains('Lowest to highest').click()
+    var prevVal = 0
+    cy.get('.infinite-scroll-component > li').each((item) => {
+      var curVal = parseInt(item.find('[data-testid="percentage"]')[0].text().slice(0,-1))
+      cy.wrap(curVal).should('be.gte', prevVal)
+      prevVal = curVal
+    })
+  })
+})
+
+describe('Prediction sorting test descending', () => {
+  it('Checks that sorting predictions works', () => {
+    cy.visit('http://localhost:3001/history')
+    cy.wait(10000)
+    cy.get('input[id="PredictionSort"]').parent().parent().click()
+    cy.get('ul[class="p-dropdown-items"]').contains('Highest to lowest').click()
+    var prevVal = 100
+    cy.get('.infinite-scroll-component > li').each((item) => {
+      var curVal = parseInt(item.find('[data-testid="percentage"]')[0].text().slice(0,-1))
+      cy.wrap(curVal).should('be.lte', prevVal)
+      prevVal = curVal
+    })
+  })
+})
+
 // Tests the feedback button
 
 describe('Feedback button test', () => {
