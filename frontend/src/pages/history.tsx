@@ -82,7 +82,7 @@ export default function History() {
 
                 <div style={{ minWidth: "15%" }} className="pt-6 pb-2 m-2">
                     <span className="p-float-label">
-                        <Dropdown inputId="PredictionSort" filter value={predictionSort} onChange={(e) => updatePredictionSort(e.value)} options={sortsP} optionLabel="name" className="w-full md:w-20rem" />
+                        <Dropdown inputId="PredictionSort" value={predictionSort} onChange={(e) => updatePredictionSort(e.value)} options={sortsP} optionLabel="name" className="w-full md:w-20rem" />
                         <label htmlFor="PredictionSort">Prediction Sort</label>
                     </span>
                 </div>
