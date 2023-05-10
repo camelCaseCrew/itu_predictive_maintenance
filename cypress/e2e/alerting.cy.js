@@ -2,7 +2,7 @@ describe('Alert activated', () => {
     it('Checks that prometheus alerts have been activated', () => {
         cy.request('http://localhost:9090/api/v1/alerts')
         .its('status')
-        .should('equal', 'success')
+        .should('equal', 200)
     })
 })
 
@@ -10,7 +10,7 @@ describe('Alert activated', () => {
     it('Checks that prometheus alerts have been activated', () => {
         cy.wait(10000)
         cy.request('https://api.mail.tm/domains').then(( response ) => {
-            const accountName = Cypress._.uniqueId() + '@' + response.body[0]['domain']
+            const accountName = Cypress._.uniqueId() + '@' + response.body["hydra:member"][0]["domain"]
             const password = "predictit123"
 
             cy.request('POST', 'https://api.mail.tm/accounts', { address: accountName, password: password})
