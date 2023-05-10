@@ -19,7 +19,8 @@ interface FlattenedData {
   date: number,
   percentage: string,
   type: string,
-  serial_number: string
+  serial_number: string,
+  id: string
 }
 
 interface FilterList {
@@ -58,7 +59,7 @@ const PrometheusData: React.FC<FilterList> = ({ types, serialNumbers }) => {
         const flattenedData: FlattenedData[] =
           response.data.data.result.map(
             (device: MetricData) => (device.values.map(
-              (datapoint: DataPoint) => ({ date: datapoint[0], percentage: datapoint[1], type: device.metric["device_type"], serial_number: device.metric["serial_number"] }))))
+              (datapoint: DataPoint) => ({ date: datapoint[0], percentage: datapoint[1], type: device.metric["device_type"], serial_number: device.metric["serial_number"], id: device.metric["id"] }))))
             .flat(1) // This final method takes a list of lists: [['a', 'b'], ['c']] and flattens it: ['a', 'b', 'c']
 
         setData(flattenedData)

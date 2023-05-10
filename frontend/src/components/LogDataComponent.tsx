@@ -1,13 +1,14 @@
 // ReactComponentForMetric.tsx
 import React from 'react';
 import { useState, useEffect } from "react"
-import ImageButton from './ImageButton';
+import FeedbackButton from './FeedbackButton';
 
 interface MetricData {
   date: number,
   percentage: string,
   type: string,
-  serial_number: string
+  serial_number: string,
+  id : string
 }
 
 interface LogDataComponentProps {
@@ -42,12 +43,11 @@ const LogDataComponent: React.FC<LogDataComponentProps> = ({ metricData }) => {
     <p className="text-black inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="percentage">{ (parseFloat(metricData.percentage) * 100).toFixed(5) + '%' }</p>
     </div>
   <div className={ "flex place-content-between items-center "} data-testid="img-container">
-  <ImageButton
+  <FeedbackButton
     src="/img/flag.png"
-    alt="Your Image Description"
-    href="http://localhost:3001/test"
-    className="inline-block cursor-pointer items-center p-4 w-20 h-20  bg-component1  "
-    testid="image-button"
+    className="inline-block cursor-pointer items-center p-4 w-20 h-20 "
+    testid="feedback-button"
+    id={metricData.id}
   />
   </div>
  

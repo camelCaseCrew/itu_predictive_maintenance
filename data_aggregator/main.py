@@ -1,10 +1,10 @@
-from prometheus_client import Gauge, generate_latest, start_http_server
-import pika
 import json
 import time
+from prometheus_client import Gauge, generate_latest, start_http_server
+import pika
 
 metricsOutput = Gauge('device_health', 'Failure prediction (lower is better)', [
-                      'serial_number', 'model', 'group', 'device_type'])
+                      'serial_number', 'model', 'group', 'device_type', 'id'])
 
 def createMetric(ch, method, properties, body):
     try:
@@ -14,6 +14,7 @@ def createMetric(ch, method, properties, body):
         serial_number = data["serial_number"]
         model = data["model"]
         device_type = data["device_type"]
+        id = data["id"]
 
         # get failure rate
         failure_rate = float(data['failure_prediction'])
@@ -27,7 +28,7 @@ def createMetric(ch, method, properties, body):
         elif failure_rate < 0.1:
             group = "healthy"
 
-        metricsOutput.labels(serial_number, model, group, device_type).set(data['failure_prediction'])
+        metricsOutput.labels(serial_number, model, group, device_type, id).set(data['failure_prediction'])
 
         # update the gauge and show the output as text
         generate_latest(metricsOutput)

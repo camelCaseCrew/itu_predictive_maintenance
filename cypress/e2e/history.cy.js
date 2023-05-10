@@ -32,7 +32,31 @@ describe('Checks the filtering works for Sensor', () => {
       })
     })
   })
-  
+
+// Tests the feedback button
+
+describe('Feedback button test', () => {
+  it('Tests that the feedback exists and can be clicked', () => {
+      cy.visit('http://localhost:3001/history')
+      cy.wait(10000)
+      cy.get('[data-testid="feedback-button"]').first().click()
+  })
+})
+
+describe('Database query test', () => {
+  it('Tests if database was updated after feedback button was clicked', () => {
+    cy.visit('http://localhost:3001/history')
+    cy.wait(10000)
+    cy.get('[data-testid="feedback-button"]').first().click()
+    cy.wait(3000)
+    // Create a new PostgreSQL client
+    cy.task('connectDB', 'SELECT COUNT(*) FROM prediction_feedback').then( (res) => {
+      const count = parseInt(res[0].count)
+      cy.wrap(count).should('be.gt', 0)
+    })
+  });
+});
+
 describe('Looks at serial number options', () => {
     it('Looks at serial number options', () => {
       cy.visit('http://localhost:3001/history')
