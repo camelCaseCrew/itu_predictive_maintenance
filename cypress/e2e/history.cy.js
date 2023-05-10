@@ -104,6 +104,7 @@ describe('Prediction sorting test descending', () => {
 describe('Feedback button test', () => {
   it('Tests that the feedback exists and can be clicked', () => {
       cy.visit('http://localhost:3001/history')
+      cy.wait(10000)
       cy.get('[data-testid="feedback-button"]').first().click()
   })
 })
@@ -111,8 +112,9 @@ describe('Feedback button test', () => {
 describe('Database query test', () => {
   it('Tests if database was updated after feedback button was clicked', () => {
     cy.visit('http://localhost:3001/history')
-    cy.get('div[id="feedback-button"]').first().click()
-    cy.wait(1000)
+    cy.wait(10000)
+    cy.get('[data-testid="feedback-button"]').first().click()
+    cy.wait(3000)
     // Create a new PostgreSQL client
     cy.task('connectDB', 'SELECT COUNT(*) FROM prediction_feedback').then( (res) => {
       const count = parseInt(res[0].count)
