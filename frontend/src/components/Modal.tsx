@@ -1,6 +1,7 @@
 import { Fragment, useRef, useState, useContext } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ModalContext } from "../context/ModalContext"
+import axios from 'axios'
 
 export default function Modal() {
   
@@ -11,12 +12,12 @@ export default function Modal() {
   }
 
   const addMail = (email: string) => {
-    fetch(`localhost:5000/update/${email}`)
+    axios.put(`localhost:5000/update/${email}`)
     modalContext.updateShowModal(false)
   }
 
   const removeMail = (email: string) => {
-    fetch(`localhost:5000/remove/${email}`)
+    axios.delete(`localhost:5000/remove/${email}`)
     modalContext.updateShowModal(false)
   }
 
