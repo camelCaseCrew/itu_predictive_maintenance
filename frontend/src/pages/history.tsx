@@ -22,7 +22,7 @@ export default function History() {
         { name: "Highest to lowest", code: "desc" },
         { name: "Lowest to highest", code: "asc" },
     ]
-    const [predictionSort, updatePredictionSort] = useState(sortsP[0])
+    const [predictionSort, updatePredictionSort] = useState<{name: string; code: string;}>()
 
     function getDeviceTypes() { // Get device types from prometheus
         fetch(`http://localhost:9090/api/v1/label/device_type/values`)
@@ -90,7 +90,7 @@ export default function History() {
             </div>
 
             <div className="bg-component ml-4 mr-4 mt-2 p-4 h-4/6 overflow-x-auto">
-                <LogData predictionSort={predictionSort.code} types={ selectedDeviceTypes.map(( deviceType ) => {return deviceType.code })} serialNumbers={ selectedSerialNumbers.map(( num ) => {return num.code })}/>
+                <LogData predictionSort={predictionSort?.code || ""} types={ selectedDeviceTypes.map(( deviceType ) => {return deviceType.code })} serialNumbers={ selectedSerialNumbers.map(( num ) => {return num.code })}/>
             </div>
 
         </>
