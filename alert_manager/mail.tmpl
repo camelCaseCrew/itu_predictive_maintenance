@@ -1,30 +1,17 @@
-{{ define "custom_mail_subject" }}Alert on {{ range .Alerts.Firing }}{{ .Labels.instance }} {{ end }}{{ end }}
-{{ define "custom_mail_html" }}
+{{ define "device_critical_subject" }}New critical device: {{ (index .Alerts.Firing 0).Annotations.serial_number  }}{{ end }}
+{{ define "device_critical_html" }}
 <html>
 <head>
-<title>Alert!</title>
+<title>New device in critical</title>
 </head>
 <body>
-{{ range .Alerts.Firing }}
 
-<p>{{ .Labels.alertname }} on {{ .Labels.instance }}<br/>
-{{ if ne .Annotations.summary "" }}{{ .Annotations.summary }}{{ end }}</p>
+A new device has moved to a critical state <br/> <br/>
 
-<p>Details:</p>
+Type: {{ (index .Alerts.Firing 0).Annotations.device_type }} <br/>
+Serial number: {{ (index .Alerts.Firing 0).Annotations.serial_number }} <br/> <br/>
 
-<p>
-{{ range .Annotations.SortedPairs }}
-  {{ .Name }} = {{ .Value }}<br/>
-{{ end }}
-</p>
-
-<p>
-{{ range .Labels.SortedPairs }}
-  {{ .Name }} = {{ .Value }}<br/>
-{{ end }}
-</p>
-
-{{ end }}
+<a href="http://localhost:3001/">Go to dashboard</a>
 
 </body></html>
 {{ end }}
