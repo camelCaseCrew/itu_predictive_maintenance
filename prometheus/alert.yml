@@ -3,7 +3,8 @@ groups:
     rules:
       - alert: CriticalDevice 
         expr: sum by (serial_number, device_type) (device_health{group="critical"})
-        labels:
-          serial_number: $labels.serial_number
         annotations:
-          summary: "Testing: {{ $labels.serial_number }}"
+          serial_number: "{{ $labels.serial_number }}"
+          device_type: "{{ $labels.device_type }}"
+
+
