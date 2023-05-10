@@ -19,15 +19,17 @@ interface FlattenedData {
   date: number,
   percentage: string,
   type: string,
-  serial_number: string
+  serial_number: string,
+  id: string
 }
 
-interface FilterList {
+interface LogDataProps {
   types: string[]
   serialNumbers: string[]
+  predictionSort: string
 }
 
-const PrometheusData: React.FC<FilterList> = ({ types, serialNumbers }) => {
+const PrometheusData: React.FC<LogDataProps> = ({ types, serialNumbers, predictionSort}) => {
   const [data, setData] = useState<FlattenedData[]>([]); // Data from prometheus
   const [filteredData, setFilteredData] = useState<FlattenedData[]>([]); // Filtered data
   const [hasMore, setHasMore] = useState(true)
@@ -58,7 +60,7 @@ const PrometheusData: React.FC<FilterList> = ({ types, serialNumbers }) => {
         const flattenedData: FlattenedData[] =
           response.data.data.result.map(
             (device: MetricData) => (device.values.map(
-              (datapoint: DataPoint) => ({ date: datapoint[0], percentage: datapoint[1], type: device.metric["device_type"], serial_number: device.metric["serial_number"] }))))
+              (datapoint: DataPoint) => ({ date: datapoint[0], percentage: datapoint[1], type: device.metric["device_type"], serial_number: device.metric["serial_number"], id: device.metric["id"] }))))
             .flat(1) // This final method takes a list of lists: [['a', 'b'], ['c']] and flattens it: ['a', 'b', 'c']
 
         setData(flattenedData)
@@ -82,6 +84,16 @@ const PrometheusData: React.FC<FilterList> = ({ types, serialNumbers }) => {
       }
       setFilteredData(filtered)
     }
+  }
+
+  function applyPredictionSort() {
+    var sortedData = data
+    if(predictionSort == "asc"){
+      sortedData.sort((a,b) => Number(a.percentage) - Number(b.percentage)); // b - a for reverse sort
+    } else if (predictionSort == "desc") {
+      sortedData.sort((a,b) => Number(b.percentage) - Number(a.percentage)); // b - a for reverse sort
+    }
+    setData(sortedData)
   }
 
   function reloadDisplayedData() {
@@ -110,6 +122,9 @@ const PrometheusData: React.FC<FilterList> = ({ types, serialNumbers }) => {
     setDisplayedData(newDisplayedData) // In theory this creates an infinite loop, but it works nonetheless......
   }
 
+  useEffect(() => {
+    applyPredictionSort()
+  }, [predictionSort])
 
   useEffect(() => { // This hook is only run once when the page is loaded
     fetchData()

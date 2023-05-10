@@ -104,3 +104,6 @@ ALTER TABLE IF EXISTS public."hard_drive_stats"
 CREATE INDEX ON public.hard_drive_stats (id);
 
 CREATE TABLE public.prediction_feedback AS TABLE hard_drive_stats WITH NO DATA;
+
+ALTER TABLE prediction_feedback
+ADD PRIMARY KEY (id);
