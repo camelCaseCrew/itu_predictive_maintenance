@@ -101,7 +101,7 @@ describe('Prediction sorting test descending', () => {
 
 describe('Date sorting test ascending', () => {
   it('Checks that sorting predictions works', () => {
-    cy.visit('http://localhost:3003/history')
+    cy.visit('http://localhost:3001/history')
     cy.wait(10000)
     cy.get('input[id="DateSort"]').parent().parent().click()
     cy.get('ul[class="p-dropdown-items"]').contains('Oldest to newest').click()
@@ -118,7 +118,7 @@ describe('Date sorting test ascending', () => {
 
 describe('Date sorting test descending', () => {
   it('Checks that sorting predictions works', () => {
-    cy.visit('http://localhost:3003/history')
+    cy.visit('http://localhost:3001/history')
     cy.wait(10000)
     cy.get('input[id="DateSort"]').parent().parent().click()
     cy.get('ul[class="p-dropdown-items"]').contains('Newest to oldest').click()
