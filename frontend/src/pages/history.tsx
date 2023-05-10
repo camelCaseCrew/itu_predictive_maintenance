@@ -77,7 +77,7 @@ export default function History() {
                 
                 <div style={{ minWidth: "15%" }} className="pt-6 pb-2 m-2">
                     <span className="p-float-label">
-                        <Dropdown inputId="DateSort" filter value={dateSort} onChange={(e) => updateDateSort(e.value)} options={sortsD} optionLabel="name" className="w-full md:w-20rem" />
+                        <Dropdown inputId="DateSort" value={dateSort} onChange={(e) => updateDateSort(e.value)} options={sortsD} optionLabel="name" className="w-full md:w-20rem" />
                         <label htmlFor="DateSort">Date Sort</label>
                     </span>
                 </div>
