@@ -11,21 +11,20 @@ export default async function handler(req : NextApiRequest, res : NextApiRespons
     });
     await client.connect()
     const id = req.query.id as string
-    const result = await client.query('SELECT * FROM hard_drive_stats WHERE id = $1', [id]);
     const query = {
         text: 'INSERT INTO prediction_feedback (SELECT * FROM hard_drive_stats WHERE id = $1)',
         values: [id]
     }
-    client.query(query, (err, res) => {
+    client.query(query, (err, result) => {
         if (err) {
           console.error(err);
+          res.json(-1)
         } else {
           console.log('Data inserted successfully!');
+          res.json(0)
         }
         
         // disconnect the client when finished
         client.end();
     });
-
-    res.json(result.rows[0])
 }

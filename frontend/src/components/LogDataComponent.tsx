@@ -45,9 +45,7 @@ const LogDataComponent: React.FC<LogDataComponentProps> = ({ metricData }) => {
   <div className={ "flex place-content-between items-center "} data-testid="img-container">
   <FeedbackButton
     src="/img/flag.png"
-    alt="Your Image Description"
-    href="http://localhost:3001/test"
-    className="inline-block cursor-pointer items-center p-4 w-20 h-20  bg-component1  "
+    className="inline-block cursor-pointer items-center p-4 w-20 h-20 "
     testid="feedback-button"
     id={metricData.id}
   />

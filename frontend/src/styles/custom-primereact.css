@@ -148,3 +148,14 @@
 .p-multiselect-label {
     color: #DEDEDE !important;
 }
+
+.p-button {
+    background-color: #22252B !important;
+    color: #22252B !important;
+    border-color: #22252B !important;
+}
+
+.p-button:hover {
+    color: #30343D !important; 
+    border-color: #30343D !important;
+}
