@@ -38,43 +38,46 @@ const PrometheusData: React.FC<TypeList>= ({ types }) => {
   const [displayedData, setDisplayedData] = useState<FlattenedData[]>([]) // Data which is acutally displayed
   const [itemsAmount, setItemsAmount] = useState(0)
   const [dataIsLoaded, setDataIsLoaded] = useState(false)
-  useEffect(() => { // This hook is only run once when the page is loaded.
-    async function fetchData() {
-      try {
 
-        const startTimestamp = Math.floor((Date.now() / 1000) - 60 * 60);
-        const endTimestamp = Math.floor(Date.now() / 1000);
-        const stepDuration = 15;
-        //const query = `device_health{serial_number="MJ1311YNG3K3JA"}`;
-        const query = `device_health{group="healthy"}`;
+  async function fetchData() { // Fetch data from prometheus
+    try {
 
-        const response = await axios.get('http://localhost:9090/api/v1/query_range', {
-          params: {
-            query: query,
-            start: startTimestamp,
-            end: endTimestamp,
-            step: stepDuration,
-          },
-        });
+      const startTimestamp = Math.floor((Date.now() / 1000) - 60 * 60);
+      const endTimestamp = Math.floor(Date.now() / 1000);
+      const stepDuration = 15;
+      const query = `device_health{group="healthy"}`;
 
-        if (response.data.status === 'success') {
+      const response = await axios.get('http://localhost:9090/api/v1/query_range', {
+        params: {
+          query: query,
+          start: startTimestamp,
+          end: endTimestamp,
+          step: stepDuration,
+        },
+      });
 
-          // Yes i know this is ugly. It reformats data into being of type FlattenedData.
-          const flattenedData: FlattenedData[] = 
-            response.data.data.result.map(
-              (device: MetricData) => (device.values.map(
-                (datapoint: DataPoint) => ({ date: datapoint[0], percentage: datapoint[1], type: device.metric["device_type"], serial_number: device.metric["serial_number"] }))))
-                .flat(1) // This final method takes a list of lists: [['a', 'b'], ['c']] and flattens it: ['a', 'b', 'c']
-                setData(flattenedData)
-                setFilteredData(flattenedData)
-                setHasMore(true)
-                loadMoreData()
-                setDataIsLoaded(true)
-        }
-      } catch (error) {
-        console.error('Error fetching data from Prometheus:', error);
+      if (response.data.status === 'success') {
+
+        // Yes i know this is ugly. It reformats data into being of type FlattenedData.
+        const flattenedData: FlattenedData[] = 
+          response.data.data.result.map(
+            (device: MetricData) => (device.values.map(
+              (datapoint: DataPoint) => ({ date: datapoint[0], percentage: datapoint[1], type: device.metric["device_type"], serial_number: device.metric["serial_number"] }))))
+              .flat(1) // This final method takes a list of lists: [['a', 'b'], ['c']] and flattens it: ['a', 'b', 'c']
+              
+              setData(flattenedData)
+              setFilteredData(flattenedData)
+              setHasMore(true)
+              loadMoreData()
+              setDataIsLoaded(true)
       }
+    } catch (error) {
+      console.error('Error fetching data from Prometheus:', error);
     }
+  }
+
+
+  useEffect(() => { // This hook is only run once when the page is loaded.
     fetchData()
     if (types.length === 0) {
       setFilteredData(data)
@@ -92,9 +95,31 @@ const PrometheusData: React.FC<TypeList>= ({ types }) => {
         filtered = data.filter(( dataPoint ) => { return types.includes(dataPoint.type) })
         setFilteredData(filtered)
       }
-      loadMoreData() 
     }
-  }, [types, data])
+  }, [data])
+
+  useEffect(() => {
+    if (dataIsLoaded) {
+      var filtered
+      if (types.length === 0) {
+        setFilteredData(data)
+      } else {
+        filtered = data.filter(( dataPoint ) => { return types.includes(dataPoint.type) })
+        setFilteredData(filtered)
+      }
+      reloadDisplayedData()
+    }
+  }, [types])
+
+  function reloadDisplayedData() {
+    setDisplayedData([])
+    setItemsAmount(0)
+    setHasMore(true)
+  }
+
+  useEffect(() => {
+    loadMoreData()
+  }, [displayedData])
 
   // Called every time one scrolls to the bottom.
   // Data is taken from 'data' to 'displayedData', and thereafter is rendered
