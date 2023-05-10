@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import LogDataComponent from './LogDataComponent'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { filter } from 'cypress/types/bluebird';
 
 interface DataPoint {
   [0]: number;
@@ -22,11 +23,12 @@ interface FlattenedData {
   id: string
 }
 
-interface TypeList {
+interface FilterList {
   types: string[]
+  serialNumbers: string[]
 }
 
-const PrometheusData: React.FC<TypeList> = ({ types }) => {
+const PrometheusData: React.FC<FilterList> = ({ types, serialNumbers }) => {
   const [data, setData] = useState<FlattenedData[]>([]); // Data from prometheus
   const [filteredData, setFilteredData] = useState<FlattenedData[]>([]); // Filtered data
   const [hasMore, setHasMore] = useState(true)
@@ -73,13 +75,13 @@ const PrometheusData: React.FC<TypeList> = ({ types }) => {
 
   function applyFilters() {
     if (dataIsLoaded) {
-      var filtered
-      if (types.length === 0) {
-        setFilteredData(data)
-      } else {
+      var filtered = data
+      if (types.length !== 0) {
         filtered = data.filter((dataPoint) => { return types.includes(dataPoint.type) }) // Apply the types filter
-        setFilteredData(filtered)
+      } else if (serialNumbers.length !== 0) {
+        filtered = data.filter((dataPoint) => { return serialNumbers.includes(dataPoint.serial_number) }) // Apply the types filter
       }
+      setFilteredData(filtered)
     }
   }
 

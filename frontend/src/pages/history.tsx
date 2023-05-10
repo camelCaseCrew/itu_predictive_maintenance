@@ -15,7 +15,7 @@ interface MultiSelectType {
 export default function History() {
     const [selectedDeviceTypes, updateSelectedDeviceTypes] = useState<MultiSelectType[]>([])
     const [deviceTypes, updateDeviceTypes] = useState([])
-    const [selectedSerialNumbers, updateSelectedSerialNumbers] = useState([])
+    const [selectedSerialNumbers, updateSelectedSerialNumbers] = useState<MultiSelectType[]>([])
     const [serialNumbers, updateSerialNumbers] = useState([])
 
     function getDeviceTypes() { // Get device types from prometheus
@@ -23,7 +23,7 @@ export default function History() {
         .then(response => response.json())
         .then(data => {
             if (data.status === "success") {
-                const mappedData = data.data.map((serial: string) => ({name: serial, code: serial})) // Map serial numbers from string to {name: string, code: string}
+                const mappedData = data.data.map((type: string) => ({name: type, code: type})) // Map types from string to {name: string, code: string}
                 updateDeviceTypes(mappedData)
 
             }
@@ -31,11 +31,7 @@ export default function History() {
     }
 
     function getSerialNumbers() {
-        var query = `http://localhost:9090/api/v1/label/serial_number/values?match[]=device_health{group="risk"}`
-        if (selectedDeviceTypes.length === 0) {
-            query = `http://localhost:9090/api/v1/label/serial_number/values?match[]=device_health{device_type="${selectedDeviceTypes}",group="risk"}`
-        }
-        fetch(query)
+        fetch(`http://localhost:9090/api/v1/label/serial_number/values`)
         .then(response => response.json())
         .then(data => {
             if (data.status === "success") {
@@ -47,7 +43,8 @@ export default function History() {
 
     useEffect(() => {
         getDeviceTypes()
-        getSerialNumbers()        
+        getSerialNumbers()
+        console.log(serialNumbers)
     }, [])
 
     return (
@@ -64,7 +61,7 @@ export default function History() {
 
             <div className="bg-component1 m-4 p-4 flex place-content-between items-center pr-48 pl-16 overflow-x-auto">
 
-                <MultiSelect value={selectedSerialNumbers} onChange={(e) => updateSelectedSerialNumbers(e.value)} options={serialNumbers} optionLabel="name" filter 
+                <MultiSelect value={selectedSerialNumbers} onChange={(e) => updateSelectedSerialNumbers(e.value)} options={serialNumbers} virtualScrollerOptions={{ itemSize: 43 }} optionLabel="name" filter 
                 placeholder="Serial number" maxSelectedLabels={3} className="w-48 h-16 md:gap-x-4 transition duration-300 shadow-2xl mr-2" />
                 
                 <select className="bg-component2 text-text rounded w-48 h-16 md:gap-x-4 transition duration-300 shadow-2xl mr-2" name="dateFilter">
@@ -85,7 +82,7 @@ export default function History() {
             </div>
 
             <div className="bg-component ml-4 mr-4 mt-2 p-4 h-4/6 overflow-x-auto">
-                <LogData types={ selectedDeviceTypes.map(( deviceType ) => {return deviceType.code }) }/>
+                <LogData types={ selectedDeviceTypes.map(( deviceType ) => {return deviceType.code })} serialNumbers={ selectedSerialNumbers.map(( num ) => {return num.code })}/>
             </div>
 
         </>
