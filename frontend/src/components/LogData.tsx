@@ -23,12 +23,13 @@ interface FlattenedData {
   id: string
 }
 
-interface FilterList {
+interface LogDataProps {
   types: string[]
   serialNumbers: string[]
+  predictionSort: string
 }
 
-const PrometheusData: React.FC<FilterList> = ({ types, serialNumbers }) => {
+const PrometheusData: React.FC<LogDataProps> = ({ types, serialNumbers, predictionSort}) => {
   const [data, setData] = useState<FlattenedData[]>([]); // Data from prometheus
   const [filteredData, setFilteredData] = useState<FlattenedData[]>([]); // Filtered data
   const [hasMore, setHasMore] = useState(true)
@@ -85,6 +86,17 @@ const PrometheusData: React.FC<FilterList> = ({ types, serialNumbers }) => {
     }
   }
 
+  function applyPredictionSort() {
+    let sortedData = [...data]
+    if(predictionSort == "desc"){
+      sortedData.sort((a,b) => Number(a.percentage) - Number(b.percentage)); // b - a for reverse sort
+      setData(sortedData)
+    } else {
+      sortedData.sort((a,b) => Number(b.percentage) - Number(a.percentage)); // b - a for reverse sort
+      setData(sortedData)
+    }
+  }
+
   function reloadDisplayedData() {
     setDisplayedData([])
     setItemsAmount(0)
@@ -111,6 +123,10 @@ const PrometheusData: React.FC<FilterList> = ({ types, serialNumbers }) => {
     setDisplayedData(newDisplayedData) // In theory this creates an infinite loop, but it works nonetheless......
   }
 
+  useEffect(() => {
+    applyPredictionSort()
+    reloadDisplayedData()
+  }, [predictionSort])
 
   useEffect(() => { // This hook is only run once when the page is loaded
     fetchData()
