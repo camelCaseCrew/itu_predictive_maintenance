@@ -19,9 +19,6 @@ def update(email):
     with open("alertmanager.yml", "w") as f:
         yaml.dump(data, f)
     print("update config file")
-
-    requests.put("http://localhost:9093/-/reload")
-
     return {
         "message": "added email to list",
         "code": 200
@@ -47,9 +44,6 @@ def remove(email):
     with open("alertmanager.yml", "w") as f:
         yaml.dump(data, f)
     print("update config file")
-
-    requests.put("http://localhost:9093/-/reload")
-
     return {
         "message": "Removed email from list",
         "code": 200
