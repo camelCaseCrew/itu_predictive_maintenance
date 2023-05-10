@@ -48,7 +48,7 @@ const LogDataComponent: React.FC<LogDataComponentProps> = ({ metricData }) => {
     alt="Your Image Description"
     href="http://localhost:3001/test"
     className="inline-block cursor-pointer items-center p-4 w-20 h-20  bg-component1  "
-    testid="image-button"
+    testid="feedback-button"
     id={metricData.id}
   />
   </div>
