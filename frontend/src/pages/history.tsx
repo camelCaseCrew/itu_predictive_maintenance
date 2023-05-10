@@ -74,7 +74,7 @@ export default function History() {
                     <option value="asc">Oldest to newest</option>
                 </select>
 
-                <MultiSelect value={selectedDeviceTypes} onChange={(e) => updateSelectedDeviceTypes(e.value)} options={deviceTypes} optionLabel="name" filter 
+                <MultiSelect id='typeMultiSelect' value={selectedDeviceTypes} onChange={(e) => updateSelectedDeviceTypes(e.value)} options={deviceTypes} optionLabel="name" filter 
                 placeholder="Type" maxSelectedLabels={3} className="w-48 h-16 md:gap-x-4 transition duration-300 shadow-2xl mr-2" />
 
                 <select className="bg-component2 text-text rounded w-48 h-16 md:gap-x-4 transition duration-300 shadow-2xl mr-2" name="predictionFilter">

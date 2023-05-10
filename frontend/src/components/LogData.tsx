@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import LogDataComponent from './LogDataComponent'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { filter } from 'cypress/types/bluebird';
 
 interface DataPoint {
   [0]: number;
@@ -20,11 +19,6 @@ interface FlattenedData {
   percentage: string,
   type: string,
   serial_number: string
-}
-
-interface MultiSelectType {
-  name: string,
-  code: string
 }
 
 interface TypeList {

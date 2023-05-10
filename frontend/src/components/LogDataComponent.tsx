@@ -34,7 +34,7 @@ const LogDataComponent: React.FC<LogDataComponentProps> = ({ metricData }) => {
     
 
   return (
-    <div className="flex place-content-between m-2 p-2 items-center" data-testid="container">
+    <li className="flex place-content-between m-2 p-2 items-center" data-testid="container">
     <div className={style + " flex place-content-between items-center grow p-1 mr-16 pr-8 pl-8"} data-testid="inner-container">
     <p className="text-black inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="serial-number">{ metricData.serial_number }</p>
     <p className="text-black inline-block p-4 opacity-100 align-middle w-48 text-center" data-testid="date">{ date.toUTCString() }</p>
@@ -51,7 +51,7 @@ const LogDataComponent: React.FC<LogDataComponentProps> = ({ metricData }) => {
   />
   </div>
  
-</div>
+</li>
 
   );
 };
