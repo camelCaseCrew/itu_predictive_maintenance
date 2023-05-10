@@ -10,13 +10,18 @@ inhibit_rules:
     target_match:
       severity: 'warning'
     equal: ['alertname', 'dev', 'instance']
+templates: 
+  - '/alert_manager/*.tmpl'
 receivers:
   - name: 'mail'
     email_configs:
       - require_tls: false
+        headers: 
+          subject: '{{ template "custom_mail_subject" . }}'
+        html: '{{ template "custom_mail_html" . }}'
         from: 'alice@example.com'
         smarthost: 'mail:25'
         hello: 'mail'
         auth_username: 'alice@example.com'
         auth_password: 'secretpassword'
-        to: ''
+        to: 'bopif57845@asuflex.com'
