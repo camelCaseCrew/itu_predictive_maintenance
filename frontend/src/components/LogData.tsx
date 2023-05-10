@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import LogDataComponent from './LogDataComponent'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { filter } from 'cypress/types/bluebird';
 
 interface DataPoint {
   [0]: number;
@@ -36,7 +37,7 @@ const PrometheusData: React.FC<TypeList>= ({ types }) => {
   const [hasMore, setHasMore] = useState(true)
   const [displayedData, setDisplayedData] = useState<FlattenedData[]>([]) // Data which is acutally displayed
   const [itemsAmount, setItemsAmount] = useState(0)
-
+  const [dataIsLoaded, setDataIsLoaded] = useState(false)
   useEffect(() => { // This hook is only run once when the page is loaded.
     async function fetchData() {
       try {
@@ -64,42 +65,50 @@ const PrometheusData: React.FC<TypeList>= ({ types }) => {
               (device: MetricData) => (device.values.map(
                 (datapoint: DataPoint) => ({ date: datapoint[0], percentage: datapoint[1], type: device.metric["device_type"], serial_number: device.metric["serial_number"] }))))
                 .flat(1) // This final method takes a list of lists: [['a', 'b'], ['c']] and flattens it: ['a', 'b', 'c']
-          setData(flattenedData)
-          setHasMore(true)
+                setData(flattenedData)
+                setFilteredData(flattenedData)
+                setHasMore(true)
+                loadMoreData()
+                setDataIsLoaded(true)
         }
       } catch (error) {
         console.error('Error fetching data from Prometheus:', error);
       }
     }
-
     fetchData()
+    if (types.length === 0) {
+      setFilteredData(data)
+    } else {
+      setFilteredData(data.filter(( dataPoint ) => { return types.includes(dataPoint.type) }))
+    }
   }, []);
 
   useEffect(() => {
-    var filtered = data.filter(( dataPoint ) => { return types.includes(dataPoint.type) })
-    setFilteredData(filtered)
-    loadMoreData()
-  }, [types])
-
-  useEffect(() => {
-    // load data on startup
-    loadMoreData()
-  }, [data])
-
+    if (dataIsLoaded) {
+      var filtered
+      if (types.length === 0) {
+        setFilteredData(data)
+      } else {
+        filtered = data.filter(( dataPoint ) => { return types.includes(dataPoint.type) })
+        setFilteredData(filtered)
+      }
+      loadMoreData() 
+    }
+  }, [types, data])
 
   // Called every time one scrolls to the bottom.
   // Data is taken from 'data' to 'displayedData', and thereafter is rendered
   function loadMoreData() {
-
-    const prevItemsAmount = itemsAmount
     var newDisplayedData = displayedData
 
-    for (let i = itemsAmount; i < prevItemsAmount + 10; i++) {
+    for (let i = itemsAmount; i < itemsAmount + 10; i++) {
       setItemsAmount(i)
 
-      if (i > filteredData.length) { // If there is no data left which isn't already displayed
+      if (i >= filteredData.length) { // If there is no data left which isn't already displayed
         setHasMore(false)
         break
+      } else {
+        setHasMore(true)
       }
 
       newDisplayedData.push(filteredData[i])
