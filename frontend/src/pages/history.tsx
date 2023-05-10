@@ -6,8 +6,14 @@ import { MultiSelect } from 'primereact/multiselect';
 import { useState, useEffect } from "react"
 
 
+interface MultiSelectType {
+    name: string,
+    code: string
+}
+
+
 export default function History() {
-    const [selectedDeviceType, updateSelectedDeviceType] = useState(null)
+    const [selectedDeviceTypes, updateSelectedDeviceTypes] = useState<MultiSelectType[]>([])
     const [deviceTypes, updateDeviceTypes] = useState([])
     const [selectedSerialNumbers, updateSelectedSerialNumbers] = useState([])
     const [serialNumbers, updateSerialNumbers] = useState([])
@@ -17,15 +23,17 @@ export default function History() {
         .then(response => response.json())
         .then(data => {
             if (data.status === "success") {
-                updateDeviceTypes(data.data)
+                const mappedData = data.data.map((serial: string) => ({name: serial, code: serial})) // Map serial numbers from string to {name: string, code: string}
+                updateDeviceTypes(mappedData)
+
             }
         })
     }
 
     function getSerialNumbers() {
         var query = `http://localhost:9090/api/v1/label/serial_number/values?match[]=device_health{group="risk"}`
-        if (selectedDeviceType === "all") {
-            query = `http://localhost:9090/api/v1/label/serial_number/values?match[]=device_health{device_type="${selectedDeviceType}",group="risk"}`
+        if (selectedDeviceTypes.length === 0) {
+            query = `http://localhost:9090/api/v1/label/serial_number/values?match[]=device_health{device_type="${selectedDeviceTypes}",group="risk"}`
         }
         fetch(query)
         .then(response => response.json())
@@ -39,7 +47,7 @@ export default function History() {
 
     useEffect(() => {
         getDeviceTypes()
-        getSerialNumbers()
+        getSerialNumbers()        
     }, [])
 
     return (
@@ -66,13 +74,8 @@ export default function History() {
                     <option value="asc">Oldest to newest</option>
                 </select>
 
-                <select className="bg-component2 text-text rounded w-48 h-16 md:gap-x-4 transition duration-300 shadow-2xl mr-2" name="deviceTypeFilter">
-                    <option value="" disabled selected>Type</option>
-                    <option value="all">All</option>
-                    {deviceTypes.map(type => {
-                        return <option value={type}>{ type }</option>;
-                    })}
-                </select>
+                <MultiSelect id='typeMultiSelect' value={selectedDeviceTypes} onChange={(e) => updateSelectedDeviceTypes(e.value)} options={deviceTypes} optionLabel="name" filter 
+                placeholder="Type" maxSelectedLabels={3} className="w-48 h-16 md:gap-x-4 transition duration-300 shadow-2xl mr-2" />
 
                 <select className="bg-component2 text-text rounded w-48 h-16 md:gap-x-4 transition duration-300 shadow-2xl mr-2" name="predictionFilter">
                     <option value="" disabled selected>Prediction</option>
@@ -82,7 +85,7 @@ export default function History() {
             </div>
 
             <div className="bg-component ml-4 mr-4 mt-2 p-4 h-4/6 overflow-x-auto">
-                <LogData />
+                <LogData types={ selectedDeviceTypes.map(( deviceType ) => {return deviceType.code }) }/>
             </div>
 
         </>
