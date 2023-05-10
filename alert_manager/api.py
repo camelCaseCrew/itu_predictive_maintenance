@@ -24,7 +24,7 @@ def update(email):
     }
 
 @app.route("/remove/<email>", methods=["DELETE"])
-def update(email):
+def remove(email):
     if not emails.__contains__(email):
         print("This email is not already subscribed to alerts.")
         return {
