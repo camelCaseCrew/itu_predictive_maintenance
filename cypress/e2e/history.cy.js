@@ -1,7 +1,7 @@
 //Check each device type is option for filtering
 describe('Checks each device type is option for filtering', () => {
     it('Visits looks at type options', () => {
-      cy.visit('http://localhost:3003/history')
+      cy.visit('http://localhost:3001/history')
       cy.get('.p-multiselect').click({ multiple: true })
       cy.get('.p-multiselect-panel').contains('harddrive')
       cy.get('.p-multiselect-panel').contains('sensor')
@@ -11,7 +11,7 @@ describe('Checks each device type is option for filtering', () => {
 //Check harddrive filtering works
 describe('Checks each device type is option for filtering', () => {
     it('Visits looks at type options', () => {
-      cy.visit('http://localhost:3003/history')
+      cy.visit('http://localhost:3001/history')
       cy.get('.p-multiselect').click({ multiple: true })
       cy.wait(10000)
       cy.get('.p-multiselect-panel').contains('harddrive').click()
@@ -25,7 +25,7 @@ describe('Checks each device type is option for filtering', () => {
 //Check sensor filtering works
 describe('Checks each device type is option for filtering', () => {
     it('Visits looks at type options', () => {
-      cy.visit('http://localhost:3003/history')
+      cy.visit('http://localhost:3001/history')
       cy.get('.p-multiselect').click({ multiple: true })
       cy.wait(10000)
       cy.get('.p-multiselect-panel').contains('sensor').click()
