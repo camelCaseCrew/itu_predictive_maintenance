@@ -17,7 +17,11 @@ module.exports = {
         'component2': '#30343D',
         'text': '#DEDEDE',
         'ok': '#37872D',
-        'risk': '#FADE2A ',
+        'risk': '#FFD300',
+        //#FF7900
+        //#FFAA1D
+        //#FFD300
+        //#FADE2A 
         'critical': '#C4162A',
       },
     },

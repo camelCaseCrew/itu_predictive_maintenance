@@ -14,6 +14,7 @@ import { Dropdown } from 'primereact/dropdown'
 
 import 'primeicons/primeicons.css';
 import { Button } from 'primereact/button'
+import { useGlobal } from "@/context/global";
 
 export default function App() {
   const [clickedMenu, setClickedMenu] = useState(true)
@@ -47,6 +48,8 @@ export default function App() {
     { name: "Last 3 years", code: "Last 3 years" },
   ]
 
+  const { filterInt, changeFilter} = useGlobal();
+
   const devices = [
     { name: "Harddrive", code: "Harddrive" },
     { name: "Sensor", code: "Sensor" },
@@ -55,6 +58,16 @@ export default function App() {
   // only get risk groups on first render
   useEffect(() => {
     getRiskGroups()
+  }, [])
+
+  useEffect(() => {
+    if (filterInt == 1){
+      riskGroupSelect("healthy")
+    }else if (filterInt == 2){
+      riskGroupSelect("risk")
+    } else if (filterInt == 3){
+      riskGroupSelect("critical")
+    }
   }, [])
 
   // update models and serial numbers on every render
@@ -179,7 +192,7 @@ export default function App() {
 
       </div>
 
-      <div className="h-full w-full flex">
+      <div id="iframeContainer" className="h-full w-full flex">
         {/*This source is a link to the grafana dashboard with uid=enayayaya in kiosk mode*/}
         <iframe id="devices" className="h-full grow" loading="lazy" src={grafanaSrc}></iframe>
       </div>

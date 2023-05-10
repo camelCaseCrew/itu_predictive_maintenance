@@ -12,7 +12,7 @@ function FeedbackButton (props:{ src:string, alt:string, href:string, className:
   };
   
   return <div id="feedback-button" className={props.className} onClick={handleClick} data-testid={props.testid} role="button">
-  <Image src={props.src} alt={props.alt} width={40} height={40} />
+  <Image src={props.src} alt={props.alt} width={40} priority={true} height={40} />
 </div>
 };
 
