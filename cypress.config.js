@@ -2,6 +2,7 @@ const { defineConfig } = require("cypress");
 const { Client } = require('pg')
 
 module.exports = defineConfig({
+  video: false,
   e2e: {
     setupNodeEvents(on, config) {
       on("task", {
