@@ -39,3 +39,11 @@ describe('Valid email', () => {
         })
     })
 })
+
+describe('Add email api request', () => {
+    it('alert manager update api request add email', () => {
+      cy.request("put", "localhost:5000/update/a@cool.email").then((res) => {
+        res.body.code.should("equal", 200)
+      })
+    })
+})
