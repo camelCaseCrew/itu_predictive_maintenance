@@ -25,7 +25,7 @@ describe('Alert activated', () => {
                     url: 'https://api.mail.tm/messages',
                     auth: token
                 }).then((response) => {
-                    response.body["hydra:totalItems"]
+                    expect(response.body["hydra:totalItems"]).to.be.greaterThan(0)
                 })
 
                 cy.request('DELETE', 'https://api.mail.tm/accounts/' + id)
