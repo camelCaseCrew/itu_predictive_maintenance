@@ -7,7 +7,7 @@ describe('Checks each device type is option for filtering', () => {
     })
   })
 
-describe('Checks each device type is option for filtering', () => {
+describe('Checks the filtering works for Harddrives', () => {
     it('Checks the filtering works for Harddrives', () => {
       cy.visit('http://localhost:3001/history')
       cy.wait(10000)
@@ -20,7 +20,7 @@ describe('Checks each device type is option for filtering', () => {
     })
   })
 
-describe('Checks each device type is option for filtering', () => {
+describe('Checks the filtering works for Sensor', () => {
     it('Checks the filtering works for Sensor', () => {
       cy.visit('http://localhost:3001/history')
       cy.wait(10000)
@@ -33,7 +33,7 @@ describe('Checks each device type is option for filtering', () => {
     })
   })
   
-describe('Checks each device type is option for filtering', () => {
+describe('Looks at serial number options', () => {
     it('Looks at serial number options', () => {
       cy.visit('http://localhost:3001/history')
       cy.request('http://localhost:9090/api/v1/label/serial_number/values').then(
@@ -48,8 +48,8 @@ describe('Checks each device type is option for filtering', () => {
     })
   })
  
-describe('Checks filtering works for the first serial number', () => {
-    it('Checks filtering works for the first serial number', () => {
+describe('Checks filtering works for all serial numbers', () => {
+    it('Checks filtering works for all serial numbers', () => {
       cy.visit('http://localhost:3001/history')
       cy.wait(10000)
       cy.get('.p-multiselect').contains('Serial number').click({ multiple: true })
