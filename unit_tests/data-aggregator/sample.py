@@ -1,1 +1,1 @@
-sample = '{"date": null, "serial_number": "Z304KBXS", "model": "ST4000DM000", "device_type": "harddrive", "failure_prediction": 6.220004126975216e-05, "capacity_bytes": 1.976651427858e-311}'
+sample = '{"date": null, "serial_number": "Z304KBXS", "model": "ST4000DM000", "device_type": "harddrive", "failure_prediction": 6.220004126975216e-05, "capacity_bytes": 1.976651427858e-311, "id": 1}'
