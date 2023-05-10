@@ -8,6 +8,7 @@ RUN chmod +x alertmanager
 
 RUN pip install flask
 RUN pip install pyyaml
+RUN pip install requests
 
 EXPOSE 5000
 
