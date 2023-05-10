@@ -87,16 +87,13 @@ const PrometheusData: React.FC<LogDataProps> = ({ types, serialNumbers, predicti
   }
 
   function applyPredictionSort() {
-    let sortedData = filteredData
+    var sortedData = data
     if(predictionSort == "asc"){
-      console.log("lol asc")
       sortedData.sort((a,b) => Number(a.percentage) - Number(b.percentage)); // b - a for reverse sort
-      setFilteredData(sortedData)
     } else if (predictionSort == "desc") {
-      console.log("lol desc")
       sortedData.sort((a,b) => Number(b.percentage) - Number(a.percentage)); // b - a for reverse sort
-      setFilteredData(sortedData)
     }
+    setData(sortedData)
   }
 
   function reloadDisplayedData() {
@@ -127,7 +124,6 @@ const PrometheusData: React.FC<LogDataProps> = ({ types, serialNumbers, predicti
 
   useEffect(() => {
     applyPredictionSort()
-    reloadDisplayedData()
   }, [predictionSort])
 
   useEffect(() => { // This hook is only run once when the page is loaded
