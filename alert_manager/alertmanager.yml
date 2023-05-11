@@ -24,4 +24,4 @@ receivers:
         hello: 'mail'
         auth_username: 'alice@example.com'
         auth_password: 'secretpassword'
-        to: ''
+        to: 'alice@example.com'
