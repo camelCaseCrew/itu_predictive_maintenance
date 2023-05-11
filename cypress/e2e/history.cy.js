@@ -99,6 +99,39 @@ describe('Prediction sorting test descending', () => {
   })
 })
 
+describe('Date sorting test ascending', () => {
+  it('Checks that sorting predictions works', () => {
+    cy.visit('http://localhost:3001/history')
+    cy.wait(10000)
+    cy.get('input[id="DateSort"]').parent().parent().click()
+    cy.get('ul[class="p-dropdown-items"]').contains('Oldest to newest').click()
+    cy.wait(3000)
+    var prevVal = 0
+    cy.get('.infinite-scroll-component > li').each((item) => {
+      var curVal = Date.parse(item.find('[data-testid="date"]').text())
+      console.log(curVal)
+      cy.wrap(curVal).should('be.gte', prevVal)
+      prevVal = curVal
+    })
+  })
+})
+
+describe('Date sorting test descending', () => {
+  it('Checks that sorting predictions works', () => {
+    cy.visit('http://localhost:3001/history')
+    cy.wait(10000)
+    cy.get('input[id="DateSort"]').parent().parent().click()
+    cy.get('ul[class="p-dropdown-items"]').contains('Newest to oldest').click()
+    cy.wait(3000)
+    var prevVal = Infinity
+    cy.get('.infinite-scroll-component > li').each((item) => {
+      var curVal = Date.parse(item.find('[data-testid="date"]').text())
+      cy.wrap(curVal).should('be.lte', prevVal)
+      prevVal = curVal
+    })
+  })
+})
+
 // Tests the feedback button
 
 describe('Feedback button test', () => {

@@ -22,7 +22,12 @@ export default function History() {
         { name: "Highest to lowest", code: "desc" },
         { name: "Lowest to highest", code: "asc" },
     ]
+    const sortsD = [
+        { name: "Newest to oldest", code: "desc" },
+        { name: "Oldest to newest", code: "asc" },
+    ]
     const [predictionSort, updatePredictionSort] = useState<{name: string; code: string;}>()
+    const [dateSort, updateDateSort] = useState<{name: string; code: string;}>()
 
     function getDeviceTypes() { // Get device types from prometheus
         fetch(`http://localhost:9090/api/v1/label/device_type/values`)
@@ -70,12 +75,12 @@ export default function History() {
                 <MultiSelect value={selectedSerialNumbers} onChange={(e) => updateSelectedSerialNumbers(e.value)} options={serialNumbers} virtualScrollerOptions={{ itemSize: 43 }} optionLabel="name" filter 
                 placeholder="Serial number" maxSelectedLabels={3} className="w-48 h-16 md:gap-x-4 transition duration-300 shadow-2xl mr-2" />
                 
-                <select className="bg-component2 text-text rounded w-48 h-16 md:gap-x-4 transition duration-300 shadow-2xl mr-2" name="dateFilter">
-                    <option value="" disabled selected>Date</option>
-                    
-                    <option value="desc">Newest to oldest</option>
-                    <option value="asc">Oldest to newest</option>
-                </select>
+                <div style={{ minWidth: "15%" }} className="pt-6 pb-2 m-2">
+                    <span className="p-float-label">
+                        <Dropdown inputId="DateSort" value={dateSort} onChange={(e) => updateDateSort(e.value)} options={sortsD} optionLabel="name" className="w-full md:w-20rem" />
+                        <label htmlFor="DateSort">Date Sort</label>
+                    </span>
+                </div>
 
                 <MultiSelect id='typeMultiSelect' value={selectedDeviceTypes} onChange={(e) => updateSelectedDeviceTypes(e.value)} options={deviceTypes} optionLabel="name" filter 
                 placeholder="Type" maxSelectedLabels={3} className="w-48 h-16 md:gap-x-4 transition duration-300 shadow-2xl mr-2" />
@@ -90,7 +95,7 @@ export default function History() {
             </div>
 
             <div className="bg-component ml-4 mr-4 mt-2 p-4 h-4/6 overflow-x-auto">
-                <LogData predictionSort={predictionSort?.code || ""} types={ selectedDeviceTypes.map(( deviceType ) => {return deviceType.code })} serialNumbers={ selectedSerialNumbers.map(( num ) => {return num.code })}/>
+                <LogData dateSort={dateSort?.code || ""} predictionSort={predictionSort?.code || ""} types={ selectedDeviceTypes.map(( deviceType ) => {return deviceType.code })} serialNumbers={ selectedSerialNumbers.map(( num ) => {return num.code })}/>
             </div>
 
         </>
