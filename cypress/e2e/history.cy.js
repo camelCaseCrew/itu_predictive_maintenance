@@ -1,6 +1,7 @@
 describe('Checks each device type is option for filtering', () => {
     it('Looks at type options', () => {
       cy.visit('http://localhost:3001/history')
+      cy.wait(3000)
       cy.get('.p-multiselect').contains('Type').click({ multiple: true })
       cy.get('.p-multiselect-panel').contains('harddrive')
       cy.get('.p-multiselect-panel').contains('sensor')
@@ -33,6 +34,71 @@ describe('Checks the filtering works for Sensor', () => {
     })
   })
 
+describe('Looks at serial number options', () => {
+  it('Looks at serial number options', () => {
+    cy.visit('http://localhost:3001/history')
+    cy.request('http://localhost:9090/api/v1/label/serial_number/values').then(
+      (response) => {
+          cy.log(response.body)
+          cy.wait(10000)
+          cy.get('.p-multiselect').contains('Serial number').click({ multiple: true })
+          cy.get('.p-multiselect-items > li').each((item) => {
+              expect(response.body.data).to.contain(item.children('span').eq(0).text())
+          })
+      }
+    )
+  })
+})
+ 
+describe('Checks filtering works for all serial numbers', () => {
+    it('Checks filtering works for all serial numbers', () => {
+      cy.visit('http://localhost:3001/history')
+      cy.wait(10000)
+      cy.get('.p-multiselect').contains('Serial number').click({ multiple: true })
+      cy.get('.p-multiselect-items > li').each((item) => {
+        cy.get('.p-multiselect-panel').contains(item.children('span').eq(0).text()).click()
+        cy.get('.infinite-scroll-component > li').each((log) => {
+          expect(log).to.contain(item.children('span').eq(0).text())
+        })
+        cy.get('.p-multiselect-panel').contains(item.children('span').eq(0).text()).click()
+      })
+    })
+  })
+
+// Sorting tests
+
+describe('Prediction sorting test ascending', () => {
+  it('Checks that sorting predictions works', () => {
+    cy.visit('http://localhost:3001/history')
+    cy.wait(10000)
+    cy.get('input[id="PredictionSort"]').parent().parent().click()
+    cy.get('ul[class="p-dropdown-items"]').contains('Lowest to highest').click()
+    cy.wait(3000)
+    var prevVal = 0
+    cy.get('.infinite-scroll-component > li').each((item) => {
+      var curVal = parseInt(item.find('[data-testid="percentage"]').text().slice(0,-1))
+      cy.wrap(curVal).should('be.gte', prevVal)
+      prevVal = curVal
+    })
+  })
+})
+
+describe('Prediction sorting test descending', () => {
+  it('Checks that sorting predictions works', () => {
+    cy.visit('http://localhost:3001/history')
+    cy.wait(10000)
+    cy.get('input[id="PredictionSort"]').parent().parent().click()
+    cy.get('ul[class="p-dropdown-items"]').contains('Highest to lowest').click()
+    cy.wait(3000)
+    var prevVal = 100
+    cy.get('.infinite-scroll-component > li').each((item) => {
+      var curVal = parseInt(item.find('[data-testid="percentage"]').text().slice(0,-1))
+      cy.wrap(curVal).should('be.lte', prevVal)
+      prevVal = curVal
+    })
+  })
+})
+
 // Tests the feedback button
 
 describe('Feedback button test', () => {
@@ -56,33 +122,3 @@ describe('Database query test', () => {
     })
   });
 });
-
-describe('Looks at serial number options', () => {
-    it('Looks at serial number options', () => {
-      cy.visit('http://localhost:3001/history')
-      cy.request('http://localhost:9090/api/v1/label/serial_number/values').then(
-        (response) => {
-            cy.log(response.body)
-            cy.get('.p-multiselect').contains('Serial number').click({ multiple: true })
-            cy.get('.p-multiselect-items > li').each((item) => {
-                expect(response.body.data).to.contain(item.children('span').eq(0).text())
-            })
-        }
-      )
-    })
-  })
- 
-describe('Checks filtering works for all serial numbers', () => {
-    it('Checks filtering works for all serial numbers', () => {
-      cy.visit('http://localhost:3001/history')
-      cy.wait(10000)
-      cy.get('.p-multiselect').contains('Serial number').click({ multiple: true })
-      cy.get('.p-multiselect-items > li').each((item) => {
-        cy.get('.p-multiselect-panel').contains(item.children('span').eq(0).text()).click()
-        cy.get('.infinite-scroll-component > li').each((log) => {
-          expect(log).to.contain(item.children('span').eq(0).text())
-        })
-        cy.get('.p-multiselect-panel').contains(item.children('span').eq(0).text()).click()
-      })
-    })
-  })
