@@ -51,7 +51,7 @@ export default function Home() {
     <>
       <Head>
         <title>PredictIT - Home</title>
-        <link rel="icon" href="/systematic-favicon.webp" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       
       <div className='mt-8 mb-4 flex flex-row justify-center'>
