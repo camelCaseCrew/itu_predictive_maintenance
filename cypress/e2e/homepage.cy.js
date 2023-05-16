@@ -5,7 +5,7 @@ const dimensions = require('../dimensions.js')
 
 describe('Homepage tab title', () => {
   it('Tab title equals "PredictIT - Home"', () => {
-    cy.visit('http://localhost:3003/')
+    cy.visit('http://localhost:3001/')
     cy.title().should('eq', "PredictIT - Home")
   })
 })

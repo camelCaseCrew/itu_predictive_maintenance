@@ -1,6 +1,6 @@
 describe('History tab title', () => {
   it('Tab title equals "PredictIT - History"', () => {
-    cy.visit('http://localhost:3003/history')
+    cy.visit('http://localhost:3001/history')
     cy.title().should('eq', "PredictIT - History")
   })
 })

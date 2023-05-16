@@ -3,7 +3,7 @@
 
 describe('Health-graphs tab title', () => {
     it('Tab title equals "PredictIT - Health-Graphs"', () => {
-    cy.visit('http://localhost:3003/health_graphs')
+    cy.visit('http://localhost:3001/health_graphs')
     cy.title().should('eq', "PredictIT - Health-Graphs")
     })
 })
