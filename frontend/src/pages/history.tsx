@@ -62,7 +62,7 @@ export default function History() {
         <>
             <Head>
                 <title>PredictIT - History</title>
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/systematic-favicon.webp" />
             </Head>
 
             <div className="bg-component1 m-4 p-4 flex place-content-between items-center pr-48 pl-16 overflow-x-auto">

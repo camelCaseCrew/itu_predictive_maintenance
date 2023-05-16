@@ -171,8 +171,8 @@ export default function App() {
   return (
     <>
       <Head>
-        <title>PredictIT - Health graphs</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>PredictIT - Health-Graphs</title>
+        <link rel="icon" href="/systematic-favicon.webp" />
       </Head>
       <div className="m-4">
         <div className="mx-2 bg-component1 h-[100%]">
