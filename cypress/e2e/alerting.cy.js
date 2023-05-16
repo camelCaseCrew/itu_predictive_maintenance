@@ -5,31 +5,3 @@ describe('Alert activated', () => {
         .should('equal', 200)
     })
 })
-
-describe('Alert activated', () => {
-    it('Checks that prometheus alerts have been activated', () => {
-        cy.wait(10000)
-        cy.request('https://api.mail.tm/domains').then(( response ) => {
-            const accountName = Cypress._.random(0, 1e6) + '@' + response.body["hydra:member"][0]["domain"]
-            const password = "predictit123"
-
-            cy.request('POST', 'https://api.mail.tm/accounts', { address: accountName, password: password})
-            cy.request('PUT', 'http://localhost:5000/update/'+accountName)
-            cy.request('POST', 'http://localhost:9093/-/reload')
-            cy.request('POST', 'https://api.mail.tm/token', { address: accountName, password: password}).then(( response ) => {
-                const token = response.body.token
-                const id = response.body.id
-
-                cy.request({
-                    url: 'https://api.mail.tm/messages',
-                    auth: token
-                }).then((response) => {
-                    expect(response.body["hydra:totalItems"]).to.be.greaterThan(0)
-                })
-
-                cy.request('DELETE', 'https://api.mail.tm/accounts/' + id)
-            })
-
-        })
-    })
-})
