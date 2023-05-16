@@ -49,6 +49,10 @@ export default function Home() {
     const interval = setInterval(() => { // 20 second interval for fetching percentage data
       getAllPercentages()
     }, 20000)
+
+    return () => {
+       clearInterval(interval)
+    };
   }, [])
 
   return (
