@@ -38,6 +38,12 @@ export default function Home() {
       })
      }
 
+  const getAllPercentages = () => {
+    getHealthyPercentage()
+    getRiskPercentage()
+    getCriticalPercentage()
+  }
+
   useEffect(() => { // Code inside this function is only called once per load
     setInterval(() => { // 20 second interval for fetching percentage data
       console.log("Interval")
