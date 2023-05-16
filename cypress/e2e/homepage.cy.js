@@ -3,6 +3,13 @@ import 'cypress-iframe';
 const dimensions = require('../dimensions.js')
 // Home page tests
 
+describe('Homepage tab title', () => {
+  it('Tab title equals "PredictIT - Home"', () => {
+    cy.visit('http://localhost:3003/')
+    cy.title().should('eq', "PredictIT - Home")
+  })
+})
+
 describe('Presence of bar graph test', () => {
   Object.values(dimensions).map((key, i) => {
     it('Tests that the critical grafana bar graph is on the page', () => {
