@@ -1,4 +1,4 @@
-{{ define "device_critical_subject" }}New critical device: {{ (index .Alerts.Firing 0).Annotations.serial_number  }}{{ end }}
+{{ define "device_critical_subject" }}New critical device{{ end }}
 {{ define "device_critical_html" }}
 <html>
 <head>
@@ -6,12 +6,18 @@
 </head>
 <body>
 
-A new device has moved to a critical state <br/> <br/>
+A new device has moved to a critical state <br/> 
+<a href="http://localhost:3001/">Go to dashboard</a> <br/> <br/>
 
-Type: {{ (index .Alerts.Firing 0).Annotations.device_type }} <br/>
-Serial number: {{ (index .Alerts.Firing 0).Annotations.serial_number }} <br/> <br/>
+Here are all critical devices: <br/> <br/>
 
-<a href="http://localhost:3001/">Go to dashboard</a>
+{{ range .Alerts.Firing }}
+
+Serial number: {{ .Annotations.serial_number }} <br/> 
+Type: {{ .Annotations.device_type }} <br/>
+Time: {{ .StartsAt }} <br/> <br/>
+
+{{ end }}
 
 </body></html>
 {{ end }}
