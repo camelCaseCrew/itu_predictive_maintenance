@@ -3,22 +3,35 @@ import yaml
 import os
 import requests
 
-emails = []
+emails = ["predictit@example.com"]
 app = flask.Flask(__name__)
 
 @app.route("/update/<email>", methods=["PUT"])
 def update(email):
+
+    print("Received PUT request for email " + email)
+
+    if emails.__contains__(email):
+        print("This email is already subscribed to alerts.")
+        return {
+            "message": "this email is already subscribed",
+            "code": 400
+        }
+
     emails.append(email)
-    print("emails added: ", email)
+    print("email added: ", email)
 
     with open("alertmanager.yml", "r") as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
     data.get("receivers")[0].get("email_configs")[0]["to"] = ', '.join(emails)
+    
     print("data variable: ", data)
 
     with open("alertmanager.yml", "w") as f:
         yaml.dump(data, f)
-    print("update config file")
+
+    print("updated config file")
+
     return {
         "message": "added email to list",
         "code": 200
@@ -26,26 +39,34 @@ def update(email):
 
 @app.route("/remove/<email>", methods=["DELETE"])
 def remove(email):
+
+    print("Received DELETE request for email " + email)
+
     if not emails.__contains__(email):
-        print("This email is not already subscribed to alerts.")
+        print("Email is not subscribed to alerts")
         return {
-            "message": "Bad Request: This email is not already subscribed to alerts.",
+            "message": "this email is not subscribed to alerts",
             "code": 400
         }
     
-    emails.pop(email)
+    emails.remove(email)
     print("email removed: ", email)
+
+    if len(emails) == 0:
+        emails.append("predictit@example.com")
 
     with open("alertmanager.yml", "r") as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
     data.get("receivers")[0].get("email_configs")[0]["to"] = ', '.join(emails)
+
     print("data variable: ", data)
 
     with open("alertmanager.yml", "w") as f:
         yaml.dump(data, f)
-    print("update config file")
+    print("updated config file")
+
     return {
-        "message": "Removed email from list",
+        "message": "removed email from list",
         "code": 200
     }
 
