@@ -4,11 +4,16 @@ import "primereact/resources/primereact.min.css"
 import '@/styles/custom-primereact.css'
 import BackButton from '@/components/BackButton'
 import Navbar from '@/components/Navbar'
+import { GlobalContextProvider } from "@/context/global";
 import type { AppProps } from 'next/app'
 
 export default function App({ Component, pageProps }: AppProps) {
   return <div id="main" className='bg-background w-screen h-screen p-4 overflow-scroll'>
+    
+    <GlobalContextProvider>
+  
       <Navbar />
       <Component {...pageProps} />
+    </GlobalContextProvider>
     </div>
 }
