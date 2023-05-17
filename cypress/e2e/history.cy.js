@@ -1,3 +1,10 @@
+describe('History tab title', () => {
+  it('Tab title equals "PredictIT - History"', () => {
+    cy.visit('http://localhost:3001/history')
+    cy.title().should('eq', "PredictIT - History")
+  })
+})
+
 describe('Checks each device type is option for filtering', () => {
     it('Looks at type options', () => {
       cy.visit('http://localhost:3001/history')
