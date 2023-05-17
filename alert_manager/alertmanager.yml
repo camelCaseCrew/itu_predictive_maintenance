@@ -19,7 +19,7 @@ receivers:
         headers: 
           subject: '{{ template "device_critical_subject" . }}'
         html: '{{ template "device_critical_html" . }}'
-        from: 'alice@example.com'
+        from: 'predictit@example.com'
         smarthost: 'mail:25'
         hello: 'mail'
         auth_username: 'predictit@example.com'
