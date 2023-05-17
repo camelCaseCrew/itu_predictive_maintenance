@@ -38,6 +38,23 @@ const PrometheusData: React.FC<LogDataProps> = ({ types, serialNumbers, predicti
   const [itemsAmount, setItemsAmount] = useState(0)
   const [dataIsLoaded, setDataIsLoaded] = useState(false)
 
+
+  function removeDuplicates(flattenedData: any[]) {
+    const seenIds = new Set();
+    const uniqueData: any[] = [];
+
+    flattenedData.forEach((data: { id: any; }) => {
+      const dataId = data.id;
+      if (!seenIds.has(dataId)) {
+        seenIds.add(dataId);
+        uniqueData.push(data);
+      }
+    });
+
+    return uniqueData;
+  }
+
+
   async function fetchData() { // Fetch data from prometheus
     try {
 
@@ -64,8 +81,10 @@ const PrometheusData: React.FC<LogDataProps> = ({ types, serialNumbers, predicti
               (datapoint: DataPoint) => ({ date: datapoint[0], percentage: datapoint[1], type: device.metric["device_type"], serial_number: device.metric["serial_number"], id: device.metric["id"] }))))
             .flat(1) // This final method takes a list of lists: [['a', 'b'], ['c']] and flattens it: ['a', 'b', 'c']
 
-        setData(flattenedData)
-        setFilteredData(flattenedData)
+
+        const uniqueData = removeDuplicates(flattenedData)
+        setData(uniqueData)
+        setFilteredData(uniqueData)
         setHasMore(true)
         loadMoreData()
         setDataIsLoaded(true)
@@ -117,9 +136,11 @@ const PrometheusData: React.FC<LogDataProps> = ({ types, serialNumbers, predicti
   // Data is taken from 'data' to 'displayedData', and thereafter is rendered
   function loadMoreData() {
     var newDisplayedData = displayedData
+    const prevItemsAmount = itemsAmount
+    const nextItemsAmount = Math.min(prevItemsAmount + 10, data.length)
+    setItemsAmount(nextItemsAmount)
 
     for (let i = itemsAmount; i < itemsAmount + 10; i++) { // Try loading 10 new elements from filteredData into displayedData
-      setItemsAmount(i)
 
       if (i >= filteredData.length) { // If there is no data left which isn't already displayed
         setHasMore(false)
