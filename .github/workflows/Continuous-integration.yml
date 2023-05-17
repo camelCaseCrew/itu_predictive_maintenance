@@ -35,7 +35,7 @@ jobs:
         run: docker compose -f docker/docker-compose.yml logs
 
       - name: Wait 50 seconds
-        run: sleep 50S
+        run: sleep 50s
         shell: bash
 
       - name: Cypress run
