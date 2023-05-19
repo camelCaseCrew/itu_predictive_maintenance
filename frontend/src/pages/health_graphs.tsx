@@ -18,6 +18,7 @@ import { useGlobal } from "@/context/global";
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline'
 import Head from "next/head";
+import { machine } from "os";
 
 export default function App() {
   const [clickedMenu, setClickedMenu] = useState(true)
@@ -36,6 +37,9 @@ export default function App() {
 
   const [maxPages, updateMaxPages] = useState(1)
   const [currentPage, updateCurrentPage] = useState(1)
+
+  const [iframeHeight, updateIframeHeight] = useState(0)
+  
 
   const maxPerPage: number = 100
 
@@ -104,9 +108,16 @@ export default function App() {
 
     if(serials.length > 0) {
       updateMaxPages(Math.ceil(serials.map(v => v["name"]).length/maxPerPage))
+      
       newSerials = getNewSerials(serials.map(v => v["name"]).slice((pageNumber-1)*maxPerPage, (pageNumber-1)*maxPerPage+maxPerPage))
     } else { // we no serial numbers were selected:
       updateMaxPages(Math.ceil(allDevicesInArray.length/maxPerPage))
+
+      const graphs_last_page = allDevicesInArray.length % maxPerPage
+
+      currentPage === maxPages ? updateIframeHeight((29.8 * (Math.ceil(graphs_last_page/4)) + 20)) : updateIframeHeight((29.8 * (Math.ceil(maxPerPage/4)) + 20))
+
+      console.log(iframeHeight)
       newSerials = getNewSerials(allDevicesInArray.slice((pageNumber-1)*maxPerPage, (pageNumber-1)*maxPerPage+maxPerPage))
     }
 
@@ -225,10 +236,10 @@ export default function App() {
 
         </div>
 
-        <div id="iframeContainer" className="h-[60vh] w-full flex mt-2">
+        <div id="iframeContainer" className="h-[50vh] overflow-x-hidden overflow-y-scroll flex mt-2">
 
           {/*This source is a link to the grafana dashboard with uid=enayayaya in kiosk mode*/}
-          <iframe id="devices" className="h-full grow" loading="lazy" src={grafanaSrc}></iframe>
+          <iframe id="devices" className={`h-[${iframeHeight + "vh"}] grow pointer-events-none`} loading="lazy" src={grafanaSrc}></iframe>
         </div>
 
         <div className=" justify-center my-2 flex">
