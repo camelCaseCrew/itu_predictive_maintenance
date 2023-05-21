@@ -16,13 +16,9 @@ module.exports = {
         'component1': '#22252B',
         'component2': '#30343D',
         'text': '#DEDEDE',
-        'ok': '#37872D',
-        'risk': '#FFD300',
-        //#FF7900
-        //#FFAA1D
-        //#FFD300
-        //#FADE2A 
-        'critical': '#C4162A',
+        'ok': '#3A7924',
+        'risk': '#BB5E1B',
+        'critical': '#971020',
       },
     },
   },

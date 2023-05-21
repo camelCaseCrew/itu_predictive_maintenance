@@ -84,9 +84,9 @@ export default function Home() {
 
       </div>
       <div className='flex flex-row gap-2 sm:gap-14 lg:gap-20 2xl:gap-28 justify-center mt-3'>
-        <OverviewButton Status='Critical' Id='Critical-goto-btn-id' Filter='critical' HexColor='#C4162A' href='/health_graphs' percentage={criticalPercentage} />
-        <OverviewButton Status='At risk' Id='Risk-goto-btn-id' Filter='risk' HexColor='#FADE2A' href='/health_graphs' percentage={riskPercentage} />
-        <OverviewButton Status='Healthy' Id='Healthy-goto-btn-id' Filter='healthy' HexColor='#37872D' href='/health_graphs' percentage={healthyPercentage} />
+        <OverviewButton Status='Critical' Id='Critical-goto-btn-id' Filter='critical' HexColor='#971020' href='/health_graphs' percentage={criticalPercentage} />
+        <OverviewButton Status='At risk' Id='Risk-goto-btn-id' Filter='risk' HexColor='#BB5E1B' href='/health_graphs' percentage={riskPercentage} />
+        <OverviewButton Status='Healthy' Id='Healthy-goto-btn-id' Filter='healthy' HexColor='#3A7924' href='/health_graphs' percentage={healthyPercentage} />
         
       </div>
     </>
