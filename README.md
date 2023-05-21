@@ -39,6 +39,8 @@ Run it attached with `make compose_up_attached`.
 
 Then visit [http://localhost:3001](http://localhost:3001)
 
+*Note*: sometimes the 'rabbitmq' service is unhealthy - just delete all containers and run it again.
+
 To build, run `make build_services`
 
 It is also possible to run the frontend seperately (without docker) from the rest of the system.
