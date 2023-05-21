@@ -238,8 +238,8 @@ export default function App() {
 
         <div id="iframeContainer" className="h-[50vh] overflow-scroll-y overflow-x-hidden flex mt-2">
 
-          {/*This source is a link to the grafana dashboard with uid=enayayaya in kiosk mode   ${iframeHeight + "vh"}*/}
-          <iframe id="devices" className={`h-[765vh] grow pointer-events-none`} loading="lazy" src={grafanaSrc}></iframe>
+          {/*This source is a link to the grafana dashboard with uid=enayayaya in kiosk mode*/}
+          <iframe id="devices" className={`h-[${iframeHeight + "vh"}] grow pointer-events-none`} loading="lazy" src={grafanaSrc}></iframe>
         </div>
 
         <div className=" justify-center my-2 flex">
