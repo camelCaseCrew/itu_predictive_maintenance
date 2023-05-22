@@ -15,13 +15,13 @@ templates:
 receivers:
   - name: 'mail'
     email_configs:
-      - require_tls: false
+      - require_tls: true
         headers: 
           subject: '{{ template "device_critical_subject" . }}'
         html: '{{ template "device_critical_html" . }}'
-        from: 'predictit@example.com'
-        smarthost: 'mail:25'
-        hello: 'mail'
-        auth_username: 'predictit@example.com'
-        auth_password: 'secretpassword'
-        to: 'predictit@example.com'
+        from: 'camelcasecrew@gmail.com'
+        smarthost: 'in-v3.mailjet.com:587'
+        hello: 'localhost'
+        auth_username: '7532e030a49b259cc62687cde8e2c047'
+        auth_password: '404881b8a12010c4a7e0b70c220afa5a'
+        to: 'camelcasecrew@gmail.com'
