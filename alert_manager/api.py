@@ -3,7 +3,7 @@ import yaml
 import os
 import requests
 
-emails = ["predictit@example.com"]
+emails = ["camelcasecrew@gmail.com"]
 app = flask.Flask(__name__)
 
 @app.route("/update/<email>", methods=["PUT"])
@@ -53,7 +53,7 @@ def remove(email):
     print("email removed: ", email)
 
     if len(emails) == 0:
-        emails.append("predictit@example.com")
+        emails.append("test@example.com")
 
     with open("alertmanager.yml", "r") as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
