@@ -145,11 +145,3 @@ services:
     depends_on:
       - prometheus
       - mail
-  
-  mail:
-    image: bytemark/smtp
-    restart: always
-    ports:
-      - "25:25"
-    networks:
-      - predictive-maintenance-net
