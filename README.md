@@ -73,6 +73,13 @@ E.g. the following command will launch 3 instances of the ML-worker on startup:
 docker-compose -f docker/docker-compose.yaml up --scale predictive_maintenance=3
 ```
 
+#### Increasing amount of simulated data
+
+The default is 50.000 rows taken out of `data_generator/data/harddrive.csv`. 
+Unfortunately there is no simple way of configuring this amount, it has to be hardcoded.
+This can be done on line 35 of `data_generator/data_generator/app/main.py`. 
+The last argument given to CSV_Parser can be changed to any number (the last digit is not allowed to be zero).
+
 ---
 
 ## System architecture
