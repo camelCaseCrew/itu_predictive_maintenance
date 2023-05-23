@@ -80,6 +80,32 @@ Unfortunately there is no simple way of configuring this amount, it has to be ha
 This can be done on line 35 of `data_generator/data_generator/app/main.py`. 
 The last argument given to CSV_Parser can be changed to any number (the last digit is not allowed to be zero).
 
+#### Front-End Config-Guide
+These are the files that are unique for the specific pages.
+
+## History Page:
+LogData
+|_LogDataComponent
+FeedbackButton
+tailwind.config.js(Colours)
+
+## Index Page:
+ClickableIframe
+OverviewButton
+
+## Health-Graps Page:
+Is currently self-contained.
+Right now the context global.tsx supports this page with a global filter value, this is currently hardcoded to:
+1 = Healthy
+2 = Risk
+3 = Critical
+The other pages and components modify this value.
+
+## NavBar
+Navbar
+|_NavbarButton
+|_Logo
+|_BackButton
 ---
 
 ## System architecture
