@@ -1,2 +1,2 @@
-./alertmanager --config.file=alertmanager.yml &
-python api.py
+python api.py & 
+./alertmanager --config.file=alertmanager.yml
