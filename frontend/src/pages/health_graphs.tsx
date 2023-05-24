@@ -11,6 +11,7 @@ import { Button } from 'primereact/button'
 import { useGlobal } from "@/context/global";
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline'
+import { machine } from "os";
 import Head from "next/head";
 
 export default function App() {
@@ -30,6 +31,7 @@ export default function App() {
 
   const [maxPages, updateMaxPages] = useState(1)
   const [currentPage, updateCurrentPage] = useState(1)  
+  const [iframeHeight, updateIframeHeight] = useState(0)
 
   const maxPerPage: number = 100
 
