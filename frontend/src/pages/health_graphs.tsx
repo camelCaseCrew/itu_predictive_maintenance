@@ -1,11 +1,5 @@
 import BackButton from "@/components/BackButton"
 
-//this is a very hacky solution that essentially detects when the window is no longer the focus
-//ie. you have focused on the Grafana Embed, and changes the focus to the window. This is done
-//to prevent exiting kiosk mode on the Grafana embed, however a better solution could be
-//1. managing user permissions such that an anonymous viewer cannot get a full view
-//or 2. disabling the hotkeys to exit kiosk mode (esc or f) on the Grafana embed
-
 import { useState, useEffect } from "react"
 import React from 'react'
 
@@ -18,7 +12,6 @@ import { useGlobal } from "@/context/global";
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline'
 import Head from "next/head";
-import { machine } from "os";
 
 export default function App() {
   const [clickedMenu, setClickedMenu] = useState(true)
@@ -90,6 +83,18 @@ export default function App() {
   useEffect(() => {
     getSerialNumbers()
   }, [selectedGroup, selectedModel, selectedDevice])
+
+//this is a very hacky solution that essentially detects when the window is no longer the focus
+//ie. you have focused on the Grafana Embed, and changes the focus to the window. This is done
+//to prevent exiting kiosk mode on the Grafana embed, however a better solution could be
+//1. managing user permissions such that an anonymous viewer cannot get a full view
+//or 2. disabling the hotkeys to exit kiosk mode (esc or f) on the Grafana embed
+ window.addEventListener("blur", function (e) {
+        setTimeout(function () {
+          window.focus();
+        }, 0);
+      });
+
 
   const getNewSerials = (lst: string[]) => {
     return lst.map(serial => `&var-serial_number=${serial}`).toString().replaceAll(",", "")
