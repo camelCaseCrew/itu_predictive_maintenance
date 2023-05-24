@@ -69,8 +69,8 @@ export default function History() {
 
                 <div style={{ minWidth: "200px" }} className="w-48 py-1 m-2">
                     <span className="p-float-label">
-                        <MultiSelect id="typeMultiSelect" value={selectedSerialNumbers} onChange={(e) => updateSelectedSerialNumbers(e.value)} options={serialNumbers} optionLabel="name" filter maxSelectedLabels={3} virtualScrollerOptions={{ itemSize: 43 }} className="w-full md:w-20rem" />
-                        <label htmlFor="PredictionSort">Serial number</label>
+                        <MultiSelect inputId="serialFilter" value={selectedSerialNumbers} onChange={(e) => updateSelectedSerialNumbers(e.value)} options={serialNumbers} optionLabel="name" filter maxSelectedLabels={3} virtualScrollerOptions={{ itemSize: 43 }} className="w-full md:w-20rem" />
+                        <label htmlFor="serialFilter">Serial Filter</label>
                     </span>
                 </div>
                 
@@ -83,8 +83,8 @@ export default function History() {
 
                 <div style={{ minWidth: "200px" }} className="w-48 py-1 m-2">
                     <span className="p-float-label">
-                        <MultiSelect id="typeMultiSelect" value={selectedDeviceTypes} onChange={(e) => updateSelectedDeviceTypes(e.value)} options={deviceTypes} optionLabel="name" filter className="w-full md:w-20rem" />
-                        <label htmlFor="PredictionSort">Device Type</label>
+                        <MultiSelect inputId="typeFilter" value={selectedDeviceTypes} onChange={(e) => updateSelectedDeviceTypes(e.value)} options={deviceTypes} optionLabel="name" filter className="w-full md:w-20rem" />
+                        <label htmlFor="typeFilter">Type Filter</label>
                     </span>
                 </div>
 
