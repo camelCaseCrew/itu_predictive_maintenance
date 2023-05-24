@@ -9,6 +9,7 @@ RUN chmod +x alertmanager
 RUN pip install flask
 RUN pip install pyyaml
 RUN pip install requests
+RUN pip install -U flask-cors
 
 EXPOSE 5000
 
