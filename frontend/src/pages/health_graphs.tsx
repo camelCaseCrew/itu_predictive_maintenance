@@ -1,11 +1,5 @@
 import BackButton from "@/components/BackButton"
 
-//this is a very hacky solution that essentially detects when the window is no longer the focus
-//ie. you have focused on the Grafana Embed, and changes the focus to the window. This is done
-//to prevent exiting kiosk mode on the Grafana embed, however a better solution could be
-//1. managing user permissions such that an anonymous viewer cannot get a full view
-//or 2. disabling the hotkeys to exit kiosk mode (esc or f) on the Grafana embed
-
 import { useState, useEffect } from "react"
 import React from 'react'
 
@@ -17,6 +11,7 @@ import { Button } from 'primereact/button'
 import { useGlobal } from "@/context/global";
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline'
+import { machine } from "os";
 import Head from "next/head";
 
 export default function App() {
@@ -35,7 +30,8 @@ export default function App() {
   const [selectedDevice, updateSelectedDevice] = useState('Harddrive')
 
   const [maxPages, updateMaxPages] = useState(1)
-  const [currentPage, updateCurrentPage] = useState(1)
+  const [currentPage, updateCurrentPage] = useState(1)  
+  const [iframeHeight, updateIframeHeight] = useState(0)
 
   const maxPerPage: number = 100
 
@@ -87,6 +83,19 @@ export default function App() {
     getSerialNumbers()
   }, [selectedGroup, selectedModel, selectedDevice])
 
+//this is a very hacky solution that essentially detects when the window is no longer the focus
+//ie. you have focused on the Grafana Embed, and changes the focus to the window. This is done
+//to prevent exiting kiosk mode on the Grafana embed, however a better solution could be
+//1. managing user permissions such that an anonymous viewer cannot get a full view
+//or 2. disabling the hotkeys to exit kiosk mode (esc or f) on the Grafana embed
+ useEffect(() => {
+ window.addEventListener("blur", function (e) {
+        setTimeout(function () {
+          window.focus();
+        }, 0);
+      });
+    })
+
   const getNewSerials = (lst: string[]) => {
     return lst.map(serial => `&var-serial_number=${serial}`).toString().replaceAll(",", "")
   }
@@ -104,6 +113,7 @@ export default function App() {
 
     if(serials.length > 0) {
       updateMaxPages(Math.ceil(serials.map(v => v["name"]).length/maxPerPage))
+      
       newSerials = getNewSerials(serials.map(v => v["name"]).slice((pageNumber-1)*maxPerPage, (pageNumber-1)*maxPerPage+maxPerPage))
     } else { // we no serial numbers were selected:
       updateMaxPages(Math.ceil(allDevicesInArray.length/maxPerPage))
@@ -225,10 +235,10 @@ export default function App() {
 
         </div>
 
-        <div id="iframeContainer" className="h-[60vh] w-full flex mt-2">
+        <div id="iframeContainer" className="h-[50vh] overflow-hidden flex mt-2">
 
           {/*This source is a link to the grafana dashboard with uid=enayayaya in kiosk mode*/}
-          <iframe id="devices" className="h-full grow" loading="lazy" src={grafanaSrc}></iframe>
+          <iframe id="devices" className={`grow`} loading="lazy" src={grafanaSrc}></iframe>
         </div>
 
         <div className=" justify-center my-2 flex">
