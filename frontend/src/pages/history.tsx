@@ -67,20 +67,28 @@ export default function History() {
 
             <div className="bg-component1 m-4 p-4 flex place-content-between items-center pr-48 pl-16 overflow-x-auto">
 
-                <MultiSelect value={selectedSerialNumbers} onChange={(e) => updateSelectedSerialNumbers(e.value)} options={serialNumbers} virtualScrollerOptions={{ itemSize: 43 }} optionLabel="name" filter 
-                placeholder="Serial number" maxSelectedLabels={3} className="w-48 h-16 md:gap-x-4 transition duration-300 shadow-2xl mr-2" />
+                <div style={{ minWidth: "200px" }} className="w-48 py-1 m-2">
+                    <span className="p-float-label">
+                        <MultiSelect id="typeMultiSelect" value={selectedSerialNumbers} onChange={(e) => updateSelectedSerialNumbers(e.value)} options={serialNumbers} optionLabel="name" filter maxSelectedLabels={3} virtualScrollerOptions={{ itemSize: 43 }} className="w-full md:w-20rem" />
+                        <label htmlFor="PredictionSort">Serial number</label>
+                    </span>
+                </div>
                 
-                <div style={{ minWidth: "15%" }} className="pt-6 pb-2 m-2">
+                <div style={{ minWidth: "200px" }} className="w-48 py-1 m-2">
                     <span className="p-float-label">
                         <Dropdown inputId="DateSort" value={dateSort} onChange={(e) => updateDateSort(e.value)} options={sortsD} optionLabel="name" className="w-full md:w-20rem" />
                         <label htmlFor="DateSort">Date Sort</label>
                     </span>
                 </div>
 
-                <MultiSelect id='typeMultiSelect' value={selectedDeviceTypes} onChange={(e) => updateSelectedDeviceTypes(e.value)} options={deviceTypes} optionLabel="name" filter 
-                placeholder="Type" maxSelectedLabels={3} className="w-48 h-16 md:gap-x-4 transition duration-300 shadow-2xl mr-2" />
+                <div style={{ minWidth: "200px" }} className="w-48 py-1 m-2">
+                    <span className="p-float-label">
+                        <MultiSelect id="typeMultiSelect" value={selectedDeviceTypes} onChange={(e) => updateSelectedDeviceTypes(e.value)} options={deviceTypes} optionLabel="name" filter className="w-full md:w-20rem" />
+                        <label htmlFor="PredictionSort">Device Type</label>
+                    </span>
+                </div>
 
-                <div style={{ minWidth: "15%" }} className="pt-6 pb-2 m-2">
+                <div style={{ minWidth: "200px" }} className="w-48 py-1 m-2">
                     <span className="p-float-label">
                         <Dropdown inputId="PredictionSort" value={predictionSort} onChange={(e) => updatePredictionSort(e.value)} options={sortsP} optionLabel="name" className="w-full md:w-20rem" />
                         <label htmlFor="PredictionSort">Prediction Sort</label>
