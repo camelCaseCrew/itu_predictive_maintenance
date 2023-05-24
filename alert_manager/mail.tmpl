@@ -1,0 +1,23 @@
+{{ define "device_critical_subject" }}New critical device{{ end }}
+{{ define "device_critical_html" }}
+<html>
+<head>
+<title>New device in critical</title>
+</head>
+<body>
+
+A new device has moved to a critical state <br/> 
+<a href="http://localhost:3001/health_graphs">See health graphs</a> <br/> <br/>
+
+Here are all critical devices: <br/> <br/>
+
+{{ range .Alerts.Firing }}
+
+Serial number: {{ .Annotations.serial_number }} <br/> 
+Type: {{ .Annotations.device_type }} <br/>
+Time: {{ .StartsAt }} <br/> <br/>
+
+{{ end }}
+
+</body></html>
+{{ end }}

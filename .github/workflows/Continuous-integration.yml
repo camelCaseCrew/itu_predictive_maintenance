@@ -34,13 +34,14 @@ jobs:
       - name: Get logs
         run: docker compose -f docker/docker-compose.yml logs
 
-      - name: Wait 300 seconds
-        run: sleep 300s
+      - name: Wait 50 seconds
+        run: sleep 50s
         shell: bash
 
       - name: Cypress run
         uses: cypress-io/github-action@v5.3.0
         with:
+          record: false
           wait-on: 'http://localhost:3001'
         
   test-rabbitmq:

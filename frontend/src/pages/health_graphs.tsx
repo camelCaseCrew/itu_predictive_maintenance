@@ -16,6 +16,9 @@ import 'primeicons/primeicons.css';
 import { Button } from 'primereact/button'
 import { useGlobal } from "@/context/global";
 
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline'
+import Head from "next/head";
+
 export default function App() {
   const [clickedMenu, setClickedMenu] = useState(true)
 
@@ -30,6 +33,11 @@ export default function App() {
   const [selectedModel, updateSelectedModel] = useState('ST4000DM000')
   const [selectedTime, updateSelectedTime] = useState('Last 6 hours')
   const [selectedDevice, updateSelectedDevice] = useState('Harddrive')
+
+  const [maxPages, updateMaxPages] = useState(1)
+  const [currentPage, updateCurrentPage] = useState(1)
+
+  const maxPerPage: number = 100
 
   const times = [
     { name: "Last 5 minutes", code: "Last 5 minutes" },
@@ -79,12 +87,28 @@ export default function App() {
     getSerialNumbers()
   }, [selectedGroup, selectedModel, selectedDevice])
 
+  const getNewSerials = (lst: string[]) => {
+    return lst.map(serial => `&var-serial_number=${serial}`).toString().replaceAll(",", "")
+  }
+
   // main function for changing the iframe src depending on the filter chosen
-  function updateFilter(model = selectedModel, group = selectedGroup, serials = selectedSerials, time = selectedTime, device = selectedDevice) {
+  function updateFilter(model = selectedModel, group = selectedGroup, serials = selectedSerials, time = selectedTime, device = selectedDevice, pageNumber = currentPage) {
     const formattedValue = time.split(" ")[1] + time.split(" ")[2].split("")[0]
     const newTime = `from=now-${formattedValue}&to=now`
 
-    const newSerials = serials.map(serial => `&var-serial_number=${serial["name"]}`).toString().replaceAll(",", "")
+    var allDevicesInArray: any[] = [];
+
+    serialNumbers.forEach(v => allDevicesInArray.push(v["name"]))
+    
+    let newSerials
+
+    if(serials.length > 0) {
+      updateMaxPages(Math.ceil(serials.map(v => v["name"]).length/maxPerPage))
+      newSerials = getNewSerials(serials.map(v => v["name"]).slice((pageNumber-1)*maxPerPage, (pageNumber-1)*maxPerPage+maxPerPage))
+    } else { // we no serial numbers were selected:
+      updateMaxPages(Math.ceil(allDevicesInArray.length/maxPerPage))
+      newSerials = getNewSerials(allDevicesInArray.slice((pageNumber-1)*maxPerPage, (pageNumber-1)*maxPerPage+maxPerPage))
+    }
 
     const updated = `http://localhost:3000/d/enayayaya/health-graphs?orgId=1&refresh=15s${newSerials}&var-risk_group=${group.toLowerCase()}&var-model=${model}&${newTime}&var-device_type=${device.toLowerCase()}&kiosk`
     updateGrafanaSrc(updated)
@@ -108,95 +132,121 @@ export default function App() {
 
   function riskGroupSelect(value: string) {
     updateSelectedGroup(value)
+    updateCurrentPage(1) //when filter is updated, set current page to 1
+    updateSelectedSerials([]) //resetting selectedSerials when changing filter
     updateFilter(undefined, value)
   }
 
   function timeSelect(value: string) {
     updateSelectedTime(value)
+    updateCurrentPage(1) //when filter is updated, set current page to 1
+    updateSelectedSerials([]) //resetting selectedSerials when changing filter
     updateFilter(undefined, undefined, undefined, value)
   }
 
   function modelSelect(value: string) {
     updateSelectedModel(value)
+    updateCurrentPage(1) //when filter is updated, set current page to 1
+    updateSelectedSerials([]) //resetting selectedSerials when changing filter
     updateFilter(value)
   }
 
   function serialSelect(value: []) {
     updateSelectedSerials(value)
+    updateCurrentPage(1) //when filter is updated, set current page to 1
     updateFilter(undefined, undefined, value)
   }
 
   function deviceSelect(device: string) {
     updateSelectedDevice(device)
+    updateCurrentPage(1) //when filter is updated, set current page to 1
+    updateSelectedSerials([]) //resetting selectedSerials when changing filter
     updateFilter(undefined, undefined, undefined, undefined, device)
   }
 
-  if (typeof window !== "undefined" && window.document) {
-    window.addEventListener("blur", function (e) {
-      setTimeout(function () {
-        window.focus();
-      }, 0);
-    });
-  }
+  useEffect(() => {
+    updateFilter()
+  }, [currentPage,[]])
 
   return (
+    <>
+      <Head>
+        <title>PredictIT - Health-Graphs</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className="m-4">
+        <div className="mx-2 bg-component1 h-[100%]">
 
-    <div className="m-4 bg-component1 h-[100%]">
-      <div className="mx-2">
+          <div className="flex justify-end md:hidden pt-3 pr-3 pb-3">
+            <Button onClick={() => setClickedMenu(current => !current)} severity="secondary" className="bg-component2" icon="pi pi-bars"></Button>
+          </div>
 
-        <div className="flex justify-end md:hidden pt-3 pr-3 pb-3">
-          <Button onClick={() => setClickedMenu(current => !current)} severity="secondary" className="bg-component2" icon="pi pi-bars"></Button>
+          <div className={"md:flex justify-start place-items-center" + (clickedMenu ? 'hidden' : '')} id="filters">
+
+            <BackButton></BackButton>
+            <hr className="md:hidden mx-4 h-px my-2 bg-component2 border-0"></hr>
+
+            <div style={{ minWidth: "12%" }} className="pt-6 pb-2 m-2">
+              <span className="p-float-label">
+                <Dropdown inputId="healthFilter" filter value={{ name: selectedGroup, code: selectedGroup.toLowerCase() }} onChange={(e) => riskGroupSelect(e.value["name"])} options={riskGroups} optionLabel="name" className="w-full md:w-20rem" />
+                <label htmlFor="healthFilter">Select Risk Group</label>
+              </span>
+            </div>
+
+            <div style={{ minWidth: "15%" }} className="pt-6 pb-2 m-2">
+              <span className="p-float-label">
+                <Dropdown inputId="modelFilter" filter value={{ name: selectedModel, code: selectedModel }} onChange={(e) => modelSelect(e.value["name"])} options={models} optionLabel="name" className="w-full md:w-20rem" />
+                <label htmlFor="modelFilter">Select Model</label>
+              </span>
+            </div>
+
+            <div style={{ minWidth: "15%" }} className="pt-6 pb-2 m-2">
+              <span className="p-float-label">
+                <Dropdown inputId="timeFilter" filter value={{ name: selectedTime, code: selectedTime }} onChange={(e) => timeSelect(e.value["name"])} options={times} optionLabel="name" className="w-full md:w-20rem" />
+                <label htmlFor="timeFilter">Select Time</label>
+              </span>
+            </div>
+
+            <div style={{ minWidth: "15%" }} className="pt-6 pb-2 m-2">
+              <span className="p-float-label">
+                <Dropdown inputId="deviceFilter" filter value={{ name: selectedDevice, code: selectedDevice }} onChange={(e) => deviceSelect(e.value["name"])} options={devices} optionLabel="name" className="w-full md:w-20rem" />
+                <label htmlFor="deviceFilter">Select Device Type</label>
+              </span>
+            </div>
+
+            <div style={{ minWidth: "18%" }} className="pt-6 pb-2 m-2">
+              <span className="p-float-label">
+                <MultiSelect inputId="serialFilter" value={selectedSerials} onChange={(e) => serialSelect(e.value)} virtualScrollerOptions={{ itemSize: 43 }} options={serialNumbers} optionLabel="name" filter maxSelectedLabels={3} className="w-full md:w-20rem" />
+                <label htmlFor="serialFilter">Select Serial Numbers</label>
+              </span>
+            </div>
+
+          </div>
+
         </div>
 
-        <div className={"md:flex justify-start place-items-center" + (clickedMenu ? 'hidden' : '')} id="filters">
+        <div id="iframeContainer" className="h-[60vh] w-full flex mt-2">
 
-          <BackButton></BackButton>
-          <hr className="md:hidden mx-4 h-px my-2 bg-component2 border-0"></hr>
+          {/*This source is a link to the grafana dashboard with uid=enayayaya in kiosk mode*/}
+          <iframe id="devices" className="h-full grow" loading="lazy" src={grafanaSrc}></iframe>
+        </div>
 
-          <div style={{ minWidth: "12%" }} className="pt-6 pb-2 m-2">
-            <span className="p-float-label">
-              <Dropdown inputId="healthFilter" filter value={{ name: selectedGroup, code: selectedGroup.toLowerCase() }} onChange={(e) => riskGroupSelect(e.value["name"])} options={riskGroups} optionLabel="name" className="w-full md:w-20rem" />
-              <label htmlFor="healthFilter">Select Risk Group</label>
-            </span>
+        <div className=" justify-center my-2 flex">
+          <div onClick={() => updateCurrentPage(prevPage => prevPage > 1 ? prevPage-1 : prevPage)} className=" w-12 leading-[48px] rounded-md text-center aspect-square bg-component2 text-text cursor-pointer">
+            <ChevronLeftIcon className=" scale-50 min-w-[50px]" />
           </div>
-
-          <div style={{ minWidth: "15%" }} className="pt-6 pb-2 m-2">
-            <span className="p-float-label">
-              <Dropdown inputId="modelFilter" filter value={{ name: selectedModel, code: selectedModel }} onChange={(e) => modelSelect(e.value["name"])} options={models} optionLabel="name" className="w-full md:w-20rem" />
-              <label htmlFor="modelFilter">Select Model</label>
-            </span>
+          <div onClick={() => updateCurrentPage(1)} className=" select-none relative w-7 text-center mx-4 leading-[48px] bg-componen2 text-text cursor-pointer"> 1 </div>
+          <input type="number" defaultValue={currentPage} value={currentPage} 
+            onChange={(e)=>updateCurrentPage(e.target.valueAsNumber < 1 || Number.isNaN(e.target.valueAsNumber) ? 1 : e.target.valueAsNumber > maxPages ? maxPages : e.target.valueAsNumber)} 
+            className="bg-component1 border-0 text-text text-md rounded-md w-12 text-center "
+          />
+          <div onClick={() => updateCurrentPage(maxPages)} className=" select-none relative w-7 text-center mx-4 leading-[48px] bg-componen2 text-text cursor-pointer">{maxPages}</div>
+          <div onClick={() => updateCurrentPage(prevPage => prevPage < maxPages ? prevPage+1 : prevPage)} className=" w-12 leading-[48px] rounded-md text-center aspect-square bg-component2 text-text cursor-pointer">
+            <ChevronRightIcon className=" scale-50 min-w-[50px]" />
           </div>
-
-          <div style={{ minWidth: "15%" }} className="pt-6 pb-2 m-2">
-            <span className="p-float-label">
-              <Dropdown inputId="timeFilter" filter value={{ name: selectedTime, code: selectedTime }} onChange={(e) => timeSelect(e.value["name"])} options={times} optionLabel="name" className="w-full md:w-20rem" />
-              <label htmlFor="timeFilter">Select Time</label>
-            </span>
-          </div>
-
-          <div style={{ minWidth: "15%" }} className="pt-6 pb-2 m-2">
-            <span className="p-float-label">
-              <Dropdown inputId="deviceFilter" filter value={{ name: selectedDevice, code: selectedDevice }} onChange={(e) => deviceSelect(e.value["name"])} options={devices} optionLabel="name" className="w-full md:w-20rem" />
-              <label htmlFor="deviceFilter">Select Device Type</label>
-            </span>
-          </div>
-
-          <div style={{ minWidth: "18%" }} className="pt-6 pb-2 m-2">
-            <span className="p-float-label">
-              <MultiSelect inputId="serialFilter" value={selectedSerials} onChange={(e) => serialSelect(e.value)} virtualScrollerOptions={{ itemSize: 43 }} options={serialNumbers} optionLabel="name" filter maxSelectedLabels={3} className="w-full md:w-20rem" />
-              <label htmlFor="serialFilter">Select Serial Numbers</label>
-            </span>
-          </div>
-
         </div>
 
       </div>
-
-      <div id="iframeContainer" className="h-full w-full flex">
-        {/*This source is a link to the grafana dashboard with uid=enayayaya in kiosk mode*/}
-        <iframe id="devices" className="h-full grow" loading="lazy" src={grafanaSrc}></iframe>
-      </div>
-
-    </div>
+    </>
   )
 }

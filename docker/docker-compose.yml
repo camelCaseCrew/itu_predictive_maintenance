@@ -95,6 +95,7 @@ services:
     volumes:
       - prometheus-data:/prometheus
       - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ../prometheus/alert.yml:/etc/prometheus/alert.yml
     networks:
       - predictive-maintenance-net
 
@@ -119,7 +120,6 @@ services:
     depends_on:
       - prometheus
 
-
   frontend:
     build:
       context: ../
@@ -132,4 +132,15 @@ services:
       - predictive-maintenance-net
     depends_on:
       - grafana
-      
+  
+  alert_manager:
+    build:
+      context: ../
+      dockerfile: ./docker/alert_manager/Dockerfile
+    ports:
+      - "9093:9093"
+      - "5000:5000"
+    networks:
+      - predictive-maintenance-net
+    depends_on:
+      - prometheus

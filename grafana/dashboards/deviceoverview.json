@@ -35,7 +35,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "dark-red",
+            "fixedColor": "#971020",
             "mode": "fixed"
           },
           "mappings": [],
@@ -70,9 +70,10 @@
           "fields": "/^Value$/",
           "values": false
         },
-        "showUnfilled": true
+        "showUnfilled": true,
+        "valueMode": "color"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
@@ -123,7 +124,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "yellow",
+            "fixedColor": "#BB5E1B",
             "mode": "fixed"
           },
           "mappings": [],
@@ -158,9 +159,10 @@
           "fields": "/^Value$/",
           "values": false
         },
-        "showUnfilled": true
+        "showUnfilled": true,
+        "valueMode": "color"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
@@ -214,7 +216,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "dark-green",
+            "fixedColor": "#3A7924",
             "mode": "fixed"
           },
           "mappings": [],
@@ -249,9 +251,10 @@
           "fields": "/^Value$/",
           "values": false
         },
-        "showUnfilled": true
+        "showUnfilled": true,
+        "valueMode": "color"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
@@ -376,6 +379,6 @@
   "timezone": "",
   "title": "Overview of devices",
   "uid": "en2yCsa4k",
-  "version": 13,
+  "version": 5,
   "weekStart": ""
 }

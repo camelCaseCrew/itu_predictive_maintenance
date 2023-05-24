@@ -1,6 +1,13 @@
 
 // Health Graphs page tests
 
+describe('Health-graphs tab title', () => {
+    it('Tab title equals "PredictIT - Health-Graphs"', () => {
+    cy.visit('http://localhost:3001/health_graphs')
+    cy.title().should('eq', "PredictIT - Health-Graphs")
+    })
+})
+
 describe('Grafana Graph test, will break if test page is removed', () => {
     it('Visits the test page', () => {
       cy.visit('http://localhost:3001/health_graphs')
