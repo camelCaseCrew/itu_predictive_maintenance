@@ -17,7 +17,7 @@ export default function Modal() {
         'crossDomain': true,
         'Access-Control-Allow-Origin': '*',
       },
-    })
+    }).then((response) => {response.status == 200 ? alert("You have subscribed to alerts") : console.log('error')})
     modalContext.updateShowModal(false)
   }
 
@@ -27,7 +27,7 @@ export default function Modal() {
         'crossDomain': true,
         'Access-Control-Allow-Origin': '*',
       },
-    })
+    }).then((response) => {response.status == 200 ? alert("You have unsubscribed to alerts") : console.log('error')})
     modalContext.updateShowModal(false)
   }
 
