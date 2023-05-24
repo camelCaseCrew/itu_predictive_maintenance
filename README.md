@@ -33,9 +33,13 @@ Alternatively, the file can be downloaded directly.
 
 ## Running the system
 
-Run docker-compose in detached mode with `make compose_up`.
+The project is run using Docker, so make sure to first have Docker running.
 
-Run it attached with `make compose_up_attached`.
+To run the program, there are 3 options (all the same)
+
+1. Run the `start.sh` file
+2. Run the terminal command `make compose_up_attached` for attached mode or `make compose_up` for detached mode
+3. Run the terminal command `docker compose -f docker/docker-compose.yml up`
 
 Then visit [http://localhost:3001](http://localhost:3001)
 
@@ -111,7 +115,7 @@ Navbar
 
 ## System architecture
 
-| ![System Architecture](/images/StackDiagram.png) |
+| ![System Architecture](/images/diagram.png) |
 |:--:|
 | *General connections between system services* |
 
