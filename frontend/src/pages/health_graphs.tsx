@@ -88,12 +88,13 @@ export default function App() {
 //to prevent exiting kiosk mode on the Grafana embed, however a better solution could be
 //1. managing user permissions such that an anonymous viewer cannot get a full view
 //or 2. disabling the hotkeys to exit kiosk mode (esc or f) on the Grafana embed
+ useEffect(() => {
  window.addEventListener("blur", function (e) {
         setTimeout(function () {
           window.focus();
         }, 0);
       });
-
+    })
 
   const getNewSerials = (lst: string[]) => {
     return lst.map(serial => `&var-serial_number=${serial}`).toString().replaceAll(",", "")
