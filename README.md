@@ -89,7 +89,7 @@ The last argument given to CSV_Parser can be changed to any number (the last dig
 These are the files that are unique for the specific pages.
 
 ##### History Page
-LogData (Logic)
+- LogData (Logic)
 - LogDataComponent (Visuals)
 - FeedbackButton
 - tailwind.config.js (Colours)
@@ -107,10 +107,11 @@ Right now the context global.tsx supports this page with a global filter value, 
 The other pages and components modify this value, and this page will change accordingly.
 
 ##### NavBar
-Navbar
+- Navbar
 - NavbarButton
 - Logo
 - BackButton
+
 ---
 
 ## System architecture
