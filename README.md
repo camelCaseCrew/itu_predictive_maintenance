@@ -88,17 +88,17 @@ The last argument given to CSV_Parser can be changed to any number (the last dig
 #### Front-End Config-Guide
 These are the files that are unique for the specific pages.
 
-## History Page:
+##### History Page
 LogData (Logic)
-|_LogDataComponent (Visuals)
-FeedbackButton
-tailwind.config.js(Colours)
+- LogDataComponent (Visuals)
+- FeedbackButton
+- tailwind.config.js (Colours)
 
-## Index Page:
+##### Index Page
 ClickableIframe
 OverviewButton
 
-## Health-Graps Page:
+##### Health-Graps Page
 Is currently self-contained.
 Right now the context global.tsx supports this page with a global filter value, this is currently hardcoded to:
 1 = Healthy
@@ -106,11 +106,11 @@ Right now the context global.tsx supports this page with a global filter value, 
 3 = Critical
 The other pages and components modify this value, and this page will change accordingly.
 
-## NavBar
+##### NavBar
 Navbar
-|_NavbarButton
-|_Logo
-|_BackButton
+- NavbarButton
+- Logo
+- BackButton
 ---
 
 ## System architecture
