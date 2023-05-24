@@ -134,6 +134,7 @@ services:
       - grafana
   
   alert_manager:
+    container_name: alert_manager
     build:
       context: ../
       dockerfile: ./docker/alert_manager/Dockerfile

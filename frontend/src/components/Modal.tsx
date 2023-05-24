@@ -12,12 +12,22 @@ export default function Modal() {
   }
 
   const addMail = (email: string) => {
-    axios.put(`localhost:5000/update/${email}`)
+    axios.put(`http://localhost:5000/update/${email}`, {
+      headers: {
+        'crossDomain': true,
+        'Access-Control-Allow-Origin': '*',
+      },
+    })
     modalContext.updateShowModal(false)
   }
 
   const removeMail = (email: string) => {
-    axios.delete(`localhost:5000/remove/${email}`)
+    axios.delete(`http://localhost:5000/remove/${email}`, {
+      headers: {
+        'crossDomain': true,
+        'Access-Control-Allow-Origin': '*',
+      },
+    })
     modalContext.updateShowModal(false)
   }
 
