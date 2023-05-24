@@ -29,10 +29,7 @@ export default function App() {
   const [selectedDevice, updateSelectedDevice] = useState('Harddrive')
 
   const [maxPages, updateMaxPages] = useState(1)
-  const [currentPage, updateCurrentPage] = useState(1)
-
-  const [iframeHeight, updateIframeHeight] = useState(0)
-  
+  const [currentPage, updateCurrentPage] = useState(1)  
 
   const maxPerPage: number = 100
 
@@ -117,12 +114,6 @@ export default function App() {
       newSerials = getNewSerials(serials.map(v => v["name"]).slice((pageNumber-1)*maxPerPage, (pageNumber-1)*maxPerPage+maxPerPage))
     } else { // we no serial numbers were selected:
       updateMaxPages(Math.ceil(allDevicesInArray.length/maxPerPage))
-
-      const graphs_last_page = allDevicesInArray.length % maxPerPage
-
-      currentPage === maxPages ? updateIframeHeight((29.8 * (Math.ceil(graphs_last_page/4)) + 20)) : updateIframeHeight((29.8 * (Math.ceil(maxPerPage/4)) + 20))
-
-      console.log(iframeHeight)
       newSerials = getNewSerials(allDevicesInArray.slice((pageNumber-1)*maxPerPage, (pageNumber-1)*maxPerPage+maxPerPage))
     }
 
