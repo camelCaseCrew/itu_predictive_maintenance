@@ -58,6 +58,7 @@ Then visit [http://localhost:3003](http://localhost:3003)
 #### Data stream simulation
 
 The data stream simulation can be run at 3 different levels of intensities. You first have to run the system with either forementioned command.
+See data_generator/app/main.py to change these values.
 
 - 250 records pr minute: `make low_throughput_data_simulation`
 - 1000 records per minute: `make medium_throughput_data_simulation`
@@ -84,8 +85,8 @@ The last argument given to CSV_Parser can be changed to any number (the last dig
 These are the files that are unique for the specific pages.
 
 ## History Page:
-LogData
-|_LogDataComponent
+LogData (Logic)
+|_LogDataComponent (Visuals)
 FeedbackButton
 tailwind.config.js(Colours)
 
@@ -99,7 +100,7 @@ Right now the context global.tsx supports this page with a global filter value, 
 1 = Healthy
 2 = Risk
 3 = Critical
-The other pages and components modify this value.
+The other pages and components modify this value, and this page will change accordingly.
 
 ## NavBar
 Navbar
@@ -168,6 +169,12 @@ curl -X DELETE http://localhost:5000/remove/<email>
 curl -X POST http://localhost:9093/-/reload
 ```
 
+### Notes on retraining the ML-model
+
+  In a regular runtime of the program, you are able to flag reported logs in the history page, these reported logs are saved in a table in the SQL database.
+  This table allows you to pinpoint all the SMART-values that went into the prediction using a logs unique ID number.
+  This can then be sent to a retraining service, which will have to be implemented from scratch.
+  
 ---
 
 ## Testing
