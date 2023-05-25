@@ -2,9 +2,11 @@ import flask
 import yaml
 import os
 import requests
+from flask_cors import CORS
 
 emails = ["camelcasecrew@gmail.com"]
 app = flask.Flask(__name__)
+CORS(app)
 
 @app.route("/update/<email>", methods=["PUT"])
 def update(email):
