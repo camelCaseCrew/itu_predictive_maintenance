@@ -17,7 +17,10 @@ export default function Modal() {
         'crossDomain': true,
         'Access-Control-Allow-Origin': '*',
       },
-    }).then((response) => {response.status == 200 ? alert("You have subscribed to alerts") : console.log('error')})
+    }).then((response) => {if (response.status == 200) {
+      axios.post(`http://localhost:9093/-/reload`);
+      alert("You have subscribed to alerts");
+    } else {console.log('error')}})
     modalContext.updateShowModal(false)
   }
 
@@ -27,7 +30,10 @@ export default function Modal() {
         'crossDomain': true,
         'Access-Control-Allow-Origin': '*',
       },
-    }).then((response) => {response.status == 200 ? alert("You have unsubscribed to alerts") : console.log('error')})
+    }).then((response) => {if (response.status == 200) {
+      axios.post(`http://localhost:9093/-/reload`);
+      alert("You have unsubscribed from alerts");
+    } else {console.log('error')}})
     modalContext.updateShowModal(false)
   }
 
