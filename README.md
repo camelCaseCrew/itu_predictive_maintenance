@@ -33,9 +33,13 @@ Alternatively, the file can be downloaded directly.
 
 ## Running the system
 
-Run docker-compose in detached mode with `make compose_up`.
+The project is run using Docker, so make sure to first have Docker running.
 
-Run it attached with `make compose_up_attached`.
+To run the program, there are 3 options (all the same)
+
+1. Run the `start.sh` file
+2. Run the terminal command `make compose_up_attached` for attached mode or `make compose_up` for detached mode
+3. Run the terminal command `docker compose -f docker/docker-compose.yml up`
 
 Then visit [http://localhost:3001](http://localhost:3001)
 
@@ -58,6 +62,7 @@ Then visit [http://localhost:3003](http://localhost:3003)
 #### Data stream simulation
 
 The data stream simulation can be run at 3 different levels of intensities. You first have to run the system with either forementioned command.
+See data_generator/app/main.py to change these values.
 
 - 250 records pr minute: `make low_throughput_data_simulation`
 - 1000 records per minute: `make medium_throughput_data_simulation`
@@ -80,11 +85,38 @@ Unfortunately there is no simple way of configuring this amount, it has to be ha
 This can be done on line 35 of `data_generator/data_generator/app/main.py`. 
 The last argument given to CSV_Parser can be changed to any number (the last digit is not allowed to be zero).
 
+#### Front-End Config-Guide
+These are the files that are unique for the specific pages.
+
+##### History Page
+- LogData (Logic)
+- LogDataComponent (Visuals)
+- FeedbackButton
+- tailwind.config.js (Colours)
+
+##### Index Page
+ClickableIframe
+OverviewButton
+
+##### Health-Graps Page
+Is currently self-contained.
+Right now the context global.tsx supports this page with a global filter value, this is currently hardcoded to:
+1 = Healthy
+2 = Risk
+3 = Critical
+The other pages and components modify this value, and this page will change accordingly.
+
+##### NavBar
+- Navbar
+- NavbarButton
+- Logo
+- BackButton
+
 ---
 
 ## System architecture
 
-| ![System Architecture](/images/StackDiagram.png) |
+| ![System Architecture](/images/diagram.png) |
 |:--:|
 | *General connections between system services* |
 
@@ -142,6 +174,12 @@ curl -X DELETE http://localhost:5000/remove/<email>
 curl -X POST http://localhost:9093/-/reload
 ```
 
+### Notes on retraining the ML-model
+
+  In a regular runtime of the program, you are able to flag reported logs in the history page, these reported logs are saved in a table in the SQL database.
+  This table allows you to pinpoint all the SMART-values that went into the prediction using a logs unique ID number.
+  This can then be sent to a retraining service, which will have to be implemented from scratch.
+  
 ---
 
 ## Testing
