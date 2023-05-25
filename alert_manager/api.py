@@ -2,7 +2,6 @@ import flask
 import yaml
 import os
 import requests
-import subprocess
 from flask_cors import CORS
 
 emails = ["camelcasecrew@gmail.com"]
@@ -34,8 +33,6 @@ def update(email):
         yaml.dump(data, f)
 
     print("updated config file")
-
-    subprocess.run(["kill", "-HUP", "$(pidof alertmanager)"])
 
     return {
         "message": "added email to list",
@@ -69,8 +66,6 @@ def remove(email):
     with open("alertmanager.yml", "w") as f:
         yaml.dump(data, f)
     print("updated config file")
-
-    subprocess.run(["kill", "-HUP", "$(pidof alertmanager)"])
 
     return {
         "message": "removed email from list",
