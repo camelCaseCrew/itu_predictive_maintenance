@@ -191,7 +191,7 @@ export default function App() {
             <Button onClick={() => setClickedMenu(current => !current)} severity="secondary" className="bg-component2" icon="pi pi-bars"></Button>
           </div>
 
-          <div className={"md:flex justify-start place-items-center" + (clickedMenu ? 'hidden' : '')} id="filters">
+          <div className={"md:flex justify-start place-items-center " + (clickedMenu ? 'hidden' : '')} id="filters">
 
             <BackButton></BackButton>
             <hr className="md:hidden mx-4 h-px my-2 bg-component2 border-0"></hr>

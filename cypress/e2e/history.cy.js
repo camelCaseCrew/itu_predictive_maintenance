@@ -9,7 +9,7 @@ describe('Checks each device type is option for filtering', () => {
     it('Looks at type options', () => {
       cy.visit('http://localhost:3001/history')
       cy.wait(3000)
-      cy.get('.p-multiselect').contains('Type').click({ multiple: true })
+      cy.get('.p-multiselect').parent().contains('Type').parent().click({ multiple: true })
       cy.get('.p-multiselect-panel').contains('harddrive')
       cy.get('.p-multiselect-panel').contains('sensor')
     })
@@ -19,7 +19,7 @@ describe('Checks the filtering works for Harddrives', () => {
     it('Checks the filtering works for Harddrives', () => {
       cy.visit('http://localhost:3001/history')
       cy.wait(10000)
-      cy.get('.p-multiselect').contains('Type').click({ multiple: true })
+      cy.get('.p-multiselect').parent().contains('Type').parent().click({ multiple: true })
       cy.get('.p-multiselect-panel').contains('harddrive').click()
       cy.get('#parent').scrollTo(0, 1000)
       cy.get('.infinite-scroll-component > li').each((item) => {
@@ -32,7 +32,7 @@ describe('Checks the filtering works for Sensor', () => {
     it('Checks the filtering works for Sensor', () => {
       cy.visit('http://localhost:3001/history')
       cy.wait(10000)
-      cy.get('.p-multiselect').contains('Type').click({ multiple: true })
+      cy.get('.p-multiselect').parent().contains('Type').parent().click({ multiple: true })
       cy.get('.p-multiselect-panel').contains('sensor').click()
       cy.get('#parent').scrollTo(0, 1000)
       cy.get('.infinite-scroll-component > li').each((item) => {
@@ -48,7 +48,7 @@ describe('Looks at serial number options', () => {
       (response) => {
           cy.log(response.body)
           cy.wait(10000)
-          cy.get('.p-multiselect').contains('Serial number').click({ multiple: true })
+          cy.get('.p-multiselect').parent().contains('Serial').parent().click({ multiple: true })
           cy.get('.p-multiselect-items > li').each((item) => {
               expect(response.body.data).to.contain(item.children('span').eq(0).text())
           })
@@ -61,7 +61,7 @@ describe('Checks filtering works for all serial numbers', () => {
     it('Checks filtering works for all serial numbers', () => {
       cy.visit('http://localhost:3001/history')
       cy.wait(10000)
-      cy.get('.p-multiselect').contains('Serial number').click({ multiple: true })
+      cy.get('.p-multiselect').parent().contains('Serial').parent().click({ multiple: true })
       cy.get('.p-multiselect-items > li').each((item) => {
         cy.get('.p-multiselect-panel').contains(item.children('span').eq(0).text()).click()
         cy.get('.infinite-scroll-component > li').each((log) => {
